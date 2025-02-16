@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Activités - Green Sports Park</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Ajout d'un fond de page léger et d'animations */
+        body {
+            background: linear-gradient(to right, #f0f4f8, #e4e7eb);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Boutons animés */
+        .btn:hover {
+            transition: all 0.3s ease;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation pour les cartes */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="bg-white shadow-md">
+        <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Logo -->
+            <a href="#">
+                <img src="https://dashboard.codeparrot.ai/api/image/Z7Hmp49nxTWt8i-Z/link-→-l.png" alt="Logo"
+                    width="200" height="53.5">
+            </a>
+
+            <!-- Menu de navigation -->
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition duration-300">Accueil</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition duration-300">Nos
+                    Activités</a>
+                <a href="#"
+                    class="font-medium text-gray-700 hover:text-green-600 transition duration-300">Réservation</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition duration-300">About</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition duration-300">Contact</a>
+            </div>
+
+            <!-- Boutons Sign In et Sign Up -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#"
+                    class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Sign
+                    In</a>
+                <a href="#"
+                    class="bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-800 transition duration-300">Sign
+                    Up</a>
+            </div>
+
+            <!-- Menu burger pour mobile -->
+            <button
+                class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                aria-label="Menu">
+                <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden bg-white shadow-lg hidden">
+        <div class="px-6 py-4 space-y-4">
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-500 transition duration-300">Accueil</a>
+            <a href="#"
+                class="block text-gray-700 font-medium hover:text-green-500 transition duration-300">NosActivités</a>
+            <a href="#"
+                class="block text-gray-700 font-medium hover:text-green-500 transition duration-300">Réservation</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-500 transition duration-300">About</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-500 transition duration-300">Contact</a>
+            <a href="#"
+                class="block text-white bg-black px-6 py-2 rounded-full font-semibold text-center hover:bg-gray-800 transition duration-300">Sign
+                Up</a>
+            <a href="#"
+                class="block text-gray-700 border-2 border-gray-600 px-6 py-2 rounded-full font-semibold text-center hover:bg-gray-200 transition duration-300">Sign
+                In</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-green-600 py-12">
+        <div class="max-w-screen-xl mx-auto text-center">
+            <h1 class="text-5xl text-white font-bold">Nos Activités Sportives</h1>
+            <p class="mt-4 text-xl text-gray-300">Découvrez nos installations sportives de première classe.
+                Réservez facilement et profitez d'une expérience sportive exceptionnelle.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <!-- Filtrage des Activités -->
+            <div class="text-center mb-8">
+                <div class="inline-flex space-x-4">
+                    <!-- Bouton ALL -->
+                    <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                        data-filter="all">ALL</button>
+                    <!-- Bouton FOOTBALL -->
+                    <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                        data-filter="football">FOOTBALL</button>
+                    <!-- Bouton PADEL -->
+                    <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                        data-filter="padel">PADEL</button>
+                </div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+
+                <!-- 5 vs 5 Card -->
+                <div
+                    class="activity-card football group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative overflow-hidden">
+                        <div
+                            class="absolute top-4 right-4 z-10 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm shadow-md">
+                            400 DH/h
+                        </div>
+                        <img src="./img/5vs5.png" alt="Terrain de Football"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500 rounded-t-3xl">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent h-24">
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Terrain 5 VS 5</h3>
+                            <span class="flex items-center text-green-600">
+                                <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
+                                Disponible
+                            </span>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">Terrain synthétique nouvelle génération avec éclairage LED.
+                            Parfait
+                            pour vos matchs entre amis ou en équipe.</p>
+
+                        <div class="space-y-2 text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Durée: 60 minutes
+                            </div>
+
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                10 joueurs
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
+                            <button
+                                class="group inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Voir Détails
+                            </button>
+                            <button
+                                class="inline-flex items-center bg-gray-900 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
+                                Réserver
+                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7 vs 7 Card -->
+                <div
+                    class="group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative overflow-hidden">
+                        <div
+                            class="absolute top-4 right-4 z-10 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm shadow-md">
+                            700 DH/h
+                        </div>
+                        <img src="./img/7vs7.png" alt="Terrain de Football"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500 rounded-t-3xl">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent h-24">
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Terrain 7 VS 7</h3>
+                            <span class="flex items-center text-green-600">
+                                <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
+                                Disponible
+                            </span>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">Terrain synthétique nouvelle génération avec éclairage LED.
+                            Parfait
+                            pour vos matchs entre amis ou en équipe.</p>
+
+                        <div class="space-y-2 text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Durée: 60 minutes
+                            </div>
+
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                14 joueurs
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
+                            <button
+                                class="group inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Voir Détails
+                            </button>
+                            <button
+                                class="inline-flex items-center bg-gray-900 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
+                                Réserver
+                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11 vs 11-->
+
+                <div
+                    class="group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative overflow-hidden">
+                        <div
+                            class="absolute top-4 right-4 z-10 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm shadow-md">
+                            1200 DH/h
+                        </div>
+                        <img src="./img/11vs11.png" alt="Terrain de Football"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500 rounded-t-3xl">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent h-24">
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Terrain 11 VS 11</h3>
+                            <span class="flex items-center text-green-600">
+                                <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
+                                Disponible
+                            </span>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">Terrain synthétique nouvelle génération avec éclairage LED.
+                            Parfait
+                            pour vos matchs entre amis ou en équipe.</p>
+
+                        <div class="space-y-2 text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Durée: 60 minutes
+                            </div>
+
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                22 joueurs
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
+                            <button
+                                class="group inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Voir Détails
+                            </button>
+                            <button
+                                class="inline-flex items-center bg-gray-900 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
+                                Réserver
+                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Padel Card -->
+                <div
+                    class="group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative overflow-hidden">
+                        <div
+                            class="absolute top-4 right-4 z-10 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm shadow-md">
+                            250 DH/h
+                        </div>
+                        <img src="./img/padel.png" alt="Terrain de Football"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500 rounded-t-3xl">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent h-24">
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Padel</h3>
+                            <span class="flex items-center text-green-600">
+                                <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
+                                Disponible
+                            </span>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">Terrain synthétique nouvelle génération avec éclairage LED.
+                            Parfait
+                            pour vos matchs entre amis ou en équipe.</p>
+
+                        <div class="space-y-2 text-sm text-gray-500">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Durée: 60 minutes
+                            </div>
+
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                2 - 4 joueurs
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
+                            <button
+                                class="group inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Voir Détails
+                            </button>
+                            <button
+                                class="inline-flex items-center bg-gray-900 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
+                                Réserver
+                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-10">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-start space-x-10">
+            <!-- Logo and Social Links -->
+            <div class="flex items-center w-1/4">
+                <img src="https://dashboard.codeparrot.ai/api/image/Z7H0C-epongUSRrO/item-→-l.png" alt="GSP Logo"
+                    class="w-48 h-auto">
+            </div>
+
+            <!-- Address Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Adresse Paris</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">123 Avenue des Champs-Élysées, 75008 Paris, France.</p>
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Téléphone</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Contactez-nous : +33 1 23 45 67 89</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
+                <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
+                </p>
+
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Recrutement</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Envie de rejoindre notre équipe dynamique ?</p>
+                <p><a href="#" class="text-yellow-500 hover:underline">Voir les offres d'emploi</a></p>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Suivez-nous sur les Réseaux Sociaux</h3>
+                <div class="flex space-x-6">
+                    <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                    </a>
+                    <a href="https://www.twitter.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-linkedin-in text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 border-t border-gray-700 pt-6 text-sm text-center text-gray-400">
+            <p>© 2025, EXAMPLE COMPANY. Créé avec passion par WebDev Agency.</p>
+            <p>© Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sélection de tous les boutons de filtrage
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        // Sélection de toutes les cartes d'activités
+        const activityCards = document.querySelectorAll('.activity-card');
+
+        // Ajout d'un événement de clic à chaque bouton
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+
+                // Affichage des cartes selon le filtre
+                activityCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'flex'; // Affiche tout
+                    } else {
+                        card.style.display = card.classList.contains(filter) ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
