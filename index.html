@@ -63,9 +63,8 @@
             </div>
 
             <!-- Menu burger pour mobile -->
-            <button
-                class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                aria-label="Menu">
+            <button id="burger-btn" class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300
+focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Menu">
                 <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
@@ -76,7 +75,7 @@
     </header>
 
     <!-- Mobile menu (hidden by default) -->
-    <div class="md:hidden bg-white shadow-md">
+    <div id="mobile-menu" class="md:hidden bg-white shadow-md hidden">
         <div class="px-6 py-4 space-y-4">
             <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Accueil</a>
             <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Notre Activités</a>
@@ -91,6 +90,7 @@
                 In</a>
         </div>
     </div>
+
 
     <!-- Hero Section -->
     <section class="relative h-screen bg-cover bg-center flex items-center justify-center text-white"
@@ -109,7 +109,8 @@
     <section class="py-20 bg-gray-100">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold text-green-800 mb-12">Sports Disponibles</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Grid responsive : 1 colonne sur petits écrans, 3 sur écrans moyens -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
                 <!-- Football -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
@@ -136,40 +137,50 @@
         </div>
     </section>
 
+
     <!-- Pourquoi Nous Choisir ? -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-extrabold text-green-800 mb-12">Pourquoi Nous Choisir ?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Grid responsive : 1 colonne sur petits écrans, 2 sur écrans moyens, 3 sur grands écrans -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+                <!-- Réservation Facile -->
                 <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
                     <div class="mb-6 text-green-700 text-3xl">
                         <i class="fas fa-calendar-check"></i>
                     </div>
                     <h3 class="text-2xl font-semibold text-green-800 mb-4">Réservation Facile</h3>
-                    <p class="text-gray-700 leading-relaxed">Réservez en quelques clics, sans complications. Une interface simple et intuitive pour une expérience optimale.</p>
+                    <p class="text-gray-700 leading-relaxed">Réservez en quelques clics, sans complications. Une
+                        interface simple et intuitive pour une expérience optimale.</p>
                 </div>
+                <!-- Terrains de Qualité -->
                 <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
                     <div class="mb-6 text-green-700 text-3xl">
                         <i class="fas fa-futbol"></i>
                     </div>
                     <h3 class="text-2xl font-semibold text-green-800 mb-4">Terrains de Qualité</h3>
-                    <p class="text-gray-700 leading-relaxed">Profitez de terrains modernes, parfaitement entretenus pour garantir un jeu agréable à chaque réservation.</p>
+                    <p class="text-gray-700 leading-relaxed">Profitez de terrains modernes, parfaitement entretenus pour
+                        garantir un jeu agréable à chaque réservation.</p>
                 </div>
+                <!-- Support Rapide -->
                 <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
                     <div class="mb-6 text-green-700 text-3xl">
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3 class="text-2xl font-semibold text-green-800 mb-4">Support Rapide</h3>
-                    <p class="text-gray-700 leading-relaxed">Notre équipe est à votre disposition pour vous aider à tout moment, assurant une assistance rapide et efficace.</p>
+                    <p class="text-gray-700 leading-relaxed">Notre équipe est à votre disposition pour vous aider à tout
+                        moment, assurant une assistance rapide et efficace.</p>
                 </div>
             </div>
         </div>
     </section>
 
+
     <!-- Témoignages -->
     <section class="py-20 bg-gradient-to-r from-gray-100 via-gray-200 to-white">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold text-green-800 mb-12">Témoignages</h2>
+            <!-- Grille responsive : 1 colonne sur petits écrans, 2 sur écrans moyens, 3 sur écrans larges, 4 sur très grands écrans -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 <!-- Premier témoignage -->
                 <blockquote
@@ -217,8 +228,6 @@
         </div>
     </section>
 
-
-
     <!-- Appel à l'Action -->
     <section class="py-20 bg-green-700 text-white text-center">
         <h2 class="text-4xl font-bold mb-6">Prêt à Réserver ?</h2>
@@ -231,15 +240,14 @@
 
     <!-- Footer -->
     <footer class="bg-black py-10">
-        <div class="max-w-screen-xl mx-auto flex justify-between items-start space-x-10">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
             <!-- Logo and Social Links -->
-            <div class="flex items-center w-1/4">
-                <img src="https://dashboard.codeparrot.ai/api/image/Z7H0C-epongUSRrO/item-→-l.png" alt="GSP Logo"
-                    class="w-48 h-auto">
+            <div class="flex items-center justify-center mb-6 md:mb-0"> <!-- Ajout de justify-center -->
+                <img src="" alt="GSP Logo" class="w-48 h-auto">
             </div>
 
             <!-- Address Section -->
-            <div class="w-1/4">
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
                 <h3 class="text-xl font-semibold mb-3 text-white">Adresse Paris</h3>
                 <p class="text-gray-300 text-sm leading-relaxed">123 Avenue des Champs-Élysées, 75008 Paris, France.</p>
                 <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Téléphone</h3>
@@ -247,7 +255,7 @@
             </div>
 
             <!-- Contact Section -->
-            <div class="w-1/4">
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
                 <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
                 <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
                 <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
@@ -259,9 +267,10 @@
             </div>
 
             <!-- Social Media Section -->
-            <div class="w-1/4">
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
                 <h3 class="text-xl font-semibold mb-3 text-white">Suivez-nous sur les Réseaux Sociaux</h3>
-                <div class="flex space-x-6">
+                <div class="grid grid-cols-4 gap-6 justify-center">
+                    <!-- Ajout de justify-center pour centrer les icônes -->
                     <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
                         <i class="fab fa-facebook-f text-2xl"></i>
                     </a>
@@ -283,3 +292,23 @@
             <p>© Tous droits réservés.</p>
         </div>
     </footer>
+
+
+    <script>
+        // Sélectionner le bouton burger et le menu mobile
+        const burgerBtn = document.getElementById("burger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        // Ajouter un événement pour ouvrir/fermer le menu
+        burgerBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden"); // Toggle la classe 'hidden' pour afficher/masquer le menu
+        });
+
+        // Optionnel : ajouter un événement pour fermer le menu lorsqu'un lien est cliqué
+        const menuLinks = mobileMenu.querySelectorAll("a");
+        menuLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden"); // Fermer le menu lorsqu'un lien est cliqué
+            });
+        });
+    </script>
