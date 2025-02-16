@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Terrain de Football</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="bg-white shadow-md">
+        <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Logo -->
+            <a href="#">
+                <img src="https://dashboard.codeparrot.ai/api/image/Z7Hmp49nxTWt8i-Z/link-→-l.png" alt="Logo"
+                    width="200" height="53.5">
+            </a>
+
+            <!-- Menu de navigation -->
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition">Accueil</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition">Notre Activités</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition">Réservation</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition">About</a>
+                <a href="#" class="font-medium text-gray-700 hover:text-green-600 transition">Contact</a>
+            </div>
+
+            <!-- Boutons Sign In et Sign Up -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#"
+                    class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
+                    In</a>
+                <a href="#"
+                    class="bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-800 transition">Sign
+                    Up</a>
+            </div>
+
+            <!-- Menu burger pour mobile -->
+            <button
+                class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                aria-label="Menu">
+                <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div class="md:hidden bg-white shadow-md">
+        <div class="px-6 py-4 space-y-4">
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Accueil</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Notre Activités</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Réservation</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">About</a>
+            <a href="#" class="block text-gray-700 font-medium hover:text-green-600 transition">Contact</a>
+            <a href="#"
+                class="block text-white bg-black px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-800 transition">Sign
+                Up</a>
+            <a href="#"
+                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
+                In</a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center text-green-800 mb-12">Réservez votre terrain maintenant</h2>
+
+            <!-- Formulaire de réservation -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Détails du terrain -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Sélectionnez votre terrain</h3>
+                    <p class="text-gray-600 mb-8">Choisissez un terrain disponible pour votre prochaine partie !</p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label for="nom" class="block text-sm font-semibold text-gray-700">Nom Complet</label>
+                            <input type="text" id="nom"
+                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
+                                placeholder="Entrez votre nom Complet">
+                        </div>
+                        <!-- Nouveau champ : Numéro de téléphone -->
+                        <div>
+                            <label for="telephone" class="block text-sm font-semibold text-gray-700">Numéro de
+                                téléphone</label>
+                            <input type="tel" id="telephone"
+                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
+                                placeholder="Entrez votre numéro de téléphone">
+                        </div>
+
+                        <div>
+                            <label for="horaire" class="block text-sm font-semibold text-gray-700">Horaire</label>
+                            <input type="datetime-local" id="horaire"
+                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
+                        </div>
+
+                        <div>
+                            <label for="terrain" class="block text-sm font-semibold text-gray-700">Terrain</label>
+                            <select id="terrain"
+                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
+                                <option value="terrain1">Terrain 1 - 5 VS 5</option>
+                                <option value="terrain2">Terrain 2 - 7 VS 7</option>
+                                <option value="terrain3">Terrain 3 - 11 VS 11</option>
+                                <option value="terrain3">Padel </option>
+                            </select>
+                        </div>
+
+                        <!-- Nouveau champ : Choix de l'activité -->
+                        <div>
+                            <label for="activite" class="block text-sm font-semibold text-gray-700">Choisissez votre
+                                activité</label>
+                            <select id="activite"
+                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
+                                <option value="football">Football</option>
+                                <option value="padel">Padel</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Détails de la réservation -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Résumé de la réservation</h3>
+                    <p class="text-gray-600 mb-8">Vérifiez les informations avant de confirmer votre réservation.</p>
+
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Terrain Sélectionné</p>
+                            <p id="terrain-selection" class="text-lg font-bold text-gray-800">Terrain 1 - 5x5</p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Horaire Sélectionné</p>
+                            <p id="horaire-selection" class="text-lg font-bold text-gray-800">14:00 - 15:00</p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Nom</p>
+                            <p id="nom-selection" class="text-lg font-bold text-gray-800">John Doe</p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Numéro de téléphone</p>
+                            <p id="telephone-selection" class="text-lg font-bold text-gray-800">+212 000 000 000</p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Activité Choisie</p>
+                            <p id="activite-selection" class="text-lg font-bold text-gray-800">Football</p>
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full bg-green-700 text-white py-4 rounded-xl mt-8 hover:bg-green-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Confirmer la Réservation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Tarifs -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-green-800 mb-8">Nos tarifs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Tarif 1 -->
+                <div
+                    class="bg-gray-50 p-6 rounded-lg shadow-md text-center transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-green-700">Football 5 vs 5</h3>
+                    <p class="mt-4 text-gray-600"><span class="font-bold text-green-600">400 DH/h</span></p>
+                    <ul class="mt-4 space-y-2 text-gray-600">
+                        <li>Terrain en gazon</li>
+                        <li>Gilets 2 Equipes</li>
+                        <li>Acces vestiaires</li>
+                        <li>Douche</li>
+                    </ul>
+                </div>
+                <!-- Tarif 2 -->
+                <div
+                    class="bg-gray-50 p-6 rounded-lg shadow-md text-center transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-green-700">Football 7 vs 7</h3>
+                    <p class="mt-4 text-gray-600"><span class="font-bold text-green-600">700 DH/h</span></p>
+                    <ul class="mt-4 space-y-2 text-gray-600">
+                        <li>Terrain en gazon</li>
+                        <li>Gilets 2 Equipes</li>
+                        <li>Acces vestiaires</li>
+                        <li>Douche</li>
+                    </ul>
+                </div>
+                <!-- Tarif 4: Terrain 11 vs 11 -->
+                <div
+                    class="bg-gray-50 p-6 rounded-lg shadow-md text-center transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-green-700">Football 11 vs 11</h3>
+                    <p class="mt-4 text-gray-600"><span class="font-bold text-green-600">1200 DH/h</span></p>
+                    <ul class="mt-4 space-y-2 text-gray-600">
+                        <li>Terrain en gazon</li>
+                        <li>Gilets 2 Equipes</li>
+                        <li>Acces vestiaires</li>
+                        <li>Douche</li>
+                    </ul>
+                </div>
+                <!-- Tarif 3 -->
+                <div
+                    class="bg-gray-50 p-6 rounded-lg shadow-md text-center transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-xl font-semibold text-green-700">Padel</h3>
+                    <p class="mt-4 text-gray-600"><span class="font-bold text-green-600">250 DH/h</span></p>
+                    <ul class="mt-4 space-y-2 text-gray-600">
+                        <li>Acces Vestiaire</li>
+                        <li>Raquettes fournies</li>
+                        <li>Balles incluses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-10">
+        <div class="max-w-screen-xl mx-auto flex justify-between items-start space-x-10">
+            <!-- Logo and Social Links -->
+            <div class="flex items-center w-1/4">
+                <img src="https://dashboard.codeparrot.ai/api/image/Z7H0C-epongUSRrO/item-→-l.png" alt="GSP Logo"
+                    class="w-48 h-auto">
+            </div>
+
+            <!-- Address Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Adresse Paris</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">123 Avenue des Champs-Élysées, 75008 Paris, France.</p>
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Téléphone</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Contactez-nous : +33 1 23 45 67 89</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
+                <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
+                </p>
+
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Recrutement</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Envie de rejoindre notre équipe dynamique ?</p>
+                <p><a href="#" class="text-yellow-500 hover:underline">Voir les offres d'emploi</a></p>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="w-1/4">
+                <h3 class="text-xl font-semibold mb-3 text-white">Suivez-nous sur les Réseaux Sociaux</h3>
+                <div class="flex space-x-6">
+                    <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                    </a>
+                    <a href="https://www.twitter.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-linkedin-in text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 border-t border-gray-700 pt-6 text-sm text-center text-gray-400">
+            <p>© 2025, EXAMPLE COMPANY. Créé avec passion par WebDev Agency.</p>
+            <p>© Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
