@@ -1,17 +1,17 @@
 CREATE DATABASE gestion_terrain_sport;
 
 -- Table Utilisateur
-CREATE TABLE
-    utilisateur (
-        id SERIAL PRIMARY KEY,
-        login VARCHAR(50) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        role VARCHAR(50) NOT NULL,
-        cree_le TIMESTAMP
-        WITH
-            TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+CREATE TABLE utilisateur (
+    id SERIAL PRIMARY KEY, -- Utilisation de SERIAL pour l'auto-incrémentation de l'ID
+    login VARCHAR(50) NOT NULL UNIQUE, -- Login de l'utilisateur (unique)
+    password VARCHAR(255) NOT NULL,       
+    email VARCHAR(100) NOT NULL UNIQUE,   
+    role VARCHAR(50) NOT NULL,            
+    est_actif BOOLEAN DEFAULT TRUE,       
+    cree_le TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+    CONSTRAINT valid_role CHECK (role IN ('admin', 'utilisateur'))
+);
+
 
 -- Table Ville
 CREATE TABLE
