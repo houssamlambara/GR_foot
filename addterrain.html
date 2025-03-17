@@ -12,44 +12,88 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="min-h-screen flex flex-col md:flex-row">
-        <!-- Sidebar -->
-        <div class="w-full md:w-64 md:flex-shrink-0 bg-green-500 hidden md:block">
+
+    <div class="min-h-screen flex">
+        <!-- Sidebar mobile -->
+        <div class="md:hidden hidden flex-col bg-green-500" id="mobile-menu">
             <div class="flex flex-col flex-grow pt-5 overflow-y-auto">
                 <div class="flex items-center flex-shrink-0 px-4">
-                    <span class="text-xl font-semibold text-white">SportReserve Admin</span>
+                    <span class="text-2xl font-semibold text-white">SportReserve Admin</span>
                 </div>
-                <div class="mt-5 flex-1 flex flex-col">
-                    <nav class="flex-1 px-2 pb-4 space-y-1">
+                <div class="mt-6 flex-1 flex flex-col">
+                    <nav class="flex-1 px-2 pb-4 space-y-2">
                         <a href="dashboard.html"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md bg-green-700 text-white">
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
                         <a href="dashboardReservation.html"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-green-100 hover:bg-green-700">
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-green-100 hover:bg-green-700">
+                        <a href="addterrain.html"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-map-marker-alt mr-3"></i>
                             Terrains
                         </a>
                         <a href="#"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-green-100 hover:bg-green-700">
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-green-100 hover:bg-green-700">
+                        <a href="#"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
                         <a href="#"
-                            class="flex items-center px-2 py-2 text-sm font-medium rounded-md text-green-100 hover:bg-green-700">
-                            <i class="fas fa-cog mr-3"></i>
-                            Paramètres
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-sign-out-alt mr-3"></i>
+                            Déconnecter
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Desktop -->
+        <div class="hidden md:flex md:w-64 md:flex-col bg-green-500">
+            <div class="flex flex-col flex-grow pt-5 overflow-y-auto">
+                <div class="flex items-center flex-shrink-0 px-4">
+                    <span class="text-2xl font-semibold text-white">SportReserve Admin</span>
+                </div>
+                <div class="mt-6 flex-1 flex flex-col">
+                    <nav class="flex-1 px-2 pb-4 space-y-2">
+                        <a href="dashboard.html"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-home mr-3"></i>
+                            Tableau de bord
+                        </a>
+                        <a href="dashboardReservation.html"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-calendar-alt mr-3"></i>
+                            Réservations
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Terrains
+                        </a>
+                        <a href="tournois.html"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-trophy mr-3"></i>
+                            Tournois
+                        </a>
+                        <a href="utilisateur.html"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-users mr-3"></i>
+                            Utilisateurs
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
+                            <i class="fas fa-sign-out-alt mr-3"></i>
+                            Déconnecter
                         </a>
                     </nav>
                 </div>
@@ -59,18 +103,18 @@
         <!-- Main content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top navigation -->
-            <header class="bg-white shadow-sm">
+            <header class="bg-white shadow-md">
                 <div class="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                    <button class="md:hidden text-gray-500 focus:outline-none">
+                    <button class="md:hidden text-gray-500 focus:outline-none" id="menu-button">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="flex items-center">
                         <div class="relative">
                             <button class="flex text-sm rounded-full focus:outline-none">
-                                <img class="h-8 w-8 rounded-full" src="/api/placeholder/32/32" alt="Profile">
+                                <img class="h-8 w-8 rounded-full" src="./img/houssam.jpg" alt="Profile">
                             </button>
                         </div>
-                        <span class="ml-3 text-gray-700">Admin User</span>
+                        <span class="ml-3 text-gray-700">Admin</span>
                     </div>
                 </div>
             </header>
@@ -82,80 +126,93 @@
                 <!-- Form section for adding new field -->
                 <div class="mt-8">
                     <div class="bg-white shadow rounded-lg overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-200">
+                        <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-200">
                             <h3 class="text-lg font-medium text-gray-900">Ajouter un nouveau terrain</h3>
                         </div>
-                        <div class="p-6">
-                            <form class="space-y-6">
-                                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                                    <div class="sm:col-span-3">
-                                        <label for="field_name" class="block text-sm font-medium text-gray-700">Nom du
-                                            terrain</label>
+                        <div class="p-4 sm:p-6">
+                            <form class="space-y-4 sm:space-y-6">
+                                <div class="grid grid-cols-1 gap-y-4 sm:gap-y-6 gap-x-4 sm:grid-cols-6">
+                                    <!-- Nom du terrain -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="field_name" class="block text-sm font-medium text-gray-700">
+                                            Nom du terrain
+                                        </label>
                                         <div class="mt-1">
                                             <input type="text" name="field_name" id="field_name"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
                                         </div>
                                     </div>
 
-                                    <div class="sm:col-span-3">
-                                        <label for="field_type" class="block text-sm font-medium text-gray-700">Type de
-                                            sport</label>
+                                    <!-- Type de sport -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="field_type" class="block text-sm font-medium text-gray-700">
+                                            Type de sport
+                                        </label>
                                         <div class="mt-1">
                                             <select id="field_type" name="field_type"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
                                                 <option>Football</option>
+                                                <option>Padel</option>
                                                 <option>Basketball</option>
                                                 <option>Tennis</option>
-                                                <option>Volleyball</option>
-                                                <option>Rugby</option>
-                                                <option>Handball</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="sm:col-span-3">
-                                        <label for="capacity" class="block text-sm font-medium text-gray-700">Capacité
-                                            (personnes)</label>
+                                    <!-- Capacité -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="capacity" class="block text-sm font-medium text-gray-700">
+                                            Capacité (personnes)
+                                        </label>
                                         <div class="mt-1">
                                             <input type="number" name="capacity" id="capacity"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
                                         </div>
                                     </div>
 
-                                    <div class="sm:col-span-3">
-                                        <label for="price" class="block text-sm font-medium text-gray-700">Prix par
-                                            heure (€)</label>
+                                    <!-- Prix -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="price" class="block text-sm font-medium text-gray-700">
+                                            Prix par heure (€)
+                                        </label>
                                         <div class="mt-1">
                                             <input type="number" name="price" id="price"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
                                         </div>
                                     </div>
 
-                                    <div class="sm:col-span-6">
-                                        <label for="description"
-                                            class="block text-sm font-medium text-gray-700">Description</label>
+                                    <!-- Description -->
+                                    <div class="col-span-1 sm:col-span-6">
+                                        <label for="description" class="block text-sm font-medium text-gray-700">
+                                            Description
+                                        </label>
                                         <div class="mt-1">
                                             <textarea id="description" name="description" rows="3"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"></textarea>
                                         </div>
-                                        <p class="mt-2 text-sm text-gray-500">Brève description des caractéristiques du
-                                            terrain.</p>
+                                        <p class="mt-2 text-xs sm:text-sm text-gray-500">
+                                            Brève description des caractéristiques du terrain.
+                                        </p>
                                     </div>
 
-                                    <div class="sm:col-span-6">
-                                        <label class="block text-sm font-medium text-gray-700">Photo du terrain</label>
+                                    <!-- Upload photo -->
+                                    <div class="col-span-1 sm:col-span-6">
+                                        <label class="block text-sm font-medium text-gray-700">
+                                            Photo du terrain
+                                        </label>
                                         <div
-                                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                            class="mt-1 flex justify-center px-4 sm:px-6 pt-4 sm:pt-5 pb-4 sm:pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                             <div class="space-y-1 text-center">
-                                                <i class="fas fa-upload text-gray-400 text-3xl"></i>
-                                                <div class="flex text-sm text-gray-600">
+                                                <i class="fas fa-upload text-gray-400 text-2xl sm:text-3xl"></i>
+                                                <div
+                                                    class="flex flex-col sm:flex-row text-sm text-gray-600 justify-center">
                                                     <label for="file-upload"
                                                         class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
                                                         <span>Télécharger un fichier</span>
                                                         <input id="file-upload" name="file-upload" type="file"
                                                             class="sr-only">
                                                     </label>
-                                                    <p class="pl-1">ou glisser-déposer</p>
+                                                    <p class="sm:pl-1 mt-1 sm:mt-0">ou glisser-déposer</p>
                                                 </div>
                                                 <p class="text-xs text-gray-500">PNG, JPG, GIF jusqu'à 10MB</p>
                                             </div>
@@ -163,13 +220,15 @@
                                     </div>
                                 </div>
 
-                                <div class="flex justify-end">
+                                <!-- Buttons -->
+                                <div
+                                    class="flex flex-col-reverse sm:flex-row sm:justify-end space-y-2 space-y-reverse sm:space-y-0 sm:space-x-3 mt-4">
                                     <button type="button"
-                                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                        class="w-full sm:w-auto bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                         Annuler
                                     </button>
                                     <button type="submit"
-                                        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                        class="w-full sm:w-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                         Enregistrer
                                     </button>
                                 </div>
@@ -234,6 +293,30 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Carte pour chaque terrain (mobile) -->
+                            <div class="p-4">
+                                <div class="flex items-center mb-2">
+                                    <!-- Image à gauche -->
+                                    <img src="./img/tennis.jpg" alt="Photo du terrain"
+                                        class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md mr-4">
+                                    <!-- Texte à droite -->
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">Tennis</h4>
+                                        <p class="text-sm text-gray-700"><span class="font-medium">Type:</span> Tennis
+                                        </p>
+                                        <p class="text-sm text-gray-700"><span class="font-medium">Capacité:</span> 4
+                                        </p>
+                                        <p class="text-sm text-gray-700"><span class="font-medium">Prix:</span> 30€</p>
+                                        <div class="mt-2 flex gap-2">
+                                            <button
+                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
+                                            <button
+                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -256,7 +339,7 @@
                                         Capacité</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Prix (€)</th>
+                                        Prix par heure(€)</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions</th>
@@ -299,14 +382,44 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="py-2 px-4">
+                                        <img src="./img/tennis.jpg" alt="Photo du terrain"
+                                            class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-md">
+                                    </td>
+                                    <td class="py-2 px-4">Tennis</td>
+                                    <td class="py-2 px-4">Tennis</td>
+                                    <td class="py-2 px-4">4</td>
+                                    <td class="py-2 px-4">30€</td>
+                                    <td class="py-2 px-4">
+                                        <div class="flex flex-col sm:flex-row gap-2 justify-start">
+                                            <button
+                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
+                                            <button
+                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
             </main>
+
         </div>
     </div>
+    <script>
+        // Récupérer les éléments du bouton et du menu mobile
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('mobile-menu');
+
+        // Écouter le clic sur le bouton
+        menuButton.addEventListener('click', () => {
+            // Basculer la visibilité du menu mobile
+            sidebar.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>
