@@ -109,27 +109,37 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-l
     <!-- Main Content -->
     <main class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
         <div class="max-w-screen-xl mx-auto px-4">
-            <!-- Filtrage des Activités -->
-            <div class="text-center mb-8">
-                <div class="px-4 overflow-x-auto">
-                    <div class="inline-flex space-x-4 whitespace-nowrap">
-                        <!-- Bouton ALL -->
-                        <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                            data-filter="all">ALL</button>
-                        <!-- Bouton FOOTBALL -->
-                        <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                            data-filter="football">FOOTBALL</button>
-                        <!-- Bouton PADEL -->
-                        <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                            data-filter="padel">PADEL</button>
-                        <!-- Bouton TENNIS -->
-                        <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                            data-filter="tennis">TENNIS</button>
-                        <!-- Bouton BASKETBALL -->
-                        <button class="filter-btn bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                            data-filter="basketball">BASKETBALL</button>
-                    </div>
-                </div>
+            <!-- Section de Filtrage -->
+            <div class="flex flex-wrap justify-center space-x-4 mb-8">
+                <!-- Filtrage par Activité -->
+                <select id="sportFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                    <option value="">Toutes les Activités</option>
+                    <option value="football">Football</option>
+                    <option value="padel">Padel</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="basketball">Basketball</option>
+                </select>
+
+                <!-- Filtrage par Région -->
+                <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                    <option value="">Toutes les Régions</option>
+                    <option value="region1">Région 1</option>
+                    <option value="region2">Région 2</option>
+                </select>
+
+                <!-- Filtrage par Ville -->
+                <select id="cityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                    <option value="">Toutes les Villes</option>
+                    <option value="ville1">Ville 1</option>
+                    <option value="ville2">Ville 2</option>
+                </select>
+
+                <!-- Filtrage par Disponibilité -->
+                <select id="availabilityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                    <option value="">Toutes les Disponibilités</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="complet">Complet</option>
+                </select>
             </div>
 
             <!-- Cards Grid -->
@@ -489,6 +499,7 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-l
             <p>© Tous droits réservés.</p>
         </div>
     </footer>
+
     <script>
         // Sélectionner le bouton burger et le menu mobile
         const burgerBtn = document.getElementById("burger-btn");
@@ -507,27 +518,38 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-l
             });
         });
 
-        // Sélection de tous les boutons de filtrage
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        // Sélection de toutes les cartes d'activités
-        const activityCards = document.querySelectorAll('.activity-card');
+        document.addEventListener("DOMContentLoaded", function () {
+            const sportSelect = document.getElementById("sportFilter");
+            const regionSelect = document.getElementById("regionFilter");
+            const citySelect = document.getElementById("cityFilter");
+            const availabilitySelect = document.getElementById("availabilityFilter");
 
-        // Ajout d'un événement de clic à chaque bouton
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filter = button.getAttribute('data-filter');
+            function applyFilters() {
+                const selectedSport = sportSelect.value;
+                const selectedRegion = regionSelect.value;
+                const selectedCity = citySelect.value;
+                const selectedAvailability = availabilitySelect.value;
 
-                // Affichage des cartes selon le filtre
-                activityCards.forEach(card => {
-                    if (filter === 'all') {
-                        card.style.display = 'block'; // Affiche tout
-                    } else {
-                        card.style.display = card.classList.contains(filter) ? 'block' : 'none';
-                    }
+                document.querySelectorAll(".activity-card").forEach(card => {
+                    const sport = card.getAttribute("data-sport");
+                    const region = card.getAttribute("data-region");
+                    const city = card.getAttribute("data-city");
+                    const availability = card.getAttribute("data-availability");
+
+                    const matchesSport = !selectedSport || sport === selectedSport;
+                    const matchesRegion = !selectedRegion || region === selectedRegion;
+                    const matchesCity = !selectedCity || city === selectedCity;
+                    const matchesAvailability = !selectedAvailability || availability === selectedAvailability;
+
+                    card.style.display = matchesSport && matchesRegion && matchesCity && matchesAvailability ? "block" : "none";
                 });
-            });
-        });
+            }
 
+            sportSelect.addEventListener("change", applyFilters);
+            regionSelect.addEventListener("change", applyFilters);
+            citySelect.addEventListener("change", applyFilters);
+            availabilitySelect.addEventListener("change", applyFilters);
+        });
     </script>
 </body>
 
