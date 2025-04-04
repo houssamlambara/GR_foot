@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Activités - Green Sports Park</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Ajout d'un fond de page léger et d'animations */
+        body {
+            background: linear-gradient(to right, #f0f4f8, #e4e7eb);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Boutons animés */
+        .btn:hover {
+            transition: all 0.3s ease;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation pour les cartes */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="bg-white shadow-md">
+        <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
+            <!-- Logo -->
+            <a href="#">
+                <img src="" alt="Logo" width="200" height="53.5">
+            </a>
+
+            <!-- Menu de navigation -->
+            <div class="hidden md:flex space-x-6">
+                <a href="/index" class="font-medium text-gray-700 hover:text-green-400 transition">Accueil</a>
+                <a href="/activiter" class="font-medium text-gray-700 hover:text-green-400 transition">Notre
+                    Activités</a>
+                <a href="/reservation"
+                    class="font-medium text-gray-700 hover:text-green-400 transition">Réservation</a>
+                <a href="/tournois" class="font-medium text-gray-700 hover:text-green-400 transition">Tournois</a>
+                <a href="/about" class="font-medium text-gray-700 hover:text-green-400 transition">About</a>
+                <a href="/contact" class="font-medium text-gray-700 hover:text-green-400 transition">Contact</a>
+            </div>
+
+            <!-- Boutons Sign In et Sign Up -->
+            <div class="hidden md:flex space-x-4">
+                <a href="/signin"
+                    class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
+                    In</a>
+                <a href="/signin"
+                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Sign
+                    Up</a>
+            </div>
+
+            <!-- Menu burger pour mobile -->
+            <button id="burger-btn" class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300
+focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-label="Menu">
+                <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="md:hidden bg-white shadow-md hidden absolute z-50 top-16 left-0 right-0">
+        <div class="px-6 py-4 space-y-4">
+            <a href="/index" class="block text-gray-700 font-medium hover:text-green-400 transition">Accueil</a>
+            <a href="/activiter" class="block text-gray-700 font-medium hover:text-green-400 transition">Notre
+                Activités</a>
+            <a href="/reservation"
+                class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
+            <a href="/tournois"
+                class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
+            <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
+            <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
+            <a href="./signin"
+                class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
+                Up</a>
+            <a href="./signin"
+                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
+                In</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen bg-cover bg-center flex items-center justify-center text-white"
+        style="background-image: url('img/11vs11.png');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative text-center">
+            <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Réservez Votre Terrain de Sport</h1>
+            <p class="text-xl mb-6 drop-shadow-md">Football, Padel et bien plus... À portée de clic !</p>
+            <a href="#reservation"
+                class="inline-block px-10 py-4 bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white font-semibold rounded-full shadow-md transition duration-300">Explorer
+                Maintenant</a>
+        </div>
+    </section>
+
+    <!-- Sports Disponibles Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2
+                class="text-4xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-green-500 mb-16">
+                Sports Disponibles</h2>
+            <!-- Grid responsive : 1 colonne sur petits écrans, 3 sur écrans moyens -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+                <!-- Football -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <img class="w-full h-48 object-cover rounded-md mb-6" src="img/11vs11.png" alt="Football">
+                    <h3 class="text-2xl font-semibold text-green-700 mb-3">Football</h3>
+                    <p class="text-gray-600">Réservez un terrain pour un match entre amis ou une compétition amateur.
+                    </p>
+                </div>
+                <!-- Tennis -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <img class="w-full h-48 object-cover rounded-md mb-6" src="img/tennis.jpg" alt="Tennis">
+                    <h3 class="text-2xl font-semibold text-green-700 mb-3">Tennis</h3>
+                    <p class="text-gray-600">Envie de perfectionner votre coup droit ? Réservez notre terrain de tennis
+                        et profitez d’un jeu dynamique dans un cadre idéal !</p>
+                </div>
+                <!-- Padel -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <img class="w-full h-48 object-cover rounded-md mb-6" src="img/padel.png" alt="Padel">
+                    <h3 class="text-2xl font-semibold text-green-700 mb-3">Padel</h3>
+                    <p class="text-gray-600">Découvrez le padel, un sport fun et dynamique pour tous les âges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Pourquoi Nous Choisir ? -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-green-500 mb-16">Pourquoi Nous Choisir ?</h2>
+            <!-- Grid responsive : 1 colonne sur petits écrans, 2 sur écrans moyens, 3 sur grands écrans -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+                <!-- Réservation Facile -->
+                <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
+                    <div class="mb-6 text-green-700 text-3xl">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-green-800 mb-4">Réservation Facile</h3>
+                    <p class="text-gray-700 leading-relaxed">Réservez en quelques clics, sans complications. Une
+                        interface simple et intuitive pour une expérience optimale.</p>
+                </div>
+                <!-- Terrains de Qualité -->
+                <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
+                    <div class="mb-6 text-green-700 text-3xl">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-green-800 mb-4">Terrains de Qualité</h3>
+                    <p class="text-gray-700 leading-relaxed">Profitez de terrains modernes, parfaitement entretenus pour
+                        garantir un jeu agréable à chaque réservation.</p>
+                </div>
+                <!-- Support Rapide -->
+                <div class="p-8 bg-white rounded-lg shadow-lg transform transition hover:scale-105 hover:shadow-xl">
+                    <div class="mb-6 text-green-700 text-3xl">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-green-800 mb-4">Support Rapide</h3>
+                    <p class="text-gray-700 leading-relaxed">Notre équipe est à votre disposition pour vous aider à tout
+                        moment, assurant une assistance rapide et efficace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Témoignages -->
+    <section class="py-20 bg-gradient-to-r from-gray-100 via-gray-200 to-white">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-green-500 mb-16">Témoignages</h2>
+            <!-- Grille responsive : 1 colonne sur petits écrans, 2 sur écrans moyens, 3 sur écrans larges, 4 sur très grands écrans -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Premier témoignage -->
+                <blockquote
+                    class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="flex justify-center mb-6">
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            src="https://randomuser.me/api/portraits/men/11.jpg" alt="Jean Dupont">
+                    </div>
+                    <p class="text-lg italic text-gray-700">"Excellent service, réservation rapide et efficace !"</p>
+                    <footer class="mt-6 text-green-700 font-semibold">- Jean Dupont</footer>
+                </blockquote>
+                <!-- Deuxième témoignage -->
+                <blockquote
+                    class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="flex justify-center mb-6">
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            src="https://randomuser.me/api/portraits/women/11.jpg" alt="Marie Leclerc">
+                    </div>
+                    <p class="text-lg italic text-gray-700">"Des terrains de qualité et un site facile à utiliser."</p>
+                    <footer class="mt-6 text-green-700 font-semibold">- Marie Leclerc</footer>
+                </blockquote>
+                <!-- Troisième témoignage -->
+                <blockquote
+                    class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="flex justify-center mb-6">
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            src="https://randomuser.me/api/portraits/men/12.jpg" alt="Pierre Martin">
+                    </div>
+                    <p class="text-lg italic text-gray-700">"Facilité de réservation et une expérience géniale. À
+                        recommander!"</p>
+                    <footer class="mt-6 text-green-700 font-semibold">- Pierre Martin</footer>
+                </blockquote>
+                <!-- Quatrième témoignage -->
+                <blockquote
+                    class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                    <div class="flex justify-center mb-6">
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            src="https://randomuser.me/api/portraits/women/12.jpg" alt="Sophie Dupuis">
+                    </div>
+                    <p class="text-lg italic text-gray-700">"Le site est super intuitif et les terrains sont top. Je
+                        reviendrai !"</p>
+                    <footer class="mt-6 text-green-700 font-semibold">- Sophie Dupuis</footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-10">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+            <!-- Logo and Social Links -->
+            <div class="flex items-center justify-center mb-6 md:mb-0"> <!-- Ajout de justify-center -->
+                <img src="" alt="GSP Logo" class="w-48 h-auto">
+            </div>
+
+            <!-- Address Section -->
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
+                <h3 class="text-xl font-semibold mb-3 text-white">Adresse Paris</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">123 Avenue des Champs-Élysées, 75008 Paris, France.</p>
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Téléphone</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Contactez-nous : +33 1 23 45 67 89</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
+                <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
+                <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
+                </p>
+
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Recrutement</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Envie de rejoindre notre équipe dynamique ?</p>
+                <p><a href="#" class="text-yellow-500 hover:underline">Voir les offres d'emploi</a></p>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
+                <h3 class="text-xl font-semibold mb-3 text-white">Suivez-nous sur les Réseaux Sociaux</h3>
+                <div class="grid grid-cols-4 gap-6 justify-center">
+                    <!-- Ajout de justify-center pour centrer les icônes -->
+                    <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                    </a>
+                    <a href="https://www.twitter.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                        <i class="fab fa-linkedin-in text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 border-t border-gray-700 pt-6 text-sm text-center text-gray-400">
+            <p>© 2025, EXAMPLE COMPANY. Créé avec passion par WebDev Agency.</p>
+            <p>© Tous droits réservés.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Sélectionner le bouton burger et le menu mobile
+        const burgerBtn = document.getElementById("burger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        // Ajouter un événement pour ouvrir/fermer le menu
+        burgerBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden"); // Toggle la classe 'hidden' pour afficher/masquer le menu
+        });
+
+        // Optionnel : ajouter un événement pour fermer le menu lorsqu'un lien est cliqué
+        const menuLinks = mobileMenu.querySelectorAll("a");
+        menuLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden"); // Fermer le menu lorsqu'un lien est cliqué
+            });
+        });
+    </script>
