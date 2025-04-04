@@ -1,77 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
+@extends('layout.header')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous - Réservation de Terrain de Football</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
+@section('title', 'Réservation de Terrain de Football')
 
-<body>
-    <!-- Navbar -->
-    <header class="bg-white shadow-md">
-        <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
-            <!-- Logo -->
-            <a href="#">
-                <img src="" alt="Logo" width="200" height="53.5">
-            </a>
-
-            <!-- Menu de navigation -->
-            <div class="hidden md:flex space-x-6">
-                <a href="/index" class="font-medium text-gray-700 hover:text-green-400 transition">Accueil</a>
-                <a href="/activiter" class="font-medium text-gray-700 hover:text-green-400 transition">Notre
-                    Activités</a>
-                <a href="/reservation" class="font-medium text-gray-700 hover:text-green-400 transition">Réservation</a>
-                <a href="/tournois" class="font-medium text-gray-700 hover:text-green-400 transition">Tournois</a>
-                <a href="/about" class="font-medium text-gray-700 hover:text-green-400 transition">About</a>
-                <a href="/contact" class="font-medium text-gray-700 hover:text-green-400 transition">Contact</a>
-            </div>
-
-            <!-- Boutons Sign In et Sign Up -->
-            <div class="hidden md:flex space-x-4">
-                <a href="/signin"
-                    class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
-                    In</a>
-                <a href="/signin"
-                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Sign
-                    Up</a>
-            </div>
-
-            <!-- Menu burger pour mobile -->
-            <button id="burger-btn"
-                class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300
-focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                aria-label="Menu">
-                <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
-                </svg>
-            </button>
-        </nav>
-    </header>
-
-    <!-- Mobile menu (hidden by default) -->
-    <div id="mobile-menu" class="md:hidden bg-white shadow-md hidden absolute z-50 top-16 left-0 right-0">
-        <div class="px-6 py-4 space-y-4">
-            <a href="/index" class="block text-gray-700 font-medium hover:text-green-400 transition">Accueil</a>
-            <a href="/activiter" class="block text-gray-700 font-medium hover:text-green-400 transition">Notre
-                Activités</a>
-            <a href="/reservation"
-                class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
-            <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
-            <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
-            <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
-            <a href="./signin"
-                class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
-                Up</a>
-            <a href="./signin"
-                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
-                In</a>
-        </div>
-    </div>
+@section('content')
 
     <!-- Main Content -->
     <div class="container mx-auto py-16 px-6 flex justify-center">
@@ -152,8 +83,7 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     <!-- Card 3 : Tournoi de Padel -->
                     <div
                         class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-                        <img src="./img/padel.png" alt="Tournoi de Padel"
-                            class="w-full h-40 object-cover rounded-xl mb-4">
+                        <img src="./img/padel.png" alt="Tournoi de Padel" class="w-full h-40 object-cover rounded-xl mb-4">
                         <div class="flex justify-between items-start mb-4">
                             <h3 class="text-xl font-semibold text-gray-800">Tournoi de Padel</h3>
                             <span
@@ -227,22 +157,22 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
 
                     <!-- Card 3 : Tournoi de Badminton -->
                     <!-- <div class="bg-white p-8 rounded-2xl shadow-lg transition-all duration-300 border border-gray-100">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-semibold text-gray-800">Tournoi de Badminton</h3>
-                            <span
-                                class="inline-block px-4 py-1 bg-gray-500 text-white text-xs rounded-full shadow-sm">Terminé</span>
-                        </div>
-                        <div class="space-y-3 mb-2">
-                            <p class="flex items-center text-gray-600 justify-center">
-                                <i class="far fa-calendar-alt mr-2 text-gray-500"></i>
-                                <span>5 Février 2025</span>
-                            </p>
-                            <p class="flex items-center text-gray-600 justify-center">
-                                <i class="fas fa-trophy mr-2 text-yellow-500"></i>
-                                <span>Équipe gagnante : Les Faucons</span>
-                            </p>
-                        </div>
-                    </div> -->
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-semibold text-gray-800">Tournoi de Badminton</h3>
+                                <span
+                                    class="inline-block px-4 py-1 bg-gray-500 text-white text-xs rounded-full shadow-sm">Terminé</span>
+                            </div>
+                            <div class="space-y-3 mb-2">
+                                <p class="flex items-center text-gray-600 justify-center">
+                                    <i class="far fa-calendar-alt mr-2 text-gray-500"></i>
+                                    <span>5 Février 2025</span>
+                                </p>
+                                <p class="flex items-center text-gray-600 justify-center">
+                                    <i class="fas fa-trophy mr-2 text-yellow-500"></i>
+                                    <span>Équipe gagnante : Les Faucons</span>
+                                </p>
+                            </div>
+                        </div> -->
                 </div>
             </section>
         </div>
@@ -269,8 +199,7 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
                 <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
                 <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
-                <p><a href="mailto:contact@example.com"
-                        class="text-yellow-500 hover:underline">contact@example.com</a>
+                <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
                 </p>
 
                 <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Recrutement</h3>
@@ -320,6 +249,8 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             });
         });
     </script>
-</body>
+    </body>
 
-</html>
+    </html>
+
+@endsection

@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// MENU
+
 Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about']);
 Route::get('/activiter', [PageController::class, 'activiter']);
@@ -30,5 +32,3 @@ Route::get('/reservation', [PageController::class, 'reservation']);
 Route::get('/signin', [PageController::class, 'signin']);
 Route::get('/tournois', [PageController::class, 'tournois']);
 Route::get('/utilisateur', [PageController::class, 'utilisateur']);
-
-
