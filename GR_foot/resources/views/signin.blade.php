@@ -124,7 +124,8 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 class="relative z-10 bg-white py-8 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-gray-100 w-full max-w-md mb-12">
 
                 <!-- Formulaire de Connexion -->
-                <form id="signInForm" class="space-y-6">
+                <form method="POST" id="signInForm" class="space-y-6" action="{{url('/login')}}">
+                    @csrf
                     <div class="relative">
                         <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Adresse email</label>
                         <input id="email" name="email" type="email" required
@@ -159,7 +160,8 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 </form>
 
                 <!-- Formulaire d'Inscription -->
-                <form id="signUpForm" class="space-y-6 hidden">
+                <form method="POST" id="signUpForm" class="space-y-6 hidden" action="{{url('/register')}}">
+                    @csrf
                     <div class="relative">
                         <label for="signup-name" class="block text-sm font-bold text-gray-700 mb-2">Nom
                             complet</label>
@@ -171,9 +173,10 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     <div class="relative">
                         <label for="signup-email" class="block text-sm font-bold text-gray-700 mb-2">Adresse
                             email</label>
-                        <input id="signup-email" name="email" type="email" required
+                        <input id="signup-email" name="email" type="email" value="{{old('email')}}" required
                             class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
                             placeholder="Email">
+                            @error('email')<span>{{$message}}</span> @enderror
                     </div>
 
                     <!-- <div class="relative">
@@ -189,6 +192,7 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                         <input id="signup-password" name="password" type="password" required
                             class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
                             placeholder="Mot de passe">
+                            @error('password') <span>{{ $message }}</span> @enderror
                     </div>
 
                     <button type="submit"

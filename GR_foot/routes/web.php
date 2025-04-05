@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,20 @@ Route::get('/reservation', [PageController::class, 'reservation']);
 Route::get('/signin', [PageController::class, 'signin']);
 Route::get('/tournois', [PageController::class, 'tournois']);
 Route::get('/utilisateur', [PageController::class, 'utilisateur']);
+
+// REGISTER
+
+Route::get('/register', function(){
+    return view ('auth.register');
+})->name('register');
+
+Route::get('/login', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
