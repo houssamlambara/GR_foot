@@ -19,8 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// MENU
-
+// Routes principales
 Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about']);
 Route::get('/activiter', [PageController::class, 'activiter']);
@@ -34,19 +33,19 @@ Route::get('/signin', [PageController::class, 'signin']);
 Route::get('/tournois', [PageController::class, 'tournois']);
 Route::get('/utilisateur', [PageController::class, 'utilisateur']);
 
-// REGISTER
+// Routes pour l'admin et utilisateur
+Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+Route::get('/reservation', [PageController::class, 'activiter'])->name('activiter')->middleware('auth');
 
-Route::get('/register', function(){
-    return view ('auth.register');
+// Routes d'authentification
+Route::get('/register', function () {
+    return view('auth.register');
 })->name('register');
 
 Route::get('/login', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-

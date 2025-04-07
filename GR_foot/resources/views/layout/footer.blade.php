@@ -21,9 +21,7 @@
             <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
             </p>
 
-            <h3 class="text-xl font-semibold mb-3 mt-6 text-white">Recrutement</h3>
-            <p class="text-gray-300 text-sm leading-relaxed">Envie de rejoindre notre équipe dynamique ?</p>
-            <p><a href="#" class="text-yellow-500 hover:underline">Voir les offres d'emploi</a></p>
+           
         </div>
 
         <!-- Social Media Section -->
@@ -48,8 +46,7 @@
     </div>
 
     <div class="mt-10 border-t border-gray-700 pt-6 text-sm text-center text-gray-400">
-        <p>© 2025, EXAMPLE COMPANY. Créé avec passion par WebDev Agency.</p>
-        <p>© Tous droits réservés.</p>
+        <p>© 2025. Créé avec passion par WebDev Agency. Tous droits réservés.
     </div>
 </footer>
 </body>

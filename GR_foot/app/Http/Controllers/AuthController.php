@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,10 @@ class AuthController extends Controller
                 'name' => $validateData['name'],
                 'email' => $validateData['email'],
                 'password' => bcrypt($validateData['password']),
+                'role' => 'Utilisateur',
             ]);
+
+            Auth::login($user);
 
             return redirect()->route('index')->with('success', 'Inscription réussie ! Bienvenue.');
         } catch (\Exception $e) {
@@ -36,21 +40,31 @@ class AuthController extends Controller
             'password' => 'required|min:3',
         ]);
 
-        // Tentative de connexion
         if (Auth::attempt([
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
         ])) {
-            // Connexion réussie
-            return redirect()->route('dashboard')->with('success', 'Connexion réussie !');
+            $user = Auth::user();
+
+            if ($user->role == 'Admin') {
+                return redirect()->route('dashboard')->with('success', 'Connexion réussie ! Bienvenue Admin.');
+            } elseif ($user->role == 'Utilisateur') {
+                return redirect()->route('activiter')->with('success', 'Connexion réussie ! Bienvenue Utilisateur.');
+            }
+
+            return redirect()->route('index')->with('error', 'Rôle inconnu, veuillez contacter l\'administrateur.');
         } else {
-            // Erreur de connexion
             return back()->withErrors(['error' => 'Identifiants incorrects'])->withInput();
         }
     }
-    public function logout()
+
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return redirect()->route('login')->with('success', 'Déconnexion réussie.');
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'Vous avez été déconnecté.');
     }
 }
