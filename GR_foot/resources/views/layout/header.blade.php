@@ -54,6 +54,10 @@
             </div>
 
             <!-- Boutons Sign In et Sign Up -->
+            @auth
+            <a href="/signin"
+                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Log out</a>
+            @else
             <div class="hidden md:flex space-x-4">
                 <a href="/signin"
                     class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
@@ -62,6 +66,7 @@
                     class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Sign
                     Up</a>
             </div>
+            @endauth
 
             <!-- Menu burger pour mobile -->
             <button id="burger-btn"
@@ -87,12 +92,20 @@
             <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
             <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
             <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
+
+            @auth
+            <a href="/signin"
+            class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Log Out</a>
+            @else
             <a href="/signup"
                 class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
                 Up</a>
             <a href="/signin"
                 class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
                 In</a>
+                
+            @endauth
+            
         </div>
     </div>
 

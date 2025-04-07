@@ -22,29 +22,25 @@ Route::get('/', function () {
 // Routes principales
 Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about']);
-Route::get('/activiter', [PageController::class, 'activiter']);
+Route::get('/activiter', [PageController::class, 'activiter'])->name('activiter')->middleware('auth');
 Route::get('/addterrain', [PageController::class, 'addterrain']);
 Route::get('/addtounois', [PageController::class, 'addtounois']);
 Route::get('/contact', [PageController::class, 'contact']);
-Route::get('/dashboard', [PageController::class, 'dashboard']);
+Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::get('/dashboardReservation', [PageController::class, 'dashboardReservation']);
-Route::get('/reservation', [PageController::class, 'reservation']);
-Route::get('/signin', [PageController::class, 'signin']);
-Route::get('/tournois', [PageController::class, 'tournois']);
+Route::get('/reservation', [PageController::class, 'reservation'])->middleware("auth");
+Route::get('/signin', [PageController::class, 'signin'])->name('signin');
+Route::get('/tournois', [PageController::class, 'tournois'])->middleware('auth');
 Route::get('/utilisateur', [PageController::class, 'utilisateur']);
 
-// Routes pour l'admin et utilisateur
-Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard')->middleware('auth');
-Route::get('/reservation', [PageController::class, 'activiter'])->name('activiter')->middleware('auth');
-
-// Routes d'authentification
+// Register
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::get('/login', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+// Route::get('/login', function () {
+//     return view('dashboard');
+// })->middleware('auth')->name('dashboard');
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
