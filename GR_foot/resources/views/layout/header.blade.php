@@ -56,7 +56,7 @@
             <!-- Boutons Sign In et Sign Up -->
             @auth
             <a href="/signin"
-                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Log out</a>
+                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">LogOut</a>
             @else
             <div class="hidden md:flex space-x-4">
                 <a href="/signin"
