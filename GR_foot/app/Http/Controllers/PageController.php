@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Terrain;
 
 class PageController extends Controller
 {
@@ -15,11 +16,13 @@ class PageController extends Controller
     }
 
     public function activiter() {
-        return view('activiter');
+        $terrains = Terrain::all();
+        return view('activiter', compact('terrains'));
     }
 
     public function addterrain() {
-        return view('addterrain');
+        $terrains = Terrain::all();
+        return view('addterrain', compact('terrains'));
     }
 
     public function addtounois() {
