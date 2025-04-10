@@ -27,36 +27,39 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="#"
+                        <a href="{{ route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{ route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="#"
+                        <a href="{{ route('terrains.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="addtournois.html"
+                        <a href="{{ route('tournois.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{ route('utilisateurs.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
@@ -70,36 +73,39 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="dashboard.html"
+                        <a href="{{ route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{ route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="#"
+                        <a href="{{ route('terrains.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="addtournois.html"
+                        <a href="{{ route('tournois.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{ route('utilisateurs.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
@@ -128,6 +134,23 @@
             <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-gray-100">
                 <h1 class="text-2xl font-semibold text-gray-800">Gestion des terrains</h1>
 
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Erreur!</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- Form section for adding new field -->
                 <div class="mt-8">
                     <div class="bg-white shadow rounded-lg overflow-hidden">
@@ -135,69 +158,55 @@
                             <h3 class="text-lg font-medium text-gray-900">Ajouter un nouveau terrain</h3>
                         </div>
                         <div class="p-4 sm:p-6">
-                            <form class="space-y-4 sm:space-y-6">
+                            <form action="{{ route('terrains.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 sm:space-y-6">
+                                @csrf
                                 <div class="grid grid-cols-1 gap-y-4 sm:gap-y-6 gap-x-4 sm:grid-cols-6">
-                                    <!-- Nom du terrain -->
+                                    <!-- Type de terrain -->
                                     <div class="col-span-1 sm:col-span-3">
-                                        <label for="field_name" class="block text-sm font-medium text-gray-700">
-                                            Nom du terrain
+                                        <label for="type" class="block text-sm font-medium text-gray-700">
+                                            Type de terrain
                                         </label>
                                         <div class="mt-1">
-                                            <input type="text" name="field_name" id="field_name"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
-                                        </div>
-                                    </div>
-
-                                    <!-- Type de sport -->
-                                    <div class="col-span-1 sm:col-span-3">
-                                        <label for="field_type" class="block text-sm font-medium text-gray-700">
-                                            Type de sport
-                                        </label>
-                                        <div class="mt-1">
-                                            <select id="field_type" name="field_type"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
-                                                <option>Football</option>
-                                                <option>Padel</option>
-                                                <option>Basketball</option>
-                                                <option>Tennis</option>
-                                            </select>
+                                            <input type="text" name="type" id="type"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                placeholder="Ex: Football, Basketball, etc." required>
                                         </div>
                                     </div>
 
                                     <!-- Capacité -->
                                     <div class="col-span-1 sm:col-span-3">
-                                        <label for="capacity" class="block text-sm font-medium text-gray-700">
+                                        <label for="capacite" class="block text-sm font-medium text-gray-700">
                                             Capacité (personnes)
                                         </label>
                                         <div class="mt-1">
-                                            <input type="number" name="capacity" id="capacity"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
+                                            <input type="number" name="capacite" id="capacite"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                placeholder="Nombre de joueurs" required>
                                         </div>
                                     </div>
 
-                                    <!-- Prix -->
+                                    <!-- Tarif -->
                                     <div class="col-span-1 sm:col-span-3">
-                                        <label for="price" class="block text-sm font-medium text-gray-700">
-                                            Prix par heure (€)
+                                        <label for="tarif" class="block text-sm font-medium text-gray-700">
+                                            Tarif par heure (DH)
                                         </label>
                                         <div class="mt-1">
-                                            <input type="number" name="price" id="price"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md">
+                                            <input type="number" name="tarif" id="tarif"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                placeholder="Tarif en dirhams" required>
                                         </div>
                                     </div>
 
-                                    <!-- Description -->
-                                    <div class="col-span-1 sm:col-span-6">
-                                        <label for="description" class="block text-sm font-medium text-gray-700">
-                                            Description
+                                    <!-- Localisation -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="localisation" class="block text-sm font-medium text-gray-700">
+                                            Localisation
                                         </label>
                                         <div class="mt-1">
-                                            <textarea id="description" name="description" rows="3"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"></textarea>
+                                            <input type="text" name="localisation" id="localisation"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                placeholder="Adresse du terrain" required>
                                         </div>
-                                        <p class="mt-2 text-xs sm:text-sm text-gray-500">
-                                            Brève description des caractéristiques du terrain.
-                                        </p>
                                     </div>
 
                                     <!-- Upload photo -->
@@ -214,12 +223,12 @@
                                                     <label for="file-upload"
                                                         class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
                                                         <span>Télécharger un fichier</span>
-                                                        <input id="file-upload" name="file-upload" type="file"
-                                                            class="sr-only">
+                                                        <input id="file-upload" name="image" type="file"
+                                                            class="sr-only" accept="image/*">
                                                     </label>
                                                     <p class="sm:pl-1 mt-1 sm:mt-0">ou glisser-déposer</p>
                                                 </div>
-                                                <p class="text-xs text-gray-500">PNG, JPG, GIF jusqu'à 10MB</p>
+                                                <p class="text-xs text-gray-500">PNG, JPG, JPEG jusqu'à 2MB</p>
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +237,7 @@
                                 <!-- Buttons -->
                                 <div class="mt-6 flex justify-center">
                                     <button type="submit"
-                                        class="bg-gradient-to-r from-green-500 to-green-800 text-white px-6 py-2 rounded-md shadow-sm">Enregister</button>
+                                        class="bg-gradient-to-r from-green-500 to-green-800 text-white px-6 py-2 rounded-md shadow-sm">Enregistrer</button>
                                 </div>
                             </form>
                         </div>
@@ -244,77 +253,32 @@
                     <!-- Version mobile (carte) -->
                     <div class="block sm:hidden">
                         <div class="divide-y divide-gray-200">
+                            @foreach($terrains as $terrain)
                             <!-- Carte pour chaque terrain (mobile) -->
                             <div class="p-4">
                                 <div class="flex items-center mb-2">
                                     <!-- Image à gauche -->
-                                    <img src="./img/padel.png" alt="Photo du terrain"
-                                        class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md mr-4">
+                                    <div class="w-24 h-24 flex-shrink-0">
+                                        @if($terrain->image)
+                                            <img src="{{ asset('img/' . $terrain->image) }}" alt="Photo du terrain"
+                                                class="w-24 h-24 rounded object-cover">
+                                        @else
+                                            <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
+                                                class="w-24 h-24 rounded object-cover">
+                                        @endif
+                                    </div>
                                     <!-- Texte à droite -->
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-gray-900">Padel</h4>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Type:</span> Padel
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Capacité:</span> 22
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Prix:</span> 50€</p>
-                                        <div class="mt-2 flex gap-2">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{ $terrain->type }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ $terrain->localisation }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Carte pour chaque terrain (mobile) -->
-                            <div class="p-4">
-                                <div class="flex items-center mb-2">
-                                    <!-- Image à gauche -->
-                                    <img src="./img/11vs11.png" alt="Photo du terrain"
-                                        class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md mr-4">
-                                    <!-- Texte à droite -->
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-gray-900">11vs11</h4>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Type:</span> Football
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Capacité:</span> 11
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Prix:</span> 70€</p>
-                                        <div class="mt-2 flex gap-2">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Carte pour chaque terrain (mobile) -->
-                            <div class="p-4">
-                                <div class="flex items-center mb-2">
-                                    <!-- Image à gauche -->
-                                    <img src="./img/tennis.jpg" alt="Photo du terrain"
-                                        class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-md mr-4">
-                                    <!-- Texte à droite -->
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-gray-900">Tennis</h4>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Type:</span> Tennis
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Capacité:</span> 4
-                                        </p>
-                                        <p class="text-sm text-gray-700"><span class="font-medium">Prix:</span> 30€</p>
-                                        <div class="mt-2 flex gap-2">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -328,76 +292,63 @@
                                         Photo</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Nom du terrain</th>
-                                    <th
-                                        class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Type de sport</th>
+                                        Type de terrain</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Capacité</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Prix par heure(€)</th>
+                                        Tarif par heure(DH)</th>
+                                    <th
+                                        class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Localisation</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
+                                @foreach($terrains as $terrain)
                                 <tr>
                                     <td class="py-2 px-4">
-                                        <img src="./img/padel.png" alt="Photo du terrain"
-                                            class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-md">
+                                        <div class="flex items-center">
+                                            <div class="w-32 h-32 flex-shrink-0">
+                                                @if($terrain->image)
+                                                    <img src="{{ asset('img/' . $terrain->image) }}" alt="Photo du terrain"
+                                                        class="w-32 h-32 rounded object-cover">
+                                                @else
+                                                    <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
+                                                        class="w-32 h-32 rounded object-cover">
+                                                @endif
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    {{ $terrain->type }}
+                                                </div>
+                                                <div class="text-sm text-gray-500">
+                                                    {{ $terrain->localisation }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="py-2 px-4">Padel</td>
-                                    <td class="py-2 px-4">Padel</td>
-                                    <td class="py-2 px-4">22</td>
-                                    <td class="py-2 px-4">50€</td>
+                                    <td class="py-2 px-4">{{ $terrain->type }}</td>
+                                    <td class="py-2 px-4">{{ $terrain->capacite }}</td>
+                                    <td class="py-2 px-4">{{ $terrain->tarif }} DH</td>
+                                    <td class="py-2 px-4">{{ $terrain->localisation }}</td>
                                     <td class="py-2 px-4">
                                         <div class="flex flex-col sm:flex-row gap-2 justify-start">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                            <a href="{{ route('terrains.edit', $terrain->id) }}"
+                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</a>
+                                            <form action="{{ route('terrains.destroy', $terrain->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce terrain ?')"
+                                                    class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="py-2 px-4">
-                                        <img src="./img/11vs11.png" alt="Photo du terrain"
-                                            class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-md">
-                                    </td>
-                                    <td class="py-2 px-4">11vs11</td>
-                                    <td class="py-2 px-4">Football</td>
-                                    <td class="py-2 px-4">11</td>
-                                    <td class="py-2 px-4">70€</td>
-                                    <td class="py-2 px-4">
-                                        <div class="flex flex-col sm:flex-row gap-2 justify-start">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2 px-4">
-                                        <img src="./img/tennis.jpg" alt="Photo du terrain"
-                                            class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-md">
-                                    </td>
-                                    <td class="py-2 px-4">Tennis</td>
-                                    <td class="py-2 px-4">Tennis</td>
-                                    <td class="py-2 px-4">4</td>
-                                    <td class="py-2 px-4">30€</td>
-                                    <td class="py-2 px-4">
-                                        <div class="flex flex-col sm:flex-row gap-2 justify-start">
-                                            <button
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <button
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

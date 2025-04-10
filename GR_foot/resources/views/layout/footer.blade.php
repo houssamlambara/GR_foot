@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-black py-10">
+<footer class="bg-gray-900 py-10">
     <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         <!-- Logo and Social Links -->
         <div class="flex items-center justify-center mb-6 md:mb-0"> <!-- Ajout de justify-center -->
@@ -18,7 +18,7 @@
         <div class="text-center md:text-left"> <!-- Ajout de text-center pour mobile -->
             <h3 class="text-xl font-semibold mb-3 text-white">Contactez-nous</h3>
             <p class="text-gray-300 text-sm leading-relaxed">Des questions ? Nous sommes là pour vous aider.</p>
-            <p><a href="mailto:contact@example.com" class="text-yellow-500 hover:underline">contact@example.com</a>
+            <p><a href="mailto:contact@example.com" class="text-green-500 hover:underline">contact@example.com</a>
             </p>
 
            
