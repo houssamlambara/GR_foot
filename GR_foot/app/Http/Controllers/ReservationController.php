@@ -24,7 +24,14 @@ class ReservationController extends Controller
     public function create()
     {
         $terrains = Terrain::all();
-        return view('reservation', compact('terrains'));
+        $selectedTerrainId = request('terrain_id');
+        $selectedTerrain = null;
+        
+        if ($selectedTerrainId) {
+            $selectedTerrain = Terrain::find($selectedTerrainId);
+        }
+        
+        return view('reservation', compact('terrains', 'selectedTerrain'));
     }
 
     /**

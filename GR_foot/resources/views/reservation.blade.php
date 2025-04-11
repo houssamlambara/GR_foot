@@ -85,14 +85,21 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label for="terrain_id" class="block text-sm font-semibold text-gray-700">Terrain</label>
-                            <select id="terrain_id" name="terrain_id" required
-                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
+                        <div class="mb-4">
+                            <label for="terrain" class="block text-gray-700 text-sm font-bold mb-2">Terrain</label>
+                            <select name="terrain_id" id="terrain" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                <option value="">Sélectionnez un terrain</option>
                                 @foreach($terrains as $terrain)
-                                    <option value="{{ $terrain->id }}">{{ $terrain->nom }} - {{ $terrain->type }}</option>
+                                    <option value="{{ $terrain->id }}" {{ $selectedTerrain && $selectedTerrain->id == $terrain->id ? 'selected' : '' }}>
+                                        {{ $terrain->type }} - {{ $terrain->localisation }}
+                                    </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="montant" class="block text-gray-700 text-sm font-bold mb-2">Montant (DH)</label>
+                            <input type="number" name="montant" id="montant" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ $selectedTerrain ? $selectedTerrain->tarif : '' }}" required>
                         </div>
 
                         <!-- Choix de l'activité -->
@@ -106,9 +113,6 @@
                                 <option value="basketball">Basketball</option>
                             </select>
                         </div>
-
-                        <!-- Champ caché pour le montant -->
-                        <input type="hidden" id="montant" name="montant" value="0">
 
                         <button type="submit"
                             class="w-full bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white py-4 rounded-xl mt-8">
@@ -384,6 +388,17 @@
     </section>
 
     @include('layout.footer')
-    @endsection
+
+<script>
+    // Script pour mettre à jour le montant lorsqu'un terrain est sélectionné
+    document.getElementById('terrain').addEventListener('change', function() {
+        const terrainId = this.value;
+        if (terrainId) {
+            // Rediriger vers la même page avec le terrain_id en paramètre
+            window.location.href = '{{ route("reservation") }}?terrain_id=' + terrainId;
+        }
+    });
+</script>
+@endsection
 
 

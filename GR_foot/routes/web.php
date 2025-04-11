@@ -44,14 +44,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes pour la gestion des tournois
-Route::middleware(['auth', 'Admin'])->group(function () {
-    Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
-    Route::get('/tournois/create', [TournoiController::class, 'create'])->name('tournois.create');
-    Route::post('/tournois', [TournoiController::class, 'store'])->name('tournois.store');
-    Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');
-    Route::put('/tournois/{tournoi}', [TournoiController::class, 'update'])->name('tournois.update');
-    Route::delete('/tournois/{tournoi}', [TournoiController::class, 'destroy'])->name('tournois.destroy');
-});
+// Route::middleware(['auth', 'Admin'])->group(function () {
+//     Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
+//     Route::get('/tournois/create', [TournoiController::class, 'create'])->name('tournois.create');
+//     Route::post('/tournois', [TournoiController::class, 'store'])->name('tournois.store');
+//     Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');
+//     Route::put('/tournois/{tournoi}', [TournoiController::class, 'update'])->name('tournois.update');
+//     Route::delete('/tournois/{tournoi}', [TournoiController::class, 'destroy'])->name('tournois.destroy');
+// });
 
 // Routes pour la gestion des terrains (protégées pour les administrateurs)
 Route::middleware(['auth', 'Admin'])->group(function () {
@@ -81,9 +81,5 @@ Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'e
 Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
 Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
-// Route API pour récupérer le tarif d'un terrain
-Route::get('/api/terrains/{terrain}/tarif', function ($terrain) {
-    $terrain = \App\Models\Terrain::findOrFail($terrain);
-    return response()->json(['tarif' => $terrain->tarif]);
-});
+// La route API a été déplacée vers le fichier api.php
 
