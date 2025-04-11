@@ -168,7 +168,7 @@
                                         </label>
                                         <div class="mt-1">
                                             <input type="text" name="type" id="type"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
                                                 placeholder="Ex: Football, Basketball, etc." required>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@
                                         </label>
                                         <div class="mt-1">
                                             <input type="number" name="capacite" id="capacite"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
                                                 placeholder="Nombre de joueurs" required>
                                         </div>
                                     </div>
@@ -192,7 +192,7 @@
                                         </label>
                                         <div class="mt-1">
                                             <input type="number" name="tarif" id="tarif"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
                                                 placeholder="Tarif en dirhams" required>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@
                                         </label>
                                         <div class="mt-1">
                                             <input type="text" name="localisation" id="localisation"
-                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
                                                 placeholder="Adresse du terrain" required>
                                         </div>
                                     </div>
