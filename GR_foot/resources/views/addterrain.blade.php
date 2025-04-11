@@ -253,7 +253,7 @@
                     <!-- Version mobile (carte) -->
                     <div class="block sm:hidden">
                         <div class="divide-y divide-gray-200">
-                            @foreach($terrains as $terrain)
+                            @forelse($terrains as $terrain)
                             <!-- Carte pour chaque terrain (mobile) -->
                             <div class="p-4">
                                 <div class="flex items-center mb-2">
@@ -278,13 +278,17 @@
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="p-4 text-center text-gray-500">
+                                Aucun terrain n'a été ajouté pour le moment.
+                            </div>
+                            @endforelse
                         </div>
                     </div>
 
                     <!-- Version tablette/desktop (tableau) -->
                     <div class="hidden sm:block overflow-x-auto">
-                        <table class="min-w-full bg-white">
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr class="bg-gray-50">
                                     <th
@@ -307,8 +311,8 @@
                                         Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                @foreach($terrains as $terrain)
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse($terrains as $terrain)
                                 <tr>
                                     <td class="py-2 px-4">
                                         <div class="flex items-center">
@@ -320,14 +324,6 @@
                                                     <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
                                                         class="w-32 h-32 rounded object-cover">
                                                 @endif
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">
-                                                    {{ $terrain->type }}
-                                                </div>
-                                                <div class="text-sm text-gray-500">
-                                                    {{ $terrain->localisation }}
-                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -348,14 +344,18 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="py-4 text-center text-gray-500">
+                                        Aucun terrain n'a été ajouté pour le moment.
+                                    </td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </main>
-
         </div>
     </div>
     <script>
