@@ -42,7 +42,8 @@ class PageController extends Controller
     }
 
     public function reservation() {
-        return view('reservation');
+        $terrains = Terrain::all();
+        return view('reservation', compact('terrains'));
     }
 
     public function signin() {
