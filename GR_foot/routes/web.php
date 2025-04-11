@@ -6,6 +6,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\TournoiController;
 use App\Http\Controllers\UtilisateurController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/activiter', [PageController::class, 'activiter'])->name('activiter');
     Route::get('/addtounois', [PageController::class, 'addtounois']);
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboardReservation', [PageController::class, 'dashboardReservation'])->name('dashboardReservation');
+    Route::get('/dashboardreservation', [ReservationController::class, 'dashboard'])->name('dashboardreservation');
     Route::get('/tournois', [PageController::class, 'tournois']);
     Route::get('/addterrain', [PageController::class, 'addterrain'])->name('addterrain');
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateurs.index');
@@ -63,12 +64,26 @@ Route::middleware(['auth', 'Admin'])->group(function () {
 });
 
 // Routes pour la gestion des utilisateurs
-Route::middleware(['auth', 'Admin'])->group(function () {
-    Route::get('/utilisateurs', [UtilisateurController::class, 'index'])->name('utilisateurs.index');
-    Route::get('/utilisateurs/create', [UtilisateurController::class, 'create'])->name('utilisateurs.create');
-    Route::post('/utilisateurs', [UtilisateurController::class, 'store'])->name('utilisateurs.store');
-    Route::get('/utilisateurs/{utilisateur}/edit', [UtilisateurController::class, 'edit'])->name('utilisateurs.edit');
-    Route::put('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
-    Route::delete('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.destroy');
+// Route::middleware(['auth', 'Admin'])->group(function () {
+//     Route::get('/utilisateurs', [UtilisateurController::class, 'index'])->name('utilisateurs.index');
+//     Route::get('/utilisateurs/create', [UtilisateurController::class, 'create'])->name('utilisateurs.create');
+//     Route::post('/utilisateurs', [UtilisateurController::class, 'store'])->name('utilisateurs.store');
+//     Route::get('/utilisateurs/{utilisateur}/edit', [UtilisateurController::class, 'edit'])->name('utilisateurs.edit');
+//     Route::put('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
+//     Route::delete('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.destroy');
+// });
+
+// Routes pour les réservations
+Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation');
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+
+// Route API pour récupérer le tarif d'un terrain
+Route::get('/api/terrains/{terrain}/tarif', function ($terrain) {
+    $terrain = \App\Models\Terrain::findOrFail($terrain);
+    return response()->json(['tarif' => $terrain->tarif]);
 });
 
