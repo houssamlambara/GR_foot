@@ -163,112 +163,50 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse($reservations as $reservation)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Thomas Dubois</div>
-                                                <div class="text-sm text-gray-500">thomas.d@example.com</div>
+                                                <div class="text-sm font-medium text-gray-900">{{ $reservation->user->name ?? 'N/A' }}</div>
+                                                <div class="text-sm text-gray-500">{{ $reservation->user->email ?? 'N/A' }}</div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 612345678</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $reservation->telephone ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain 5v5 </div>
+                                            <div class="text-sm text-gray-900">{{ $reservation->terrain->type ?? 'N/A' }}</div>
+                                            <div class="text-sm text-gray-500">{{ $reservation->terrain->localisation ?? 'N/A' }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14:00 - 15:00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($reservation->date)->format('d M Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ \Carbon\Carbon::parse($reservation->heure_debut)->format('H:i') }} - 
+                                            {{ \Carbon\Carbon::parse($reservation->heure_fin)->format('H:i') }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmée</span>
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {{ $reservation->disponibilite ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ $reservation->disponibilite ? 'Disponible' : 'Indisponible' }}
+                                            </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
+                                            <a href="{{ route('reservations.edit', $reservation->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
+                                    @empty
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Sophie Martin</div>
-                                                <div class="text-sm text-gray-500">sophie.m@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 612987654</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Padel </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16:00 - 18:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En
-                                                attente</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
+                                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                            Aucune réservation trouvée
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Alexandre Petit</div>
-                                                <div class="text-sm text-gray-500">alex.p@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 613456789</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Basketball</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01 Mar 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 - 11:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Annulée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more users here -->
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Julien Lefevre</div>
-                                                <div class="text-sm text-gray-500">julien.l@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 614567890</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Football</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">05 Mar 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12:00 - 13:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
