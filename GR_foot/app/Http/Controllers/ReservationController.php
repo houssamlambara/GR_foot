@@ -39,6 +39,9 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        // Log des données reçues pour le débogage
+        \Log::info('Données de réservation reçues:', $request->all());
+        
         $request->validate([
             'terrain_id' => 'required|exists:terrains,id',
             'date' => 'required|date',
@@ -46,14 +49,31 @@ class ReservationController extends Controller
             'heure_fin' => 'required|after:heure_debut',
             'montant' => 'required|numeric|min:0',
             'telephone' => 'required|string|max:20',
+            'activite' => 'required|string',
         ]);
 
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
-        $data['disponibilite'] = true;
-
-        Reservation::create($data);
-        return redirect()->route('reservation')->with('success', 'Réservation créée avec succès.');
+        try {
+            $data = $request->all();
+            $data['user_id'] = Auth::id();
+            $data['disponibilite'] = true;
+            
+            // Log des données avant création
+            \Log::info('Données préparées pour la création:', $data);
+            
+            $reservation = Reservation::create($data);
+            
+            // Log de confirmation
+            \Log::info('Réservation créée avec succès:', ['id' => $reservation->id]);
+            
+            return redirect()->route('reservation')->with('success', 'Réservation créée avec succès.');
+        } catch (\Exception $e) {
+            // Log de l'erreur
+            \Log::error('Erreur lors de la création de la réservation:', ['error' => $e->getMessage()]);
+            
+            return redirect()->route('reservation')
+                ->with('error', 'Une erreur est survenue lors de la création de la réservation. Veuillez réessayer.')
+                ->withInput();
+        }
     }
 
     /**

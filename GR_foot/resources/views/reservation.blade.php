@@ -21,24 +21,33 @@
                         @csrf
                         <div>
                             <label for="nom" class="block text-sm font-semibold text-gray-700">Nom Complet</label>
-                            <input type="text" id="nom" name="nom" required
+                            <input type="text" id="nom" name="nom" value="{{ old('nom', Auth::user()->name) }}" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
                                 placeholder="Entrez votre nom Complet">
+                            @error('nom')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Numéro de téléphone -->
                         <div>
                             <label for="telephone" class="block text-sm font-semibold text-gray-700">Numéro de téléphone</label>
-                            <input type="tel" id="telephone" name="telephone" required
+                            <input type="tel" id="telephone" name="telephone" value="{{ old('telephone') }}" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
                                 placeholder="Entrez votre numéro de téléphone">
+                            @error('telephone')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Sélection de la date -->
                         <div>
                             <label for="date" class="block text-sm font-semibold text-gray-700">Date de réservation</label>
-                            <input type="date" id="date" name="date" required
+                            <input type="date" id="date" name="date" value="{{ old('date') }}" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
+                            @error('date')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Sélection de l'heure de début -->
@@ -46,21 +55,25 @@
                             <label for="heure_debut" class="block text-sm font-semibold text-gray-700">Heure de début</label>
                             <select id="heure_debut" name="heure_debut" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
-                                <option value="09:00">09h</option>
-                                <option value="10:00">10h</option>
-                                <option value="11:00">11h</option>
-                                <option value="12:00">12h</option>
-                                <option value="13:00">13h</option>
-                                <option value="14:00">14h</option>
-                                <option value="15:00">15h</option>
-                                <option value="16:00">16h</option>
-                                <option value="17:00">17h</option>
-                                <option value="18:00">18h</option>
-                                <option value="19:00">19h</option>
-                                <option value="20:00">20h</option>
-                                <option value="21:00">21h</option>
-                                <option value="22:00">22h</option>
+                                <option value="">Sélectionnez une heure</option>
+                                <option value="09:00" {{ old('heure_debut') == '09:00' ? 'selected' : '' }}>09h</option>
+                                <option value="10:00" {{ old('heure_debut') == '10:00' ? 'selected' : '' }}>10h</option>
+                                <option value="11:00" {{ old('heure_debut') == '11:00' ? 'selected' : '' }}>11h</option>
+                                <option value="12:00" {{ old('heure_debut') == '12:00' ? 'selected' : '' }}>12h</option>
+                                <option value="13:00" {{ old('heure_debut') == '13:00' ? 'selected' : '' }}>13h</option>
+                                <option value="14:00" {{ old('heure_debut') == '14:00' ? 'selected' : '' }}>14h</option>
+                                <option value="15:00" {{ old('heure_debut') == '15:00' ? 'selected' : '' }}>15h</option>
+                                <option value="16:00" {{ old('heure_debut') == '16:00' ? 'selected' : '' }}>16h</option>
+                                <option value="17:00" {{ old('heure_debut') == '17:00' ? 'selected' : '' }}>17h</option>
+                                <option value="18:00" {{ old('heure_debut') == '18:00' ? 'selected' : '' }}>18h</option>
+                                <option value="19:00" {{ old('heure_debut') == '19:00' ? 'selected' : '' }}>19h</option>
+                                <option value="20:00" {{ old('heure_debut') == '20:00' ? 'selected' : '' }}>20h</option>
+                                <option value="21:00" {{ old('heure_debut') == '21:00' ? 'selected' : '' }}>21h</option>
+                                <option value="22:00" {{ old('heure_debut') == '22:00' ? 'selected' : '' }}>22h</option>
                             </select>
+                            @error('heure_debut')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Sélection de l'heure de fin -->
@@ -68,21 +81,25 @@
                             <label for="heure_fin" class="block text-sm font-semibold text-gray-700">Heure de fin</label>
                             <select id="heure_fin" name="heure_fin" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
-                                <option value="10:00">10h</option>
-                                <option value="11:00">11h</option>
-                                <option value="12:00">12h</option>
-                                <option value="13:00">13h</option>
-                                <option value="14:00">14h</option>
-                                <option value="15:00">15h</option>
-                                <option value="16:00">16h</option>
-                                <option value="17:00">17h</option>
-                                <option value="18:00">18h</option>
-                                <option value="19:00">19h</option>
-                                <option value="20:00">20h</option>
-                                <option value="21:00">21h</option>
-                                <option value="22:00">22h</option>
-                                <option value="23:00">23h</option>
+                                <option value="">Sélectionnez une heure</option>
+                                <option value="10:00" {{ old('heure_fin') == '10:00' ? 'selected' : '' }}>10h</option>
+                                <option value="11:00" {{ old('heure_fin') == '11:00' ? 'selected' : '' }}>11h</option>
+                                <option value="12:00" {{ old('heure_fin') == '12:00' ? 'selected' : '' }}>12h</option>
+                                <option value="13:00" {{ old('heure_fin') == '13:00' ? 'selected' : '' }}>13h</option>
+                                <option value="14:00" {{ old('heure_fin') == '14:00' ? 'selected' : '' }}>14h</option>
+                                <option value="15:00" {{ old('heure_fin') == '15:00' ? 'selected' : '' }}>15h</option>
+                                <option value="16:00" {{ old('heure_fin') == '16:00' ? 'selected' : '' }}>16h</option>
+                                <option value="17:00" {{ old('heure_fin') == '17:00' ? 'selected' : '' }}>17h</option>
+                                <option value="18:00" {{ old('heure_fin') == '18:00' ? 'selected' : '' }}>18h</option>
+                                <option value="19:00" {{ old('heure_fin') == '19:00' ? 'selected' : '' }}>19h</option>
+                                <option value="20:00" {{ old('heure_fin') == '20:00' ? 'selected' : '' }}>20h</option>
+                                <option value="21:00" {{ old('heure_fin') == '21:00' ? 'selected' : '' }}>21h</option>
+                                <option value="22:00" {{ old('heure_fin') == '22:00' ? 'selected' : '' }}>22h</option>
+                                <option value="23:00" {{ old('heure_fin') == '23:00' ? 'selected' : '' }}>23h</option>
                             </select>
+                            @error('heure_fin')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
@@ -90,29 +107,19 @@
                             <select name="terrain_id" id="terrain" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                 <option value="">Sélectionnez un terrain</option>
                                 @foreach($terrains as $terrain)
-                                    <option value="{{ $terrain->id }}" {{ $selectedTerrain && $selectedTerrain->id == $terrain->id ? 'selected' : '' }}>
+                                    <option value="{{ $terrain->id }}" {{ old('terrain_id') == $terrain->id ? 'selected' : '' }}>
                                         {{ $terrain->type }} - {{ $terrain->localisation }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('terrain_id')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
-                        <div class="mb-4">
-                            <label for="montant" class="block text-gray-700 text-sm font-bold mb-2">Montant (DH)</label>
-                            <input type="number" name="montant" id="montant" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ $selectedTerrain ? $selectedTerrain->tarif : '' }}" required>
-                        </div>
-
-                        <!-- Choix de l'activité -->
-                        <div>
-                            <label for="activite" class="block text-sm font-semibold text-gray-700">Choisissez votre activité</label>
-                            <select id="activite" name="activite" required
-                                class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
-                                <option value="football">Football</option>
-                                <option value="padel">Padel</option>
-                                <option value="tennis">Tennis</option>
-                                <option value="basketball">Basketball</option>
-                            </select>
-                        </div>
+                        <!-- Champs cachés qui seront mis à jour automatiquement -->
+                        <input type="hidden" name="montant" id="montant" value="{{ old('montant') }}">
+                        <input type="hidden" name="activite" id="activite" value="{{ old('activite') }}">
 
                         <button type="submit"
                             class="w-full bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white py-4 rounded-xl mt-8">
@@ -155,12 +162,6 @@
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Numéro de téléphone</p>
                             <p id="telephone-selection" class="text-lg font-bold text-gray-800">+212 000 000 000</p>
-                        </div>
-
-                        <!-- Activité choisie -->
-                        <div>
-                            <p class="text-sm font-semibold text-gray-700">Activité Choisie</p>
-                            <p id="activite-selection" class="text-lg font-bold text-gray-800">Football</p>
                         </div>
                     </div>
                 </div>
@@ -390,14 +391,44 @@
     @include('layout.footer')
 
 <script>
-    // Script pour mettre à jour le montant lorsqu'un terrain est sélectionné
-    document.getElementById('terrain').addEventListener('change', function() {
-        const terrainId = this.value;
-        if (terrainId) {
-            // Rediriger vers la même page avec le terrain_id en paramètre
-            window.location.href = '{{ route("reservation") }}?terrain_id=' + terrainId;
+    // Définition des tarifs par activité
+    const tarifs = {
+        'football': 400,
+        'padel': 250,
+        'tennis': 300,
+        'basketball': 250
+    };
+
+    // Fonction pour mettre à jour le montant et l'activité
+    function updateMontantEtActivite() {
+        const terrainSelect = document.getElementById('terrain');
+        const selectedOption = terrainSelect.options[terrainSelect.selectedIndex];
+        const terrainType = selectedOption.text.split(' - ')[0].toLowerCase();
+        
+        // Déterminer l'activité en fonction du type de terrain
+        let activite = '';
+        if (terrainType.includes('football')) {
+            activite = 'football';
+        } else if (terrainType.includes('padel')) {
+            activite = 'padel';
+        } else if (terrainType.includes('tennis')) {
+            activite = 'tennis';
+        } else if (terrainType.includes('basketball')) {
+            activite = 'basketball';
         }
-    });
+        
+        // Mettre à jour les champs cachés
+        document.getElementById('activite').value = activite;
+        if (activite && tarifs[activite]) {
+            document.getElementById('montant').value = tarifs[activite];
+        }
+    }
+
+    // Écouter les changements sur le select de terrain
+    document.getElementById('terrain').addEventListener('change', updateMontantEtActivite);
+
+    // Mettre à jour au chargement de la page si un terrain est déjà sélectionné
+    document.addEventListener('DOMContentLoaded', updateMontantEtActivite);
 </script>
 @endsection
 
