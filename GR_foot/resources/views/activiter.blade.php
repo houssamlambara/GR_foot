@@ -71,7 +71,7 @@
 
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-2xl font-bold text-gray-900">Terrain {{ $terrain->type }}</h3>
+                            <h3 class="text-2xl font-bold text-gray-900">{{ $terrain->type }}</h3>
                             <span class="flex items-center text-green-600">
                                 <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
                                 Disponible
