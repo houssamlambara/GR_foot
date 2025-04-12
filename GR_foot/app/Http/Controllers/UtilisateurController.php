@@ -101,6 +101,7 @@ class UtilisateurController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8|confirmed',
+            'role' => 'nullable|in:Admin,Utilisateur',
         ]);
 
         $user->name = $validated['name'];
@@ -108,6 +109,10 @@ class UtilisateurController extends Controller
         
         if (!empty($validated['password'])) {
             $user->password = bcrypt($validated['password']);
+        }
+        
+        if (isset($validated['role'])) {
+            $user->role = $validated['role'];
         }
         
         $user->save();

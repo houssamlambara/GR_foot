@@ -157,12 +157,6 @@
                             class="p-3 pl-10 border border-gray-300 rounded-xl shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-green-500">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
                     </div>
-                    
-                    <!-- Bouton pour ajouter un utilisateur -->
-                    <a href="{{ route('utilisateurs.create') }}" 
-                        class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow-md hover:from-green-600 hover:to-green-800 transition duration-300">
-                        <i class="fas fa-plus mr-2"></i> Ajouter un utilisateur
-                    </a>
                 </div>
 
                 <!-- Tableau Utilisateurs -->
@@ -184,7 +178,7 @@
                                     <td class="p-4">{{ $user->name }}</td>
                                     <td class="p-4">{{ $user->email }}</td>
                                     <td class="p-4">
-                                        @if($user->role == 'admin')
+                                        @if(strtolower($user->role) == 'admin')
                                             <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Admin</span>
                                         @else
                                             <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Utilisateur</span>
