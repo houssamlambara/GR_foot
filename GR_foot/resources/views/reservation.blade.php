@@ -108,7 +108,7 @@
                                 <option value="">Sélectionnez un terrain</option>
                                 @foreach($terrains as $terrain)
                                     <option value="{{ $terrain->id }}" {{ old('terrain_id') == $terrain->id ? 'selected' : '' }}>
-                                        {{ $terrain->type }} - {{ $terrain->localisation }}
+                                        {{ $terrain->type }} 
                                     </option>
                                 @endforeach
                             </select>
