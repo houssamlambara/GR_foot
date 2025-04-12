@@ -26,7 +26,7 @@ class TerrainController extends Controller
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|numeric|min:0',
             'localisation' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
 
         $data = $request->all();
