@@ -83,6 +83,3 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
-
-// La route API a été déplacée vers le fichier api.php
-
