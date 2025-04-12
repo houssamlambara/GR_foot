@@ -50,7 +50,7 @@ class TerrainController extends Controller
     public function index()
     {
         $terrains = Terrain::all();
-        return view('terrains.index', compact('terrains'));
+        return view('addterrain', compact('terrains'));
     }
 
     /**
