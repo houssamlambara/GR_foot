@@ -156,9 +156,6 @@
                                             Heure</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Statut</th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Actions</th>
                                     </tr>
                                 </thead>
@@ -181,12 +178,6 @@
                                             {{ \Carbon\Carbon::parse($reservation->heure_debut)->format('H:i') }} - 
                                             {{ \Carbon\Carbon::parse($reservation->heure_fin)->format('H:i') }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                {{ $reservation->disponibilite ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                                {{ $reservation->disponibilite ? 'Disponible' : 'Indisponible' }}
-                                            </span>
-                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('reservations.edit', $reservation->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-2">
                                                 <i class="fas fa-edit"></i>
@@ -202,7 +193,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">
                                             Aucune réservation trouvée
                                         </td>
                                     </tr>
