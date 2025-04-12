@@ -23,7 +23,6 @@ use App\Http\Controllers\ReservationController;
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-// Route de réservation (protégée par authentification)
 Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
 
@@ -34,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addtounois', [PageController::class, 'addtounois']);
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardReservation', [ReservationController::class, 'dashboard'])->name('dashboardReservation');
-    Route::get('/tournois', [PageController::class, 'tournois']);
+    Route::get('/tournois', [PageController::class, 'tournois'])->name('tournois');
     Route::get('/addterrain', [PageController::class, 'addterrain'])->name('addterrain');
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateurs.index');
 });
