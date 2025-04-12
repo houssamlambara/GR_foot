@@ -23,7 +23,9 @@ use App\Http\Controllers\ReservationController;
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/reservation', [PageController::class, 'reservation'])->name('reservation')->middleware('auth');
+// Route de réservation (protégée par authentification)
+Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
 
 // Routes principales
 Route::middleware(['auth'])->group(function () {
@@ -44,14 +46,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes pour la gestion des tournois
-// Route::middleware(['auth', 'Admin'])->group(function () {
-//     Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
-//     Route::get('/tournois/create', [TournoiController::class, 'create'])->name('tournois.create');
-//     Route::post('/tournois', [TournoiController::class, 'store'])->name('tournois.store');
-//     Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');
-//     Route::put('/tournois/{tournoi}', [TournoiController::class, 'update'])->name('tournois.update');
-//     Route::delete('/tournois/{tournoi}', [TournoiController::class, 'destroy'])->name('tournois.destroy');
-// });
+Route::middleware(['auth', 'Admin'])->group(function () {
+    Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
+    Route::get('/tournois/create', [TournoiController::class, 'create'])->name('tournois.create');
+    Route::post('/tournois', [TournoiController::class, 'store'])->name('tournois.store');
+    Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');
+    Route::put('/tournois/{tournoi}', [TournoiController::class, 'update'])->name('tournois.update');
+    Route::delete('/tournois/{tournoi}', [TournoiController::class, 'destroy'])->name('tournois.destroy');
+});
 
 // Routes pour la gestion des terrains (protégées pour les administrateurs)
 Route::middleware(['auth', 'Admin'])->group(function () {
@@ -64,22 +66,23 @@ Route::middleware(['auth', 'Admin'])->group(function () {
 });
 
 // Routes pour la gestion des utilisateurs
-// Route::middleware(['auth', 'Admin'])->group(function () {
-//     Route::get('/utilisateurs', [UtilisateurController::class, 'index'])->name('utilisateurs.index');
-//     Route::get('/utilisateurs/create', [UtilisateurController::class, 'create'])->name('utilisateurs.create');
-//     Route::post('/utilisateurs', [UtilisateurController::class, 'store'])->name('utilisateurs.store');
-//     Route::get('/utilisateurs/{utilisateur}/edit', [UtilisateurController::class, 'edit'])->name('utilisateurs.edit');
-//     Route::put('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
-//     Route::delete('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.destroy');
-// });
+Route::middleware(['auth', 'Admin'])->group(function () {
+    Route::get('/utilisateurs', [UtilisateurController::class, 'index'])->name('utilisateurs.index');
+    Route::get('/utilisateurs/create', [UtilisateurController::class, 'create'])->name('utilisateurs.create');
+    Route::post('/utilisateurs', [UtilisateurController::class, 'store'])->name('utilisateurs.store');
+    Route::get('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'show'])->name('utilisateurs.show');
+    Route::get('/utilisateurs/{utilisateur}/edit', [UtilisateurController::class, 'edit'])->name('utilisateurs.edit');
+    Route::put('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
+    Route::delete('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.destroy');
+});
 
-// Routes pour les réservations
-Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation');
-Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
-Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
-Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+// Routes pour les réservations (admin)
+Route::middleware(['auth', 'Admin'])->group(function () {
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+    Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+});
 
 // La route API a été déplacée vers le fichier api.php
 

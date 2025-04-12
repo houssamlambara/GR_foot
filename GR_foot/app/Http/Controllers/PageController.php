@@ -55,6 +55,7 @@ class PageController extends Controller
     }
 
     public function utilisateur() {
-        return view('utilisateur');
+        $controller = new \App\Http\Controllers\UtilisateurController();
+        return $controller->index();
     }
 }
