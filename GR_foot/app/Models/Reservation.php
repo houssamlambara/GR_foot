@@ -17,7 +17,8 @@ class Reservation extends Model
         'heure_fin',
         'montant',
         'disponibilite',
-        'telephone'
+        'telephone',
+        'activite'
     ];
 
     // Relation avec le terrain

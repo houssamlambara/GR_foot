@@ -316,13 +316,13 @@
                                 <tr>
                                     <td class="py-2 px-4">
                                         <div class="flex items-center">
-                                            <div class="w-32 h-32 flex-shrink-0">
+                                            <div class="w-28 h-28 flex-shrink-0">
                                                 @if($terrain->image)
                                                     <img src="{{ asset('img/' . $terrain->image) }}" alt="Photo du terrain"
-                                                        class="w-32 h-32 rounded object-cover">
+                                                        class="w-28 h-28 rounded object-cover">
                                                 @else
                                                     <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
-                                                        class="w-32 h-32 rounded object-cover">
+                                                        class="w-28 h-28 rounded object-cover">
                                                 @endif
                                             </div>
                                         </div>
