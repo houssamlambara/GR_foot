@@ -21,6 +21,10 @@ class Reservation extends Model
         'activite'
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     // Relation avec le terrain
     public function terrain()
     {

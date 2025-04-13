@@ -27,7 +27,7 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="{{ route('dashboard') }}"
+                        <a href="dashboard.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
@@ -37,29 +37,26 @@
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{ route('addterrain') }}"
+                        <a href="addterrain.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{ route('addtournois') }}"
+                        <a href="addtournois.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{ route('utilisateur') }}"
+                        <a href="utilisateur.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                                <i class="fas fa-sign-out-alt mr-3"></i>
-                                Déconnecter
-                            </button>
-                        </form>
+                        <a href="#"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                            <i class="fas fa-sign-out-alt mr-3"></i>
+                            Déconnecter
+                        </a>
                     </nav>
                 </div>
             </div>
@@ -73,7 +70,7 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="{{ route('dashboard') }}"
+                        <a href="dashboard.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
@@ -83,29 +80,26 @@
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{ route('addterrain') }}"
+                        <a href="addterrain.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{ route('addtournois') }}"
+                        <a href="addtournois.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{ route('utilisateur') }}"
+                        <a href="utilisateur.html"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                                <i class="fas fa-sign-out-alt mr-3"></i>
-                                Déconnecter
-                            </button>
-                        </form>
+                        <a href="#"
+                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                            <i class="fas fa-sign-out-alt mr-3"></i>
+                            Déconnecter
+                        </a>
                     </nav>
                 </div>
             </div>
@@ -156,186 +150,73 @@
                                             Terrain</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Localisation</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Date</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Heure</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Statut</th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Thomas Dubois</div>
-                                                <div class="text-sm text-gray-500">thomas.d@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 612345678</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain 5v5 </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14:00 - 15:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Sophie Martin</div>
-                                                <div class="text-sm text-gray-500">sophie.m@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 612987654</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Padel </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16:00 - 18:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En
-                                                attente</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Alexandre Petit</div>
-                                                <div class="text-sm text-gray-500">alex.p@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 613456789</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Basketball</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01 Mar 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 - 11:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Annulée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more users here -->
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Julien Lefevre</div>
-                                                <div class="text-sm text-gray-500">julien.l@example.com</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+33 614567890</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Football</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">05 Mar 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12:00 - 13:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    @forelse($reservations as $reservation)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{ $reservation->user->name ?? 'N/A' }}</div>
+                                                    <div class="text-sm text-gray-500">
+                                                        {{ $reservation->user->email ?? 'N/A' }}</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $reservation->telephone ?? 'N/A' }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">{{ $reservation->terrain->nom }}
+                                                </div>
+                                                <div class="text-sm text-gray-500">{{ $reservation->terrain->type }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $reservation->terrain->localisation }}</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ \Carbon\Carbon::parse($reservation->date)->format('d M Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ \Carbon\Carbon::parse($reservation->heure_debut)->format('H:i') }} -
+                                                {{ \Carbon\Carbon::parse($reservation->heure_fin)->format('H:i') }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <a href="{{ route('reservations.edit', $reservation->id) }}"
+                                                    class="text-yellow-600 hover:text-yellow-900 mr-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('reservations.destroy', $reservation->id) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                                Aucune réservation trouvée
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
-                        <!-- <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 flex items-center justify-between">
-                            <div class="flex-1 flex justify-between sm:hidden">
-                                <a href="#"
-                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Précédent
-                                </a>
-                                <a href="#"
-                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Suivant
-                                </a>
-                            </div> -->
-                        <!-- <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                <div>
-                                    <p class="text-sm text-gray-700">
-                                        Affichage de <span class="font-medium">1</span> à <span
-                                            class="font-medium">3</span> sur <span class="font-medium">248</span>
-                                        résultats
-                                    </p>
-                                </div>
-                                <div>
-                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                                        aria-label="Pagination">
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <span class="sr-only">Précédent</span>
-                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                    d="M10 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50">
-                                            1
-                                        </a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50">
-                                            2
-                                        </a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50">
-                                            3
-                                        </a>
-                                        <a href="#"
-                                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <span class="sr-only">Suivant</span>
-                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                    d="M10 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
-                                    </nav>
-                                </div>
-                            </div> -->
-                        <!-- </div> -->
                     </div>
                 </div>
             </main>
