@@ -32,22 +32,22 @@
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{Route ('dashboardReservation')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{Route ('addterrain')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="addtournois.html"
+                        <a href="addtournois"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{Route ('utilisateur')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -75,12 +75,12 @@
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{Route ('dashboardReservation')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{Route ('addterrain')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
@@ -90,7 +90,7 @@
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{ route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs

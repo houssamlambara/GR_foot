@@ -27,36 +27,39 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="dashboard.html"
+                        <a href="{{ route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{ route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{ route('terrains.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="#"
+                        <a href="{{ route('tournois.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{ route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
@@ -70,36 +73,39 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="dashboard.html"
+                        <a href="{{ route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="dashboardReservation.html"
+                        <a href="{{ route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{ route('terrains.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="#"
+                        <a href="{{ route('tournois.index') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{ route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
@@ -132,74 +138,58 @@
                 <!-- Créer un nouveau tournoi -->
                 <div class="bg-white shadow-md rounded-lg p-6 mb-8">
                     <h3 class="text-xl font-semibold mb-4">Créer un nouveau tournoi</h3>
-                    <form action="#" method="POST">
+                    <form action="{{ route('tournois.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="col-span-1">
-                                <label for="tournoi-name" class="block text-sm font-medium text-gray-700">Nom du
+                                <label for="nom" class="block text-sm font-medium text-gray-700">Nom du
                                     tournoi</label>
-                                <input type="text" id="tournoi-name" name="tournoi-name"
+                                <input type="text" id="nom" name="nom"
                                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                     required>
                             </div>
                             <div class="col-span-1">
-                                <label for="tournoi-date" class="block text-sm font-medium text-gray-700">Date du
-                                    tournoi</label>
-                                <input type="date" id="tournoi-date" name="tournoi-date"
+                                <label for="date_debut" class="block text-sm font-medium text-gray-700">Date de début</label>
+                                <input type="date" id="date_debut" name="date_debut"
                                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                     required>
-                            </div>
-                            <!-- Catégorie à côté de la date -->
-                            <div class="col-span-1 md:col-span-1">
-                                <label for="categorie" class="block text-sm font-medium text-gray-700">Catégorie du
-                                    tournoi</label>
-                                <select id="categorie" name="categorie"
-                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                                    required>
-                                    <option value="football">Football</option>
-                                    <option value="tennis">Tennis</option>
-                                    <option value="basketball">Basketball</option>
-                                    <option value="padel">Padel</option>
-                                </select>
                             </div>
                             <div class="col-span-1">
-                                <label for="tournoi-time" class="block text-sm font-medium text-gray-700">Heure du
-                                    tournoi</label>
-                                <input type="time" id="tournoi-time" name="tournoi-time"
+                                <label for="date_fin" class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <input type="date" id="date_fin" name="date_fin"
                                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                     required>
+                            </div>
+                            <div class="col-span-1">
+                                <label for="nombre_equipes" class="block text-sm font-medium text-gray-700">Nombre d'équipes</label>
+                                <input type="number" id="nombre_equipes" name="nombre_equipes"
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                                    required>
+                            </div>
+                            <div class="col-span-1">
+                                <label for="prix_inscription" class="block text-sm font-medium text-gray-700">Prix d'inscription</label>
+                                <input type="number" id="prix_inscription" name="prix_inscription"
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                                    required>
+                            </div>
+                            <div class="col-span-1">
+                                <label for="image" class="block text-sm font-medium text-gray-700">Image du tournoi</label>
+                                <input type="file" id="image" name="image"
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                            </div>
+                            <div class="col-span-2">
+                                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                <textarea id="description" name="description" rows="3"
+                                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                                    required></textarea>
                             </div>
                         </div>
-
-                        <!-- Sélectionner les terrains -->
-                        <!-- <div class="mt-4">
-                            <label for="terrains" class="block text-sm font-medium text-gray-700">Terrains
-                                sélectionnés</label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="terrain1" name="terrains[]" value="terrain1"
-                                        class="h-4 w-4 text-green-500 border-gray-300 rounded focus:ring-green-500">
-                                    <label for="terrain1" class="ml-2 text-sm text-gray-700">Terrain 1</label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="terrain2" name="terrains[]" value="terrain2"
-                                        class="h-4 w-4 text-green-500 border-gray-300 rounded focus:ring-green-500">
-                                    <label for="terrain2" class="ml-2 text-sm text-gray-700">Terrain 2</label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="terrain3" name="terrains[]" value="terrain3"
-                                        class="h-4 w-4 text-green-500 border-gray-300 rounded focus:ring-green-500">
-                                    <label for="terrain3" class="ml-2 text-sm text-gray-700">Terrain 3</label>
-                                </div>
-                            </div>
-                            <p class="text-sm text-gray-500 mt-1">Vous pouvez sélectionner plusieurs terrains.</p>
-                        </div> -->
 
                         <div class="mt-6 flex justify-center">
                             <button type="submit"
                                 class="bg-gradient-to-r from-green-500 to-green-800 text-white px-6 py-2 rounded-md shadow-sm">Créer
                                 le tournoi</button>
                         </div>
-
                     </form>
                 </div>
 

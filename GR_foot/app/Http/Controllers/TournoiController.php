@@ -13,7 +13,7 @@ class TournoiController extends Controller
     public function index()
     {
         $tournois = Tournoi::all();
-        return view('tournois', compact('tournois'));
+        return view('addtournois', compact('tournois'));
     }
 
     /**
@@ -29,7 +29,29 @@ class TournoiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date|after_or_equal:date_debut',
+            'nombre_equipes' => 'required|integer|min:2',
+            'prix_inscription' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('img'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        Tournoi::create($data);
+
+        return redirect()->route('tournois.index')
+            ->with('success', 'Tournoi ajouté avec succès.');
     }
 
     /**

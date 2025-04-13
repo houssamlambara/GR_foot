@@ -40,7 +40,7 @@ class TerrainController extends Controller
 
         Terrain::create($data);
 
-        return redirect('/addterrain')
+        return redirect()->route('terrains.index')
             ->with('success', 'Terrain ajouté avec succès.');
     }
 
