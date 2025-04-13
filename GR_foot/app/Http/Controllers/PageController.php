@@ -29,6 +29,10 @@ class PageController extends Controller
         return view('addtounois');
     }
 
+    public function addtournois() {
+        return view('addtournois');
+    }
+
     public function contact() {
         return view('contact');
     }

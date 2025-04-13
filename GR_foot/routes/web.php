@@ -31,7 +31,7 @@ Route::post('/reservations', [ReservationController::class, 'store'])->name('res
 Route::middleware(['auth'])->group(function () {
     Route::get('/index', [PageController::class, 'index']);
     Route::get('/activiter', [PageController::class, 'activiter'])->name('activiter');
-    Route::get('/addtounois', [PageController::class, 'addtounois']);
+    Route::get('/addtournois', [PageController::class, 'addtournois'])->name('addtournois');
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardReservation', [ReservationController::class, 'dashboard'])->name('dashboardReservation');
     Route::get('/tournois', [PageController::class, 'tournois']);

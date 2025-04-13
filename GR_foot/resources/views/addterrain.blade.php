@@ -42,12 +42,12 @@
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{ route('tournois.index') }}"
+                        <a href="{{ route('addtournois') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{ route('utilisateurs.index') }}"
+                        <a href="{{ route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -88,12 +88,12 @@
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{ route('tournois.index') }}"
+                        <a href="{{ route('addtournois') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{ route('utilisateurs.index') }}"
+                        <a href="{{ route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
