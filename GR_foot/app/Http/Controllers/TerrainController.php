@@ -71,7 +71,21 @@ class TerrainController extends Controller
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|integer|min:0',
             'localisation' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
+
+        if ($request->hasFile('image')) {
+            // Supprimer l'ancienne image si elle existe
+            if ($terrain->image && file_exists(public_path('img/' . $terrain->image))) {
+                unlink(public_path('img/' . $terrain->image));
+            }
+
+            // Sauvegarder la nouvelle image
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('img'), $imageName);
+            $validatedData['image'] = $imageName;
+        }
 
         $terrain->update($validatedData);
 
