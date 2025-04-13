@@ -34,7 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addtournois', [PageController::class, 'addtournois'])->name('addtournois');
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardReservation', [ReservationController::class, 'dashboard'])->name('dashboardReservation');
-    Route::get('/tournois', [PageController::class, 'tournois']);
     Route::get('/addterrain', [PageController::class, 'addterrain'])->name('addterrain');
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateur');
 });

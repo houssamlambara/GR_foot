@@ -13,7 +13,7 @@ class TournoiController extends Controller
     public function index()
     {
         $tournois = Tournoi::all();
-        return view('addtournois', compact('tournois'));
+        return view('tournois', compact('tournois'));
     }
 
     /**

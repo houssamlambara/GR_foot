@@ -25,10 +25,6 @@ class PageController extends Controller
         return view('addterrain', compact('terrains'));
     }
 
-    public function addtounois() {
-        return view('addtounois');
-    }
-
     public function addtournois() {
         return view('addtournois');
     }
