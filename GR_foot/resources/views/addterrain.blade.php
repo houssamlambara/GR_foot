@@ -333,8 +333,8 @@
                                     <td class="py-2 px-4">{{ $terrain->localisation }}</td>
                                     <td class="py-2 px-4">
                                         <div class="flex flex-col sm:flex-row gap-2 justify-start">
-                                            <a href="{{ route('terrains.edit', $terrain->id) }}"
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</a>
+                                            <button onclick="openEditModal({{ $terrain->id }}, '{{ $terrain->type }}', {{ $terrain->capacite }}, {{ $terrain->tarif }}, '{{ $terrain->localisation }}')"
+                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
                                             <form action="{{ route('terrains.destroy', $terrain->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')

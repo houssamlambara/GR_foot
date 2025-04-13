@@ -87,7 +87,7 @@
                         <i class="fas fa-futbol mr-3"></i>
                         Terrains
                     </a>
-                    <a href="{{ route('addtournois') }}"
+                    <a href="{{ route('tournois.index') }}"
                         class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                         <i class="fas fa-trophy mr-3"></i>
                         Tournois
