@@ -52,11 +52,14 @@
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
@@ -95,11 +98,14 @@
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
