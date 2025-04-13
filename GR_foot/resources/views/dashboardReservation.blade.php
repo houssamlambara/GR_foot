@@ -27,7 +27,7 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="dashboard.html"
+                        <a href="{{Route ('dashboard')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
@@ -37,17 +37,17 @@
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{Route ('addterrain')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="addtournois.html"
+                        <a href="{{Route ('addtournois')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{Route ('utilisateur')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -70,36 +70,39 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="dashboard.html"
+                        <a href="{{Route ('dashboard')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="#"
+                        <a href=""
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md bg-green-700 text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="addterrain.html"
+                        <a href="{{Route ('addterrain')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="addtournois.html"
+                        <a href="{{Route ('addtournois')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="utilisateur.html"
+                        <a href="{{Route ('utilisateur')}}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
                         </a>
-                        <a href="#"
-                            class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            Déconnecter
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-full flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Déconnecter
+                            </button>
+                        </form>
                     </nav>
                 </div>
             </div>
