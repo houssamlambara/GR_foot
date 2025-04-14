@@ -15,7 +15,7 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('role', '!=', 'Admin')->get();
         
         // Pour chaque utilisateur, compter le nombre de réservations
         foreach ($users as $user) {
