@@ -40,13 +40,6 @@
                     <option value="ville1">Ville 1</option>
                     <option value="ville2">Ville 2</option>
                 </select>
-
-                <!-- Filtrage par Disponibilité -->
-                <select id="availabilityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
-                    <option value="">Toutes les Disponibilités</option>
-                    <option value="disponible">Disponible</option>
-                    <option value="complet">Complet</option>
-                </select>
             </div>
 
             <!-- Cards Grid -->
@@ -74,10 +67,10 @@
                         <div class="p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-2xl font-bold text-gray-900">{{ $terrain->type }}</h3>
-                                <span class="flex items-center text-green-600">
+                                {{-- <span class="flex items-center text-green-600">
                                     <span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span>
                                     Disponible
-                                </span>
+                                </span> --}}
                             </div>
 
                             <p class="text-gray-600 mb-6">
@@ -126,7 +119,7 @@
 
     <!-- Footer -->
     @include('layout.footer')
-    
+
     <script>
         // Filtrage des cartes d'activités
         document.addEventListener('DOMContentLoaded', function() {
