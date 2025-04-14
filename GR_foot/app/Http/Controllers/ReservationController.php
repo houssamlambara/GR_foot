@@ -30,8 +30,13 @@ class ReservationController extends Controller
         if ($selectedTerrainId) {
             $selectedTerrain = Terrain::find($selectedTerrainId);
         }
+
+        // Récupérer toutes les réservations existantes
+        $reservations = Reservation::where('disponibilite', true)
+            ->select('terrain_id', 'date', 'heure_debut', 'heure_fin')
+            ->get();
         
-        return view('reservation', compact('terrains', 'selectedTerrain'));
+        return view('reservation', compact('terrains', 'selectedTerrain', 'reservations'));
     }
 
     /**
@@ -51,6 +56,31 @@ class ReservationController extends Controller
             'telephone' => 'required|string|max:20',
             'activite' => 'required|string',
         ]);
+
+        // Vérifier si le créneau est déjà réservé
+        $creneauExistant = Reservation::where('terrain_id', $request->terrain_id)
+            ->where('date', $request->date)
+            ->where(function($query) use ($request) {
+                $query->where(function($q) use ($request) {
+                    $q->where('heure_debut', '<=', $request->heure_debut)
+                      ->where('heure_fin', '>', $request->heure_debut);
+                })
+                ->orWhere(function($q) use ($request) {
+                    $q->where('heure_debut', '<', $request->heure_fin)
+                      ->where('heure_fin', '>=', $request->heure_fin);
+                })
+                ->orWhere(function($q) use ($request) {
+                    $q->where('heure_debut', '>=', $request->heure_debut)
+                      ->where('heure_fin', '<=', $request->heure_fin);
+                });
+            })
+            ->exists();
+
+        if ($creneauExistant) {
+            return redirect()->route('reservation')
+                ->with('error', 'Ce créneau est déjà réservé. Veuillez choisir un autre horaire.')
+                ->withInput();
+        }
 
         try {
             $data = $request->all();

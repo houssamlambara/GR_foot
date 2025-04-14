@@ -17,7 +17,7 @@
                     <h3 class="text-2xl font-bold text-gray-800 mb-6">Sélectionnez votre terrain</h3>
                     <p class="text-gray-600 mb-8">Choisissez un terrain disponible pour votre prochaine partie !</p>
 
-                    <form action="{{ route('reservations.store') }}" method="POST" class="space-y-6">
+                    <form action="{{ route('reservations.store') }}" method="POST" class="space-y-6" id="reservationForm">
                         @csrf
                         <div>
                             <label for="nom" class="block text-sm font-semibold text-gray-700">Nom Complet</label>
@@ -56,20 +56,13 @@
                             <select id="heure_debut" name="heure_debut" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
                                 <option value="">Sélectionnez une heure</option>
-                                <option value="09:00" {{ old('heure_debut') == '09:00' ? 'selected' : '' }}>09h</option>
-                                <option value="10:00" {{ old('heure_debut') == '10:00' ? 'selected' : '' }}>10h</option>
-                                <option value="11:00" {{ old('heure_debut') == '11:00' ? 'selected' : '' }}>11h</option>
-                                <option value="12:00" {{ old('heure_debut') == '12:00' ? 'selected' : '' }}>12h</option>
-                                <option value="13:00" {{ old('heure_debut') == '13:00' ? 'selected' : '' }}>13h</option>
-                                <option value="14:00" {{ old('heure_debut') == '14:00' ? 'selected' : '' }}>14h</option>
-                                <option value="15:00" {{ old('heure_debut') == '15:00' ? 'selected' : '' }}>15h</option>
-                                <option value="16:00" {{ old('heure_debut') == '16:00' ? 'selected' : '' }}>16h</option>
-                                <option value="17:00" {{ old('heure_debut') == '17:00' ? 'selected' : '' }}>17h</option>
-                                <option value="18:00" {{ old('heure_debut') == '18:00' ? 'selected' : '' }}>18h</option>
-                                <option value="19:00" {{ old('heure_debut') == '19:00' ? 'selected' : '' }}>19h</option>
-                                <option value="20:00" {{ old('heure_debut') == '20:00' ? 'selected' : '' }}>20h</option>
-                                <option value="21:00" {{ old('heure_debut') == '21:00' ? 'selected' : '' }}>21h</option>
-                                <option value="22:00" {{ old('heure_debut') == '22:00' ? 'selected' : '' }}>22h</option>
+                                @for($i = 9; $i <= 22; $i++)
+                                    <option value="{{ sprintf('%02d:00', $i) }}" 
+                                            {{ old('heure_debut') == sprintf('%02d:00', $i) ? 'selected' : '' }}
+                                            data-disponible="true">
+                                        {{ sprintf('%02dh', $i) }}
+                                    </option>
+                                @endfor
                             </select>
                             @error('heure_debut')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -82,20 +75,13 @@
                             <select id="heure_fin" name="heure_fin" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
                                 <option value="">Sélectionnez une heure</option>
-                                <option value="10:00" {{ old('heure_fin') == '10:00' ? 'selected' : '' }}>10h</option>
-                                <option value="11:00" {{ old('heure_fin') == '11:00' ? 'selected' : '' }}>11h</option>
-                                <option value="12:00" {{ old('heure_fin') == '12:00' ? 'selected' : '' }}>12h</option>
-                                <option value="13:00" {{ old('heure_fin') == '13:00' ? 'selected' : '' }}>13h</option>
-                                <option value="14:00" {{ old('heure_fin') == '14:00' ? 'selected' : '' }}>14h</option>
-                                <option value="15:00" {{ old('heure_fin') == '15:00' ? 'selected' : '' }}>15h</option>
-                                <option value="16:00" {{ old('heure_fin') == '16:00' ? 'selected' : '' }}>16h</option>
-                                <option value="17:00" {{ old('heure_fin') == '17:00' ? 'selected' : '' }}>17h</option>
-                                <option value="18:00" {{ old('heure_fin') == '18:00' ? 'selected' : '' }}>18h</option>
-                                <option value="19:00" {{ old('heure_fin') == '19:00' ? 'selected' : '' }}>19h</option>
-                                <option value="20:00" {{ old('heure_fin') == '20:00' ? 'selected' : '' }}>20h</option>
-                                <option value="21:00" {{ old('heure_fin') == '21:00' ? 'selected' : '' }}>21h</option>
-                                <option value="22:00" {{ old('heure_fin') == '22:00' ? 'selected' : '' }}>22h</option>
-                                <option value="23:00" {{ old('heure_fin') == '23:00' ? 'selected' : '' }}>23h</option>
+                                @for($i = 10; $i <= 23; $i++)
+                                    <option value="{{ sprintf('%02d:00', $i) }}" 
+                                            {{ old('heure_fin') == sprintf('%02d:00', $i) ? 'selected' : '' }}
+                                            data-disponible="true">
+                                        {{ sprintf('%02dh', $i) }}
+                                    </option>
+                                @endfor
                             </select>
                             @error('heure_fin')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -429,6 +415,59 @@
 
     // Mettre à jour au chargement de la page si un terrain est déjà sélectionné
     document.addEventListener('DOMContentLoaded', updateMontantEtActivite);
+
+    // Stocker les réservations existantes
+    const reservations = @json($reservations);
+    
+    // Fonction pour vérifier si un créneau est disponible
+    function checkAvailability(date, heureDebut, heureFin, terrainId) {
+        return !reservations.some(reservation => {
+            return reservation.date === date &&
+                   reservation.terrain_id === terrainId &&
+                   ((heureDebut >= reservation.heure_debut && heureDebut < reservation.heure_fin) ||
+                    (heureFin > reservation.heure_debut && heureFin <= reservation.heure_fin) ||
+                    (heureDebut <= reservation.heure_debut && heureFin >= reservation.heure_fin));
+        });
+    }
+
+    // Fonction pour mettre à jour les options disponibles
+    function updateAvailableSlots() {
+        const date = document.getElementById('date').value;
+        const terrainId = document.getElementById('terrain').value;
+        const heureDebutSelect = document.getElementById('heure_debut');
+        const heureFinSelect = document.getElementById('heure_fin');
+
+        if (!date || !terrainId) return;
+
+        // Mettre à jour les options de l'heure de début
+        Array.from(heureDebutSelect.options).forEach(option => {
+            if (option.value) {
+                const isAvailable = checkAvailability(date, option.value, option.value, terrainId);
+                option.disabled = !isAvailable;
+                option.style.color = isAvailable ? '' : '#999';
+                option.style.backgroundColor = isAvailable ? '' : '#f5f5f5';
+            }
+        });
+
+        // Mettre à jour les options de l'heure de fin
+        const selectedHeureDebut = heureDebutSelect.value;
+        Array.from(heureFinSelect.options).forEach(option => {
+            if (option.value) {
+                const isAvailable = checkAvailability(date, selectedHeureDebut, option.value, terrainId);
+                option.disabled = !isAvailable || option.value <= selectedHeureDebut;
+                option.style.color = isAvailable && option.value > selectedHeureDebut ? '' : '#999';
+                option.style.backgroundColor = isAvailable && option.value > selectedHeureDebut ? '' : '#f5f5f5';
+            }
+        });
+    }
+
+    // Écouter les changements de date et de terrain
+    document.getElementById('date').addEventListener('change', updateAvailableSlots);
+    document.getElementById('terrain').addEventListener('change', updateAvailableSlots);
+    document.getElementById('heure_debut').addEventListener('change', updateAvailableSlots);
+
+    // Initialiser l'état des créneaux au chargement de la page
+    document.addEventListener('DOMContentLoaded', updateAvailableSlots);
 </script>
 @endsection
 
