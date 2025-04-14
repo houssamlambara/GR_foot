@@ -21,15 +21,14 @@ use App\Http\Controllers\ReservationController;
 
 // Routes publiques
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-// Route de réservation (protégée par authentification)
 Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
 
 // Routes principales
 Route::middleware(['auth'])->group(function () {
-    Route::get('/index', [PageController::class, 'index']);
     Route::get('/activiter', [PageController::class, 'activiter'])->name('activiter');
     Route::get('/addtournois', [PageController::class, 'addtournois'])->name('addtournois');
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
