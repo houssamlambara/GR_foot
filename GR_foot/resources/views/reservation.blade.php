@@ -423,7 +423,7 @@
     function checkAvailability(date, heureDebut, heureFin, terrainId) {
         return !reservations.some(reservation => {
             return reservation.date === date &&
-                   reservation.terrain_id === terrainId &&
+                   parseInt(reservation.terrain_id) === parseInt(terrainId) &&
                    ((heureDebut >= reservation.heure_debut && heureDebut < reservation.heure_fin) ||
                     (heureFin > reservation.heure_debut && heureFin <= reservation.heure_fin) ||
                     (heureDebut <= reservation.heure_debut && heureFin >= reservation.heure_fin));
@@ -439,6 +439,8 @@
 
         if (!date || !terrainId) return;
 
+        console.log('Vérification des disponibilités pour:', { date, terrainId, reservations });
+
         // Mettre à jour les options de l'heure de début
         Array.from(heureDebutSelect.options).forEach(option => {
             if (option.value) {
@@ -446,6 +448,7 @@
                 option.disabled = !isAvailable;
                 option.style.color = isAvailable ? '' : '#999';
                 option.style.backgroundColor = isAvailable ? '' : '#f5f5f5';
+                console.log('Créneau début:', option.value, 'Disponible:', isAvailable);
             }
         });
 
@@ -457,6 +460,7 @@
                 option.disabled = !isAvailable || option.value <= selectedHeureDebut;
                 option.style.color = isAvailable && option.value > selectedHeureDebut ? '' : '#999';
                 option.style.backgroundColor = isAvailable && option.value > selectedHeureDebut ? '' : '#f5f5f5';
+                console.log('Créneau fin:', option.value, 'Disponible:', isAvailable);
             }
         });
     }
