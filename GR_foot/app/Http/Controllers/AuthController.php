@@ -39,11 +39,28 @@ class AuthController extends Controller
             'password' => 'required|min:3',
         ]);
 
+        // Vérifier d'abord si l'utilisateur est banni
+        $user = User::where('email', $validatedData['email'])->first();
+        
+        if ($user && $user->is_banned) {
+            return back()
+                ->with('error', 'Votre compte a été suspendu. Veuillez contacter l\'administrateur.')
+                ->withInput();
+        }
+
         if (Auth::attempt([
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
         ])) {
             $user = Auth::user();
+
+            // Double vérification du bannissement après la connexion
+            if ($user->is_banned) {
+                Auth::logout();
+                return back()
+                    ->with('error', 'Votre compte a été suspendu. Veuillez contacter l\'administrateur.')
+                    ->withInput();
+            }
 
             if ($user->role == 'Admin') {
                 return redirect()->route('dashboard')->with('success', 'Connexion réussie ! Bienvenue Admin.');

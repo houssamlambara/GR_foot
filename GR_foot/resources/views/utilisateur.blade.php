@@ -182,9 +182,14 @@
                                             <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Admin</span>
                                         @else
                                             <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Utilisateur</span>
-                                        @endif
-                                        @if($user->is_banned)
-                                            <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs ml-2">Banni</span>
+                                            @if($user->is_banned)
+                                                <div class="mt-1">
+                                                    <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs flex items-center space-x-1">
+                                                        <i class="fas fa-ban"></i>
+                                                        <span>Compte suspendu le {{ \Carbon\Carbon::parse($user->banned_at)->format('d/m/Y à H:i') }}</span>
+                                                    </span>
+                                                </div>
+                                            @endif
                                         @endif
                                     </td>
                                     <td class="p-4">{{ $user->created_at->format('d/m/Y') }}</td>
@@ -197,10 +202,10 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <button type="submit" 
-                                                            onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?')"
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir suspendre cet utilisateur ?')"
                                                             class="px-3 py-1 bg-red-100 text-red-600 hover:bg-red-200 rounded-full flex items-center space-x-1">
                                                             <i class="fas fa-ban"></i>
-                                                            <span>Bannir</span>
+                                                            <span>Suspendre</span>
                                                         </button>
                                                     </form>
                                                 @else

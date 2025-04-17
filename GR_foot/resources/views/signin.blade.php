@@ -39,7 +39,7 @@
 
 </head>
 
-<body class="h-full min-h-screen bg-gray-50">
+<body class=" ">
 
     <!-- Navbar -->
     <header class="bg-white shadow-md">
@@ -122,6 +122,23 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             <!-- Container Principal -->
             <div
                 class="relative z-10 bg-white py-8 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-gray-100 w-full max-w-md mb-12">
+
+                @if(session('error'))
+                <div class="mb-6 p-6 bg-red-100 border-2 border-red-500 rounded-lg shadow-lg">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 mr-4">
+                            <svg class="h-8 w-8 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-red-800">Compte suspendu</h3>
+                            <p class="mt-2 text-base text-red-700">{{ session('error') }}</p>
+                            <p class="mt-2 text-sm text-red-600">Pour toute question, veuillez contacter l'administrateur.</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
                 <!-- Formulaire de Connexion -->
                 <form method="POST" id="signInForm" class="space-y-6" action="{{url('/login')}}">
