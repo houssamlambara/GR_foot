@@ -34,7 +34,15 @@ class ReservationController extends Controller
         // Récupérer toutes les réservations existantes
         $reservations = Reservation::where('disponibilite', true)
             ->select('terrain_id', 'date', 'heure_debut', 'heure_fin')
-            ->get();
+            ->get()
+            ->map(function ($reservation) {
+                return [
+                    'terrain_id' => $reservation->terrain_id,
+                    'date' => $reservation->date,
+                    'heure_debut' => substr($reservation->heure_debut, 0, 5),
+                    'heure_fin' => substr($reservation->heure_fin, 0, 5)
+                ];
+            });
         
         return view('reservation', compact('terrains', 'selectedTerrain', 'reservations'));
     }
@@ -45,7 +53,7 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         // Log des données reçues pour le débogage
-        \Log::info('Données de réservation reçues:', $request->all());
+        logger('Données de réservation reçues:', $request->all());
         
         $request->validate([
             'terrain_id' => 'required|exists:terrains,id',
@@ -88,17 +96,17 @@ class ReservationController extends Controller
             $data['disponibilite'] = true;
             
             // Log des données avant création
-            \Log::info('Données préparées pour la création:', $data);
+            logger('Données préparées pour la création:', $data);
             
             $reservation = Reservation::create($data);
             
             // Log de confirmation
-            \Log::info('Réservation créée avec succès:', ['id' => $reservation->id]);
+            logger('Réservation créée avec succès:', ['id' => $reservation->id]);
             
             return redirect()->route('reservation')->with('success', 'Réservation créée avec succès.');
         } catch (\Exception $e) {
             // Log de l'erreur
-            \Log::error('Erreur lors de la création de la réservation:', ['error' => $e->getMessage()]);
+            logger('Erreur lors de la création de la réservation:', ['error' => $e->getMessage()]);
             
             return redirect()->route('reservation')
                 ->with('error', 'Une erreur est survenue lors de la création de la réservation. Veuillez réessayer.')

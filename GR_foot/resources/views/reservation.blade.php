@@ -417,61 +417,87 @@
     document.addEventListener('DOMContentLoaded', updateMontantEtActivite);
 
     // Stocker les réservations existantes
-    const reservations = @json($reservations);
-    
-    // Fonction pour vérifier si un créneau est disponible
-    function checkAvailability(date, heureDebut, heureFin, terrainId) {
-        return !reservations.some(reservation => {
-            return reservation.date === date &&
-                   parseInt(reservation.terrain_id) === parseInt(terrainId) &&
-                   ((heureDebut >= reservation.heure_debut && heureDebut < reservation.heure_fin) ||
-                    (heureFin > reservation.heure_debut && heureFin <= reservation.heure_fin) ||
-                    (heureDebut <= reservation.heure_debut && heureFin >= reservation.heure_fin));
-        });
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Convertir les réservations PHP en objet JavaScript
+        const reservations = {!! json_encode($reservations) !!};
+        console.log('Réservations chargées:', reservations);
 
-    // Fonction pour mettre à jour les options disponibles
-    function updateAvailableSlots() {
-        const date = document.getElementById('date').value;
-        const terrainId = document.getElementById('terrain').value;
-        const heureDebutSelect = document.getElementById('heure_debut');
-        const heureFinSelect = document.getElementById('heure_fin');
+        // Fonction pour vérifier si un créneau est disponible
+        function checkAvailability(date, heureDebut, heureFin, terrainId) {
+            console.log('Vérification pour:', { date, heureDebut, heureFin, terrainId });
+            return !reservations.some(reservation => {
+                const isOverlap = reservation.date === date &&
+                    parseInt(reservation.terrain_id) === parseInt(terrainId) &&
+                    ((heureDebut >= reservation.heure_debut && heureDebut < reservation.heure_fin) ||
+                     (heureFin > reservation.heure_debut && heureFin <= reservation.heure_fin) ||
+                     (heureDebut <= reservation.heure_debut && heureFin >= reservation.heure_fin));
+                
+                if (isOverlap) {
+                    console.log('Chevauchement trouvé avec:', reservation);
+                }
+                return isOverlap;
+            });
+        }
 
-        if (!date || !terrainId) return;
+        // Fonction pour mettre à jour les options disponibles
+        function updateAvailableSlots() {
+            const date = document.getElementById('date').value;
+            const terrainId = document.getElementById('terrain').value;
+            const heureDebutSelect = document.getElementById('heure_debut');
+            const heureFinSelect = document.getElementById('heure_fin');
 
-        console.log('Vérification des disponibilités pour:', { date, terrainId, reservations });
+            if (!date || !terrainId) return;
 
-        // Mettre à jour les options de l'heure de début
-        Array.from(heureDebutSelect.options).forEach(option => {
-            if (option.value) {
-                const isAvailable = checkAvailability(date, option.value, option.value, terrainId);
-                option.disabled = !isAvailable;
-                option.style.color = isAvailable ? '' : '#999';
-                option.style.backgroundColor = isAvailable ? '' : '#f5f5f5';
-                console.log('Créneau début:', option.value, 'Disponible:', isAvailable);
-            }
-        });
+            console.log('Mise à jour des créneaux pour:', { date, terrainId });
 
-        // Mettre à jour les options de l'heure de fin
-        const selectedHeureDebut = heureDebutSelect.value;
-        Array.from(heureFinSelect.options).forEach(option => {
-            if (option.value) {
-                const isAvailable = checkAvailability(date, selectedHeureDebut, option.value, terrainId);
-                option.disabled = !isAvailable || option.value <= selectedHeureDebut;
-                option.style.color = isAvailable && option.value > selectedHeureDebut ? '' : '#999';
-                option.style.backgroundColor = isAvailable && option.value > selectedHeureDebut ? '' : '#f5f5f5';
-                console.log('Créneau fin:', option.value, 'Disponible:', isAvailable);
-            }
-        });
-    }
+            // Mettre à jour les options de l'heure de début
+            Array.from(heureDebutSelect.options).forEach(option => {
+                if (option.value) {
+                    const isAvailable = checkAvailability(date, option.value, option.value, terrainId);
+                    option.disabled = !isAvailable;
+                    if (!isAvailable) {
+                        option.style.backgroundColor = '#f5f5f5';
+                        option.style.color = '#999';
+                        option.style.cursor = 'not-allowed';
+                    } else {
+                        option.style.backgroundColor = '';
+                        option.style.color = '';
+                        option.style.cursor = '';
+                    }
+                }
+            });
 
-    // Écouter les changements de date et de terrain
-    document.getElementById('date').addEventListener('change', updateAvailableSlots);
-    document.getElementById('terrain').addEventListener('change', updateAvailableSlots);
-    document.getElementById('heure_debut').addEventListener('change', updateAvailableSlots);
+            // Mettre à jour les options de l'heure de fin
+            const selectedHeureDebut = heureDebutSelect.value;
+            Array.from(heureFinSelect.options).forEach(option => {
+                if (option.value) {
+                    const isAvailable = checkAvailability(date, selectedHeureDebut, option.value, terrainId);
+                    const isAfterStart = option.value > selectedHeureDebut;
+                    option.disabled = !isAvailable || !isAfterStart;
+                    
+                    if (!isAvailable || !isAfterStart) {
+                        option.style.backgroundColor = '#f5f5f5';
+                        option.style.color = '#999';
+                        option.style.cursor = 'not-allowed';
+                    } else {
+                        option.style.backgroundColor = '';
+                        option.style.color = '';
+                        option.style.cursor = '';
+                    }
+                }
+            });
+        }
 
-    // Initialiser l'état des créneaux au chargement de la page
-    document.addEventListener('DOMContentLoaded', updateAvailableSlots);
+        // Écouter les changements
+        document.getElementById('date').addEventListener('change', updateAvailableSlots);
+        document.getElementById('terrain').addEventListener('change', updateAvailableSlots);
+        document.getElementById('heure_debut').addEventListener('change', updateAvailableSlots);
+
+        // Initialiser l'état des créneaux
+        if (document.getElementById('date').value && document.getElementById('terrain').value) {
+            updateAvailableSlots();
+        }
+    });
 </script>
 @endsection
 
