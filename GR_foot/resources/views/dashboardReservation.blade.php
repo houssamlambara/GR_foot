@@ -132,6 +132,41 @@
             <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-gray-100">
                 <h1 class="text-2xl font-semibold text-gray-800">Reservation List</h1>
 
+                <!-- Messages d'alerte -->
+                @if(session('success'))
+                    <div class="mt-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-sm" role="alert">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm leading-5 font-medium">
+                                    {{ session('success') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="mt-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-sm" role="alert">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm leading-5 font-medium">
+                                    {{ session('error') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Recent bookings -->
                 <div class="mt-8">
                     <div class="bg-white shadow rounded-lg overflow-hidden">
@@ -236,34 +271,53 @@
                     @csrf
                     @method('PUT')
                     <div class="mt-2 space-y-4">
+                        <!-- Champ caché pour l'ID -->
+                        <input type="hidden" name="reservation_id" id="edit_reservation_id">
+                        
+                        <!-- Nom -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Nom</label>
+                            <input type="text" name="nom" id="edit_nom" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                        </div>
+
+                        <!-- Téléphone -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Téléphone</label>
                             <input type="tel" name="telephone" id="edit_telephone" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                         </div>
+
+                        <!-- Date -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Date</label>
                             <input type="date" name="date" id="edit_date" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                         </div>
+
+                        <!-- Heure de début -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Heure de début</label>
                             <select name="heure_debut" id="edit_heure_debut" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                                 @for($i = 9; $i <= 22; $i++)
-                                    <option value="{{ sprintf('%02d:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
                                 @endfor
                             </select>
                         </div>
+
+                        <!-- Heure de fin -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Heure de fin</label>
                             <select name="heure_fin" id="edit_heure_fin" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
                                 @for($i = 10; $i <= 23; $i++)
-                                    <option value="{{ sprintf('%02d:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
                                 @endfor
                             </select>
                         </div>
+
+                        <!-- Terrain -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Terrain</label>
                             <select name="terrain_id" id="edit_terrain_id" required
@@ -274,6 +328,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="mt-5 flex justify-end space-x-3">
                         <button type="button" onclick="closeEditModal()"
                             class="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
@@ -311,6 +366,8 @@
             const form = document.getElementById('editForm');
             form.action = `/reservations/${id}`;
             
+            document.getElementById('edit_reservation_id').value = id;
+            document.getElementById('edit_nom').value = nom;
             document.getElementById('edit_telephone').value = telephone;
             document.getElementById('edit_date').value = date;
             document.getElementById('edit_heure_debut').value = heure_debut;
