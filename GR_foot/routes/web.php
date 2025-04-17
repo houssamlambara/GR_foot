@@ -72,6 +72,8 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::get('/utilisateurs/{utilisateur}/edit', [UtilisateurController::class, 'edit'])->name('utilisateurs.edit');
     Route::put('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'update'])->name('utilisateurs.update');
     Route::delete('/utilisateurs/{utilisateur}', [UtilisateurController::class, 'destroy'])->name('utilisateurs.destroy');
+    Route::put('/utilisateurs/{utilisateur}/ban', [UtilisateurController::class, 'ban'])->name('utilisateurs.ban');
+    Route::put('/utilisateurs/{utilisateur}/unban', [UtilisateurController::class, 'unban'])->name('utilisateurs.unban');
 });
 
 // Routes pour les réservations (admin)
