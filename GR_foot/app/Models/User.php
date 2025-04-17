@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'is_banned',
+        'banned_at'
     ];
 
     /**
@@ -42,5 +44,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'banned_at' => 'datetime',
+        'is_banned' => 'boolean'
     ];
+
+    /**
+     * Get the reservations for the user.
+     */
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

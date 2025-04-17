@@ -183,23 +183,39 @@
                                         @else
                                             <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Utilisateur</span>
                                         @endif
+                                        @if($user->is_banned)
+                                            <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs ml-2">Banni</span>
+                                        @endif
                                     </td>
                                     <td class="p-4">{{ $user->created_at->format('d/m/Y') }}</td>
                                     <td class="p-4 text-center">{{ $user->reservations_count }}</td>
                                     <td class="p-4">
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('utilisateurs.show', $user->id) }}" 
-                                                class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
-                                                <i class="fas fa-eye"></i> <span>Voir</span>
-                                            </a>
-                                            <form action="{{ route('utilisateurs.destroy', $user->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
-                                                    class="text-red-600 hover:text-red-800 flex items-center space-x-1">
-                                                    <i class="fas fa-trash"></i> <span>Supprimer</span>
-                                                </button>
-                                            </form>
+                                            @if(strtolower($user->role) != 'admin')
+                                                @if(!$user->is_banned)
+                                                    <form action="{{ route('utilisateurs.ban', $user->id) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" 
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?')"
+                                                            class="px-3 py-1 bg-red-100 text-red-600 hover:bg-red-200 rounded-full flex items-center space-x-1">
+                                                            <i class="fas fa-ban"></i>
+                                                            <span>Bannir</span>
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <form action="{{ route('utilisateurs.unban', $user->id) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" 
+                                                            onclick="return confirm('Voulez-vous réactiver cet utilisateur ?')"
+                                                            class="px-3 py-1 bg-green-100 text-green-600 hover:bg-green-200 rounded-full flex items-center space-x-1">
+                                                            <i class="fas fa-user-check"></i>
+                                                            <span>Réactiver</span>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

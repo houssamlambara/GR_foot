@@ -135,4 +135,59 @@ class UtilisateurController extends Controller
         return redirect()->route('utilisateurs.index')
             ->with('success', 'Utilisateur supprimé avec succès.');
     }
+
+    /**
+     * Bannit un utilisateur spécifique.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function ban($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Vérifier que l'utilisateur n'est pas un admin
+        if ($user->role === 'Admin') {
+            return back()->with('error', 'Impossible de bannir un administrateur.');
+        }
+
+        // Mettre à jour le statut de l'utilisateur
+        $user->update([
+            'is_banned' => true,
+            'banned_at' => now()
+        ]);
+
+        // Annuler toutes les réservations futures de l'utilisateur
+        $user->reservations()
+            ->where('date', '>=', now())
+            ->update(['disponibilite' => false]);
+
+        return redirect()->route('utilisateurs.index')
+            ->with('success', 'L\'utilisateur a été banni avec succès.');
+    }
+
+    /**
+     * Débannit un utilisateur spécifique.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unban($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Vérifier que l'utilisateur n'est pas un admin
+        if ($user->role === 'Admin') {
+            return back()->with('error', 'Impossible de modifier un administrateur.');
+        }
+
+        // Mettre à jour le statut de l'utilisateur
+        $user->update([
+            'is_banned' => false,
+            'banned_at' => null
+        ]);
+
+        return redirect()->route('utilisateurs.index')
+            ->with('success', 'L\'utilisateur a été réactivé avec succès.');
+    }
 } 
