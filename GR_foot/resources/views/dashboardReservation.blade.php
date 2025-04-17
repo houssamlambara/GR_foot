@@ -195,7 +195,7 @@
                                                 {{ \Carbon\Carbon::parse($reservation->heure_fin)->format('H:i') }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="{{ route('reservations.edit', $reservation->id) }}"
+                                                <a href="#" onclick="openEditModal('{{ $reservation->id }}', '{{ $reservation->nom }}', '{{ $reservation->telephone }}', '{{ $reservation->date }}', '{{ $reservation->heure_debut }}', '{{ $reservation->heure_fin }}', '{{ $reservation->terrain_id }}')"
                                                     class="text-yellow-600 hover:text-yellow-900 mr-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -227,11 +227,74 @@
         </div>
     </div>
 
+    <!-- Modal d'édition -->
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Modifier la réservation</h3>
+                <form id="editForm" method="POST" class="mt-4">
+                    @csrf
+                    @method('PUT')
+                    <div class="mt-2 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Téléphone</label>
+                            <input type="tel" name="telephone" id="edit_telephone" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Date</label>
+                            <input type="date" name="date" id="edit_date" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Heure de début</label>
+                            <select name="heure_debut" id="edit_heure_debut" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                                @for($i = 9; $i <= 22; $i++)
+                                    <option value="{{ sprintf('%02d:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Heure de fin</label>
+                            <select name="heure_fin" id="edit_heure_fin" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                                @for($i = 10; $i <= 23; $i++)
+                                    <option value="{{ sprintf('%02d:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Terrain</label>
+                            <select name="terrain_id" id="edit_terrain_id" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                                @foreach($terrains as $terrain)
+                                    <option value="{{ $terrain->id }}">{{ $terrain->type }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-5 flex justify-end space-x-3">
+                        <button type="button" onclick="closeEditModal()"
+                            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            Annuler
+                        </button>
+                        <button type="submit"
+                            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Récupérer les éléments du bouton et du menu mobile
         const menuButton = document.getElementById('menu-button');
         const closeButton = document.getElementById('close-button');
         const sidebar = document.getElementById('mobile-menu');
+        const editModal = document.getElementById('editModal');
 
         // Ouvrir le menu
         menuButton.addEventListener('click', () => {
@@ -241,6 +304,31 @@
         // Fermer le menu
         closeButton.addEventListener('click', () => {
             sidebar.classList.add('hidden');
+        });
+
+        // Fonctions pour le modal d'édition
+        function openEditModal(id, nom, telephone, date, heure_debut, heure_fin, terrain_id) {
+            const form = document.getElementById('editForm');
+            form.action = `/reservations/${id}`;
+            
+            document.getElementById('edit_telephone').value = telephone;
+            document.getElementById('edit_date').value = date;
+            document.getElementById('edit_heure_debut').value = heure_debut;
+            document.getElementById('edit_heure_fin').value = heure_fin;
+            document.getElementById('edit_terrain_id').value = terrain_id;
+            
+            editModal.classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            editModal.classList.add('hidden');
+        }
+
+        // Fermer le modal si on clique en dehors
+        editModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
         });
     </script>
 
