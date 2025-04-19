@@ -184,9 +184,9 @@
                                             <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Utilisateur</span>
                                             @if($user->is_banned)
                                                 <div class="mt-1">
-                                                    <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs flex items-center space-x-1">
+                                                    <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">
                                                         <i class="fas fa-ban"></i>
-                                                        <span>Compte suspendu le {{ \Carbon\Carbon::parse($user->banned_at)->format('d/m/Y à H:i') }}</span>
+                                                        <span>Banni</span>
                                                     </span>
                                                 </div>
                                             @endif
