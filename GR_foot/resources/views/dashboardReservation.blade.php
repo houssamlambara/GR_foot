@@ -170,8 +170,14 @@
                 <!-- Recent bookings -->
                 <div class="mt-8">
                     <div class="bg-white shadow rounded-lg overflow-hidden">
-                        <div class="px-6 py-5 border-b border-gray-200">
-                            <h3 class="text-lg font-medium text-gray-900">Réservations récentes</h3>
+                        <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+                            <!-- <h3 class="text-lg font-medium text-gray-900">Réservations récentes</h3> -->
+                            <!-- Barre de recherche -->
+                            <div class="relative w-full md:w-1/3">
+                                <input type="text" id="searchInput" placeholder="Rechercher une réservation..."
+                                    class="p-3 pl-10 border border-gray-300 rounded-xl shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                            </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -386,6 +392,28 @@
             if (e.target === this) {
                 closeEditModal();
             }
+        });
+
+        // Script pour la recherche de réservations
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            const searchValue = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll("tbody tr");
+            
+            tableRows.forEach(row => {
+                const client = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+                const telephone = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                const terrain = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+                const date = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                
+                if (client.includes(searchValue) || 
+                    telephone.includes(searchValue) || 
+                    terrain.includes(searchValue) || 
+                    date.includes(searchValue)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
         });
     </script>
 
