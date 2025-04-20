@@ -16,9 +16,7 @@ class Reservation extends Model
         'heure_debut',
         'heure_fin',
         'montant',
-        'disponibilite',
-        'telephone',
-        'activite'
+        'telephone'
     ];
 
     protected $casts = [
