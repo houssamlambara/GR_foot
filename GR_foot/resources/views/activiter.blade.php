@@ -49,10 +49,6 @@
                     <div
                         class="activity-card {{ strtolower($terrain->type) }} group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
                         <div class="relative overflow-hidden">
-                            <div
-                                class="absolute top-4 right-4 z-10 bg-black bg-opacity-75 text-white px-3 py-1 rounded-full text-sm shadow-md">
-                                {{ $terrain->tarif }} DH/h
-                            </div>
                             @if ($terrain->image)
                                 <img src="{{ asset('img/' . $terrain->image) }}" alt="Terrain de {{ $terrain->type }}"
                                     class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500 rounded-t-3xl">
@@ -104,8 +100,11 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-end items-center mt-6 pt-6 border-t border-gray-100">
-                                <a href="{{ route('reservation') }}"
+                            <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
+                                <div class="text-xl font-bold text-gray-800">
+                                    {{ $terrain->tarif }} DH
+                                </div>
+                                <a href="{{ route('reservation', ['terrain_id' => $terrain->id]) }}"
                                     class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition duration-300">
                                     Réserver
                                 </a>
