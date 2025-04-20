@@ -279,13 +279,6 @@
                     <div class="mt-2 space-y-4">
                         <!-- Champ caché pour l'ID -->
                         <input type="hidden" name="reservation_id" id="edit_reservation_id">
-                        
-                        <!-- Nom -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Nom</label>
-                            <input type="text" name="nom" id="edit_nom" required
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                        </div>
 
                         <!-- Téléphone -->
                         <div>
@@ -373,7 +366,6 @@
             form.action = `/reservations/${id}`;
             
             document.getElementById('edit_reservation_id').value = id;
-            document.getElementById('edit_nom').value = nom;
             document.getElementById('edit_telephone').value = telephone;
             document.getElementById('edit_date').value = date;
             document.getElementById('edit_heure_debut').value = heure_debut;
