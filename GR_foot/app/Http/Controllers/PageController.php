@@ -42,8 +42,8 @@ class PageController extends Controller
     }
 
     public function reservation() {
-        $terrains = Terrain::all();
-        return view('reservation', compact('terrains'));
+        $controller = new \App\Http\Controllers\ReservationController();
+        return $controller->create();
     }
 
     public function signin() {

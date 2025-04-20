@@ -26,6 +26,7 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
+Route::get('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check-availability');
 
 // Routes principales
 Route::middleware(['auth'])->group(function () {
@@ -78,8 +79,6 @@ Route::middleware(['auth', 'Admin'])->group(function () {
 
 // Routes pour les réservations (admin)
 Route::middleware(['auth', 'Admin'])->group(function () {
-    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-    Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
     Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
     Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
