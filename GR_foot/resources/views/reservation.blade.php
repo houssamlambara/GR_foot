@@ -53,16 +53,9 @@
                         <!-- Sélection de l'heure de début -->
                         <div>
                             <label for="heure_debut" class="block text-sm font-semibold text-gray-700">Heure de début</label>
-                            <select id="heure_debut" name="heure_debut" required
+                            <select name="heure_debut" id="heure_debut" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
-                                <option value="">Sélectionnez une heure</option>
-                                @for($i = 9; $i <= 22; $i++)
-                                    <option value="{{ sprintf('%02d:00', $i) }}" 
-                                            {{ old('heure_debut') == sprintf('%02d:00', $i) ? 'selected' : '' }}
-                                            data-disponible="true">
-                                        {{ sprintf('%02dh', $i) }}
-                                    </option>
-                                @endfor
+                                <option value="">Sélectionnez une heure de début</option>
                             </select>
                             @error('heure_debut')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -72,33 +65,11 @@
                         <!-- Sélection de l'heure de fin -->
                         <div>
                             <label for="heure_fin" class="block text-sm font-semibold text-gray-700">Heure de fin</label>
-                            <select id="heure_fin" name="heure_fin" required
+                            <select name="heure_fin" id="heure_fin" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
-                                <option value="">Sélectionnez une heure</option>
-                                @for($i = 10; $i <= 23; $i++)
-                                    <option value="{{ sprintf('%02d:00', $i) }}" 
-                                            {{ old('heure_fin') == sprintf('%02d:00', $i) ? 'selected' : '' }}
-                                            data-disponible="true">
-                                        {{ sprintf('%02dh', $i) }}
-                                    </option>
-                                @endfor
+                                <option value="">Sélectionnez une heure de fin</option>
                             </select>
                             @error('heure_fin')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="terrain" class="block text-gray-700 text-sm font-bold mb-2">Terrain</label>
-                            <select name="terrain_id" id="terrain" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                <option value="">Sélectionnez un terrain</option>
-                                @foreach($terrains as $terrain)
-                                    <option value="{{ $terrain->id }}" {{ old('terrain_id') == $terrain->id ? 'selected' : '' }}>
-                                        {{ $terrain->type }} 
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('terrain_id')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -106,6 +77,13 @@
                         <!-- Champs cachés qui seront mis à jour automatiquement -->
                         <input type="hidden" name="montant" id="montant" value="{{ old('montant') }}">
                         <input type="hidden" name="activite" id="activite" value="{{ old('activite') }}">
+                        <input type="hidden" name="terrain_id" id="terrain" value="{{ request()->get('terrain_id') }}">
+
+                        <!-- Indicateur de disponibilité -->
+                        <div id="disponibilite_message" class="hidden bg-gray-800 border-l-4 border-red-500 text-white p-4 mb-4 rounded shadow-lg">
+                            <p class="font-bold text-red-400">Créneaux Réservés !</p>
+                            <p>Les créneaux grisés sont déjà réservés pour cette date et ce terrain.</p>
+                        </div>
 
                         <button type="submit"
                             class="w-full bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white py-4 rounded-xl mt-8">
@@ -123,31 +101,54 @@
                         <!-- Nom complet -->
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Nom Complet</p>
-                            <p id="nom-complet-selection" class="text-lg font-bold text-gray-800">John Doe</p>
+                            <p id="nom-complet-selection" class="text-lg font-bold text-gray-800">{{ Auth::user()->name }}</p>
                         </div>
 
                         <!-- Terrain sélectionné -->
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Terrain Sélectionné</p>
-                            <p id="terrain-selection" class="text-lg font-bold text-gray-800">Terrain 1 - 5x5</p>
+                            <p id="terrain-selection" class="text-lg font-bold text-gray-800">
+                                @if($selectedTerrain)
+                                    {{ $selectedTerrain->type }} - {{ $selectedTerrain->localisation }} ({{ $selectedTerrain->capacite }} joueurs)
+                                @else
+                                    @foreach($terrains as $terrain)
+                                        @if($terrain->id == request()->get('terrain_id'))
+                                            {{ $terrain->type }} - {{ $terrain->localisation }} ({{ $terrain->capacite }} joueurs)
+                                            @break
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </p>
                         </div>
 
                         <!-- Horaire sélectionné -->
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Horaire Sélectionné</p>
-                            <p id="horaire-selection" class="text-lg font-bold text-gray-800">14:00 - 15:00</p>
+                            <p id="horaire-selection" class="text-lg font-bold text-gray-800">-</p>
                         </div>
 
                         <!-- Date de réservation -->
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Date de Réservation</p>
-                            <p id="date-selection" class="text-lg font-bold text-gray-800">18-03-2025</p>
+                            <p id="date-selection" class="text-lg font-bold text-gray-800">-</p>
                         </div>
 
                         <!-- Numéro de téléphone -->
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Numéro de téléphone</p>
-                            <p id="telephone-selection" class="text-lg font-bold text-gray-800">+212 000 000 000</p>
+                            <p id="telephone-selection" class="text-lg font-bold text-gray-800">-</p>
+                        </div>
+
+                        <!-- Tarif -->
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700">Tarif</p>
+                            <p id="tarif-selection" class="text-lg font-bold text-green-600">
+                                @foreach($terrains as $terrain)
+                                    @if($terrain->id == request()->get('terrain_id'))
+                                        {{ $terrain->tarif }} DH/heure
+                                    @endif
+                                @endforeach
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -376,7 +377,14 @@
 
     @include('layout.footer')
 
-<script>
+    <!-- Ajouter cet élément caché pour stocker les données -->
+    <div id="reservationsData" data-reservations="{{ json_encode($reservations) }}" style="display: none;"></div>
+
+    <!-- Ajouter ceci juste avant la balise script -->
+    <div id="debug-info" style="display: none;">
+        Terrain ID from URL: {{ request()->get('terrain_id') }}
+        Selected Terrain: {{ $selectedTerrain ? $selectedTerrain->type : 'None' }}
+    <script>
     // Définition des tarifs par activité
     const tarifs = {
         'football': 400,
@@ -385,120 +393,176 @@
         'basketball': 250
     };
 
-    // Fonction pour mettre à jour le montant et l'activité
-    function updateMontantEtActivite() {
-        const terrainSelect = document.getElementById('terrain');
-        const selectedOption = terrainSelect.options[terrainSelect.selectedIndex];
-        const terrainType = selectedOption.text.split(' - ')[0].toLowerCase();
-        
-        // Déterminer l'activité en fonction du type de terrain
-        let activite = '';
-        if (terrainType.includes('football')) {
-            activite = 'football';
-        } else if (terrainType.includes('padel')) {
-            activite = 'padel';
-        } else if (terrainType.includes('tennis')) {
-            activite = 'tennis';
-        } else if (terrainType.includes('basketball')) {
-            activite = 'basketball';
-        }
-        
-        // Mettre à jour les champs cachés
-        document.getElementById('activite').value = activite;
-        if (activite && tarifs[activite]) {
-            document.getElementById('montant').value = tarifs[activite];
-        }
+    // Fonction pour déterminer l'activité en fonction du type de terrain
+    function determinerActivite(terrainType) {
+        terrainType = terrainType.toLowerCase();
+        if (terrainType.includes('football')) return 'football';
+        if (terrainType.includes('padel')) return 'padel';
+        if (terrainType.includes('tennis')) return 'tennis';
+        if (terrainType.includes('basketball')) return 'basketball';
+        return 'football'; // Par défaut
     }
 
-    // Écouter les changements sur le select de terrain
-    document.getElementById('terrain').addEventListener('change', updateMontantEtActivite);
+    // Fonction pour calculer le montant
+    function calculerMontant(heureDebut, heureFin, tarifHoraire) {
+        if (!heureDebut || !heureFin) return 0;
+        const debut = parseInt(heureDebut.split(':')[0]);
+        const fin = parseInt(heureFin.split(':')[0]);
+        const nombreHeures = fin - debut;
+        return nombreHeures * tarifHoraire;
+    }
 
-    // Mettre à jour au chargement de la page si un terrain est déjà sélectionné
-    document.addEventListener('DOMContentLoaded', updateMontantEtActivite);
-
-    // Stocker les réservations existantes
     document.addEventListener('DOMContentLoaded', function() {
-        // Convertir les réservations PHP en objet JavaScript
-        const reservations = {!! json_encode($reservations) !!};
-        console.log('Réservations chargées:', reservations);
+        const heureDebut = document.getElementById('heure_debut');
+        const heureFin = document.getElementById('heure_fin');
+        const dateInput = document.getElementById('date');
+        const terrainInput = document.getElementById('terrain');
+        const horaireSelection = document.getElementById('horaire-selection');
+        const disponibiliteMessage = document.getElementById('disponibilite_message');
+        const nomInput = document.getElementById('nom');
+        const telephoneInput = document.getElementById('telephone');
+        const dateSelection = document.getElementById('date-selection');
+        const telephoneSelection = document.getElementById('telephone-selection');
+        const nomSelection = document.getElementById('nom-complet-selection');
 
-        // Fonction pour vérifier si un créneau est disponible
-        function checkAvailability(date, heureDebut, heureFin, terrainId) {
-            console.log('Vérification pour:', { date, heureDebut, heureFin, terrainId });
-            return !reservations.some(reservation => {
-                const isOverlap = reservation.date === date &&
-                    parseInt(reservation.terrain_id) === parseInt(terrainId) &&
-                    ((heureDebut >= reservation.heure_debut && heureDebut < reservation.heure_fin) ||
-                     (heureFin > reservation.heure_debut && heureFin <= reservation.heure_fin) ||
-                     (heureDebut <= reservation.heure_debut && heureFin >= reservation.heure_fin));
-                
-                if (isOverlap) {
-                    console.log('Chevauchement trouvé avec:', reservation);
-                }
-                return isOverlap;
-            });
-        }
-
-        // Fonction pour mettre à jour les options disponibles
-        function updateAvailableSlots() {
-            const date = document.getElementById('date').value;
-            const terrainId = document.getElementById('terrain').value;
-            const heureDebutSelect = document.getElementById('heure_debut');
-            const heureFinSelect = document.getElementById('heure_fin');
+        // Fonction pour mettre à jour les heures disponibles
+        function updateAvailableHours() {
+            const date = dateInput.value;
+            const terrainId = terrainInput.value;
 
             if (!date || !terrainId) return;
 
-            console.log('Mise à jour des créneaux pour:', { date, terrainId });
-
-            // Mettre à jour les options de l'heure de début
-            Array.from(heureDebutSelect.options).forEach(option => {
-                if (option.value) {
-                    const isAvailable = checkAvailability(date, option.value, option.value, terrainId);
-                    option.disabled = !isAvailable;
-                    if (!isAvailable) {
-                        option.style.backgroundColor = '#f5f5f5';
-                        option.style.color = '#999';
-                        option.style.cursor = 'not-allowed';
-                    } else {
-                        option.style.backgroundColor = '';
-                        option.style.color = '';
-                        option.style.cursor = '';
-                    }
-                }
-            });
-
-            // Mettre à jour les options de l'heure de fin
-            const selectedHeureDebut = heureDebutSelect.value;
-            Array.from(heureFinSelect.options).forEach(option => {
-                if (option.value) {
-                    const isAvailable = checkAvailability(date, selectedHeureDebut, option.value, terrainId);
-                    const isAfterStart = option.value > selectedHeureDebut;
-                    option.disabled = !isAvailable || !isAfterStart;
+            fetch(`/check-availability?date=${date}&terrain_id=${terrainId}`)
+                .then(response => response.json())
+                .then(data => {
+                    heureDebut.innerHTML = '<option value="">Sélectionnez une heure de début</option>';
                     
-                    if (!isAvailable || !isAfterStart) {
-                        option.style.backgroundColor = '#f5f5f5';
-                        option.style.color = '#999';
-                        option.style.cursor = 'not-allowed';
-                    } else {
-                        option.style.backgroundColor = '';
-                        option.style.color = '';
-                        option.style.cursor = '';
+                    for(let i = 9; i <= 22; i++) {
+                        const timeValue = `${String(i).padStart(2, '0')}:00:00`;
+                        const timeDisplay = `${String(i).padStart(2, '0')}:00`;
+                        const slot = data.availableSlots.find(s => s.time === timeDisplay);
+                        
+                        const option = new Option(timeDisplay, timeValue);
+                        if (slot && slot.reserved) {
+                            option.disabled = true;
+                            option.classList.add('bg-gray-200', 'text-gray-400');
+                        }
+                        heureDebut.add(option);
                     }
-                }
-            });
+
+                    heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+                    
+                    const hasReservedSlots = data.availableSlots.some(slot => slot.reserved);
+                    disponibiliteMessage.classList.toggle('hidden', !hasReservedSlots);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la vérification des disponibilités:', error);
+                });
         }
 
-        // Écouter les changements
-        document.getElementById('date').addEventListener('change', updateAvailableSlots);
-        document.getElementById('terrain').addEventListener('change', updateAvailableSlots);
-        document.getElementById('heure_debut').addEventListener('change', updateAvailableSlots);
+        // Mettre à jour les heures de fin disponibles
+        heureDebut.addEventListener('change', function() {
+            if (!this.value) {
+                heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+                return;
+            }
 
-        // Initialiser l'état des créneaux
-        if (document.getElementById('date').value && document.getElementById('terrain').value) {
-            updateAvailableSlots();
+            const startHour = parseInt(this.value.split(':')[0]);
+            const date = dateInput.value;
+            const terrainId = terrainInput.value;
+
+            fetch(`/check-availability?date=${date}&terrain_id=${terrainId}`)
+                .then(response => response.json())
+                .then(data => {
+                    heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+                    
+                    for(let i = startHour + 1; i <= 23; i++) {
+                        const timeValue = `${String(i).padStart(2, '0')}:00:00`;
+                        const timeDisplay = `${String(i).padStart(2, '0')}:00`;
+                        const slot = data.availableSlots.find(s => s.time === timeDisplay);
+                        
+                        const option = new Option(timeDisplay, timeValue);
+                        if (slot && slot.reserved) {
+                            option.disabled = true;
+                            option.classList.add('bg-gray-200', 'text-gray-400');
+                        }
+                        heureFin.add(option);
+                    }
+                });
+            
+            updateSummary();
+        });
+
+        // Mise à jour du résumé
+        function updateSummary() {
+            const startTime = heureDebut.value;
+            const endTime = heureFin.value;
+            
+            if (startTime && endTime) {
+                horaireSelection.textContent = `${startTime.substring(0, 5)} - ${endTime.substring(0, 5)}`;
+                updateMontantEtActivite();
+            } else {
+                horaireSelection.textContent = '-';
+            }
         }
+
+        // Mise à jour du montant et de l'activité
+        function updateMontantEtActivite() {
+            const terrainElement = document.getElementById('terrain-selection');
+            const terrainType = terrainElement.textContent.split('-')[0].trim();
+            const activite = determinerActivite(terrainType);
+            const heureDebut = document.getElementById('heure_debut').value;
+            const heureFin = document.getElementById('heure_fin').value;
+            
+            document.getElementById('activite').value = activite;
+            const montant = calculerMontant(heureDebut, heureFin, tarifs[activite]);
+            document.getElementById('montant').value = montant;
+            
+            const tarifElement = document.getElementById('tarif-selection');
+            if (montant > 0) {
+                tarifElement.textContent = `${montant} DH (${tarifs[activite]} DH/heure)`;
+            }
+        }
+
+        // Event Listeners
+        dateInput.addEventListener('change', function() {
+            dateSelection.textContent = this.value;
+            updateAvailableHours();
+            updateSummary();
+        });
+
+        heureFin.addEventListener('change', updateSummary);
+        
+        nomInput.addEventListener('input', function() {
+            nomSelection.textContent = this.value;
+        });
+
+        telephoneInput.addEventListener('input', function() {
+            telephoneSelection.textContent = this.value;
+        });
+
+        // Définir la date minimale à aujourd'hui
+        const today = new Date();
+        dateInput.min = today.toISOString().split('T')[0];
+
+        // Chargement initial
+        if (dateInput.value && terrainInput.value) {
+            updateAvailableHours();
+        }
+
+        // Validation du formulaire
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!telephoneInput.value || !dateInput.value || !heureDebut.value || !heureFin.value || !terrainInput.value) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            this.submit();
+        });
     });
-</script>
+    </script>
 @endsection
 
 
