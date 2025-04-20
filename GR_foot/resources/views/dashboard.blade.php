@@ -217,19 +217,24 @@
                                     <tr>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Client</th>
+                                            Client
+                                        </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Terrain</th>
+                                            Terrain
+                                        </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Localisation</th>
+                                            Localisation
+                                        </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Date</th>
+                                            Date
+                                        </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Heure</th>
+                                            Heure
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200" id="recent-reservations">
@@ -238,18 +243,22 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="ml-4">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ $reservation->user->name }}</div>
+                                                        {{ $reservation->user->name }}
+                                                    </div>
                                                     <div class="text-sm text-gray-500">
-                                                        {{ $reservation->user->email }}</div>
+                                                        {{ $reservation->user->email }}
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">{{ $reservation->terrain->type }}
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $reservation->terrain->type }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-500">
-                                                    {{ $reservation->terrain->localisation }}</div>
+                                                    {{ $reservation->terrain->localisation }}
+                                                </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">
@@ -267,8 +276,14 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Liens de pagination -->
+                        <div class="px-6 py-4 ">
+                            {{ $recent_reservations->links() }}
+                        </div>
                     </div>
                 </div>
+
             </main>
         </div>
     </div>

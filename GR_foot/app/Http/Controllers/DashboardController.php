@@ -24,8 +24,7 @@ class DashboardController extends Controller
         // Récupérer les 5 dernières réservations avec les relations
         $recent_reservations = Reservation::with(['user', 'terrain'])
             ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+            ->paginate(6);
 
         // Statistiques pour le graphique avec syntaxe PostgreSQL
         $monthly_stats = Reservation::select(
@@ -59,4 +58,4 @@ class DashboardController extends Controller
 
         return response()->json($stats);
     }
-} 
+}
