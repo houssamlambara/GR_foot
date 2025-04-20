@@ -7,6 +7,7 @@ use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\TournoiController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,3 +84,7 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+
+// Routes du dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/stats', [DashboardController::class, 'getRealtimeStats'])->name('dashboard.stats');

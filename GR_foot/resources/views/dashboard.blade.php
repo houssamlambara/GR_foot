@@ -32,12 +32,12 @@
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="{{Route ('dashboardReservation')}}"
+                        <a href="{{ Route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{Route ('addterrain')}}"
+                        <a href="{{ Route('addterrain') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
@@ -47,7 +47,7 @@
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{Route ('utilisateur')}}"
+                        <a href="{{ Route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -78,12 +78,12 @@
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
                         </a>
-                        <a href="{{Route ('dashboardReservation')}}"
+                        <a href="{{ Route('dashboardReservation') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{Route ('addterrain')}}"
+                        <a href="{{ Route('addterrain') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
@@ -145,16 +145,12 @@
                                 <div class="ml-5 w-0 flex-1">
                                     <dl>
                                         <dt class="text-sm font-medium text-gray-500 truncate">Réservations Totales</dt>
-                                        <dd class="text-3xl font-semibold text-gray-900">248</dd>
+                                        <dd class="text-3xl font-semibold text-gray-900" id="total-reservations">
+                                            {{ $stats['total_reservations'] }}</dd>
                                     </dl>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="bg-gray-50 px-5 py-3">
-                            <div class="text-sm">
-                                <a href="#" class="font-medium text-green-700 hover:text-green-900">Voir les détails</a>
-                            </div>
-                        </div> -->
                     </div>
 
                     <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -166,16 +162,12 @@
                                 <div class="ml-5 w-0 flex-1">
                                     <dl>
                                         <dt class="text-sm font-medium text-gray-500 truncate">Terrains Disponibles</dt>
-                                        <dd class="text-3xl font-semibold text-gray-900">12</dd>
+                                        <dd class="text-3xl font-semibold text-gray-900" id="terrains-disponibles">
+                                            {{ $stats['terrains_disponibles'] }}</dd>
                                     </dl>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="bg-gray-50 px-5 py-3">
-                            <div class="text-sm">
-                                <a href="#" class="font-medium text-blue-700 hover:text-blue-900">Gérer les terrains</a>
-                            </div>
-                        </div> -->
                     </div>
 
                     <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -187,17 +179,12 @@
                                 <div class="ml-5 w-0 flex-1">
                                     <dl>
                                         <dt class="text-sm font-medium text-gray-500 truncate">Tournois Actifs</dt>
-                                        <dd class="text-3xl font-semibold text-gray-900">3</dd>
+                                        <dd class="text-3xl font-semibold text-gray-900" id="tournois-actifs">
+                                            {{ $stats['tournois_actifs'] }}</dd>
                                     </dl>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="bg-gray-50 px-5 py-3">
-                            <div class="text-sm">
-                                <a href="#" class="font-medium text-yellow-700 hover:text-yellow-900">Voir les
-                                    tournois</a>
-                            </div>
-                        </div> -->
                     </div>
 
                     <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -209,17 +196,12 @@
                                 <div class="ml-5 w-0 flex-1">
                                     <dl>
                                         <dt class="text-sm font-medium text-gray-500 truncate">Utilisateurs</dt>
-                                        <dd class="text-3xl font-semibold text-gray-900">183</dd>
+                                        <dd class="text-3xl font-semibold text-gray-900" id="total-users">
+                                            {{ $stats['total_users'] }}</dd>
                                     </dl>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="bg-gray-50 px-5 py-3">
-                            <div class="text-sm">
-                                <a href="#" class="font-medium text-red-700 hover:text-red-900">Gérer les
-                                    utilisateurs</a>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
 
@@ -241,103 +223,47 @@
                                             Terrain</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Localisation</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Date</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Heure</th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Statut</th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
+                                <tbody class="bg-white divide-y divide-gray-200" id="recent-reservations">
+                                    @foreach ($recent_reservations as $reservation)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">Thomas Dubois</div>
-                                                    <div class="text-sm text-gray-500">thomas.d@example.com</div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{ $reservation->user->name }}</div>
+                                                    <div class="text-sm text-gray-500">
+                                                        {{ $reservation->user->email }}</div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Tennis</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14:00 - 15:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Confirmée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">Sophie Martin</div>
-                                                    <div class="text-sm text-gray-500">sophie.m@example.com</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">{{ $reservation->terrain->type }}
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain 5 vs 5</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28 Fév 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16:00 - 18:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">En
-                                                attente</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center">
-
-                                                <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">Alexandre Petit</div>
-                                                    <div class="text-sm text-gray-500">alex.p@example.com</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-500">
+                                                    {{ $reservation->terrain->localisation }}</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ \Carbon\Carbon::parse($reservation->date)->format('d M Y') }}
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Terrain de Padel</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">01 Mar 2025</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10:00 - 11:00</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Annulée</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-2"><i
-                                                    class="fas fa-eye"></i></a>
-                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-2"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <a href="#" class="text-red-600 hover:text-red-900"><i
-                                                    class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ substr($reservation->heure_debut, 0, 5) }} -
+                                                    {{ substr($reservation->heure_fin, 0, 5) }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
