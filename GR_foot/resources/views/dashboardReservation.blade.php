@@ -27,7 +27,7 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="{{Route ('dashboard')}}"
+                        <a href="{{ Route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
@@ -37,17 +37,17 @@
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{Route ('addterrain')}}"
+                        <a href="{{ Route('addterrain') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{Route ('addtournois')}}"
+                        <a href="{{ Route('addtournois') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{Route ('utilisateur')}}"
+                        <a href="{{ Route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -70,7 +70,7 @@
                 </div>
                 <div class="mt-6 flex-1 flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-2">
-                        <a href="{{Route ('dashboard')}}"
+                        <a href="{{ Route('dashboard') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-800 transition duration-300">
                             <i class="fas fa-home mr-3"></i>
                             Tableau de bord
@@ -80,17 +80,17 @@
                             <i class="fas fa-calendar-alt mr-3"></i>
                             Réservations
                         </a>
-                        <a href="{{Route ('addterrain')}}"
+                        <a href="{{ Route('addterrain') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-futbol mr-3"></i>
                             Terrains
                         </a>
-                        <a href="{{Route ('addtournois')}}"
+                        <a href="{{ Route('addtournois') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-trophy mr-3"></i>
                             Tournois
                         </a>
-                        <a href="{{Route ('utilisateur')}}"
+                        <a href="{{ Route('utilisateur') }}"
                             class="flex items-center px-2 py-3 text-sm font-medium rounded-md text-white hover:bg-green-700 transition duration-300">
                             <i class="fas fa-users mr-3"></i>
                             Utilisateurs
@@ -133,12 +133,15 @@
                 <h1 class="text-2xl font-semibold text-gray-800">Reservation List</h1>
 
                 <!-- Messages d'alerte -->
-                @if(session('success'))
-                    <div class="mt-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-sm" role="alert">
+                @if (session('success'))
+                    <div class="mt-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-sm"
+                        role="alert">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <div class="ml-3">
@@ -150,12 +153,15 @@
                     </div>
                 @endif
 
-                @if(session('error'))
-                    <div class="mt-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-sm" role="alert">
+                @if (session('error'))
+                    <div class="mt-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-sm"
+                        role="alert">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                        clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <div class="ml-3">
@@ -236,7 +242,8 @@
                                                 {{ \Carbon\Carbon::parse($reservation->heure_fin)->format('H:i') }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                <a href="#" onclick="openEditModal('{{ $reservation->id }}', '{{ $reservation->nom }}', '{{ $reservation->telephone }}', '{{ $reservation->date }}', '{{ $reservation->heure_debut }}', '{{ $reservation->heure_fin }}', '{{ $reservation->terrain_id }}')"
+                                                <a href="#"
+                                                    onclick="openEditModal('{{ $reservation->id }}', '{{ $reservation->nom }}', '{{ $reservation->telephone }}', '{{ $reservation->date }}', '{{ $reservation->heure_debut }}', '{{ $reservation->heure_fin }}', '{{ $reservation->terrain_id }}')"
                                                     class="text-yellow-600 hover:text-yellow-900 mr-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -260,6 +267,10 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                        
+                        <div class="mt-4">
+                            {{ $reservations->links('pagination::tailwind') }}
                         </div>
                     </div>
                 </div>
@@ -299,8 +310,9 @@
                             <label class="block text-sm font-medium text-gray-700">Heure de début</label>
                             <select name="heure_debut" id="edit_heure_debut" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                                @for($i = 9; $i <= 22; $i++)
-                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                @for ($i = 9; $i <= 22; $i++)
+                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}
+                                    </option>
                                 @endfor
                             </select>
                         </div>
@@ -310,8 +322,9 @@
                             <label class="block text-sm font-medium text-gray-700">Heure de fin</label>
                             <select name="heure_fin" id="edit_heure_fin" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                                @for($i = 10; $i <= 23; $i++)
-                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}</option>
+                                @for ($i = 10; $i <= 23; $i++)
+                                    <option value="{{ sprintf('%02d:00:00', $i) }}">{{ sprintf('%02dh00', $i) }}
+                                    </option>
                                 @endfor
                             </select>
                         </div>
@@ -321,7 +334,7 @@
                             <label class="block text-sm font-medium text-gray-700">Terrain</label>
                             <select name="terrain_id" id="edit_terrain_id" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                                @foreach($terrains as $terrain)
+                                @foreach ($terrains as $terrain)
                                     <option value="{{ $terrain->id }}">{{ $terrain->type }}</option>
                                 @endforeach
                             </select>
@@ -364,14 +377,14 @@
         function openEditModal(id, nom, telephone, date, heure_debut, heure_fin, terrain_id) {
             const form = document.getElementById('editForm');
             form.action = `/reservations/${id}`;
-            
+
             document.getElementById('edit_reservation_id').value = id;
             document.getElementById('edit_telephone').value = telephone;
             document.getElementById('edit_date').value = date;
             document.getElementById('edit_heure_debut').value = heure_debut;
             document.getElementById('edit_heure_fin').value = heure_fin;
             document.getElementById('edit_terrain_id').value = terrain_id;
-            
+
             editModal.classList.remove('hidden');
         }
 
@@ -390,16 +403,16 @@
         document.getElementById("searchInput").addEventListener("keyup", function() {
             const searchValue = this.value.toLowerCase();
             const tableRows = document.querySelectorAll("tbody tr");
-            
+
             tableRows.forEach(row => {
                 const client = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
                 const telephone = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
                 const terrain = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
                 const date = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
-                
-                if (client.includes(searchValue) || 
-                    telephone.includes(searchValue) || 
-                    terrain.includes(searchValue) || 
+
+                if (client.includes(searchValue) ||
+                    telephone.includes(searchValue) ||
+                    terrain.includes(searchValue) ||
                     date.includes(searchValue)) {
                     row.style.display = "";
                 } else {

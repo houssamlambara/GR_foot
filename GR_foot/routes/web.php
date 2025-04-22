@@ -88,3 +88,5 @@ Route::middleware(['auth', 'Admin'])->group(function () {
 // Routes du dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/stats', [DashboardController::class, 'getRealtimeStats'])->name('dashboard.stats');
+
+Route::get('/dashboard-reservation', [DashboardController::class, 'dashboardReservation'])->name('dashboardReservation');

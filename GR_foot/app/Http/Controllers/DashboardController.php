@@ -21,10 +21,10 @@ class DashboardController extends Controller
             'total_users' => User::count()
         ];
 
-        // Récupérer les 5 dernières réservations avec les relations
+        // // Récupérer les 5 dernières réservations avec les relations
         $recent_reservations = Reservation::with(['user', 'terrain'])
             ->orderBy('created_at', 'desc')
-            ->paginate(6);
+            ->paginate(5);
 
         // Statistiques pour le graphique avec syntaxe PostgreSQL
         $monthly_stats = Reservation::select(
@@ -57,5 +57,16 @@ class DashboardController extends Controller
         ];
 
         return response()->json($stats);
+    }
+
+    public function dashboardReservation()
+    {
+        $reservations = Reservation::with(['user', 'terrain'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(5); 
+
+        $terrains = Terrain::all();
+
+        return view('dashboardReservation', compact('reservations', 'terrains'));
     }
 }

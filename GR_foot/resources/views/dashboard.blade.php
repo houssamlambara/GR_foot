@@ -278,8 +278,8 @@
                         </div>
 
                         <!-- Liens de pagination -->
-                        <div class="px-6 py-4 ">
-                            {{ $recent_reservations->links() }}
+                        <div class="mt-4">
+                            {{ $recent_reservations->links('pagination::tailwind') }}
                         </div>
                     </div>
                 </div>
