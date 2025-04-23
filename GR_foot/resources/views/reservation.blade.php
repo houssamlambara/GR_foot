@@ -47,7 +47,11 @@
                         <div>
                             <label for="date" class="block text-sm font-semibold text-gray-700">Date de
                                 réservation</label>
-                            <input type="date" id="date" name="date" value="{{ old('date') }}" required
+                            <input type="date" id="date" name="date" 
+                                value="{{ old('date', date('Y-m-d')) }}"
+                                min="{{ date('Y-m-d') }}"
+                                max="{{ date('Y-m-d', strtotime('+30 days')) }}"
+                                required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
                             @error('date')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -61,6 +65,11 @@
                             <select name="heure_debut" id="heure_debut" required
                                 class="w-full mt-2 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200">
                                 <option value="">Sélectionnez une heure de début</option>
+                                @for ($heure = 9; $heure <= 22; $heure++)
+                                    <option value="{{ sprintf('%02d:00:00', $heure) }}">
+                                        {{ sprintf('%02d:00', $heure) }}
+                                    </option>
+                                @endfor
                             </select>
                             @error('heure_debut')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -91,7 +100,7 @@
                             <p>Les créneaux grisés sont déjà réservés pour cette date et ce terrain.</p>
                         </div>
 
-                        <button id="confirm-btn" type="button"
+                        <button id="confirm-btn" type="submit"
                             class="w-full bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white py-4 rounded-xl mt-8">
                             Confirmer la Réservation
                         </button>
@@ -154,11 +163,20 @@
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Tarif</p>
                             <p id="tarif-selection" class="text-lg font-bold text-green-600">
-                                @foreach ($terrains as $terrain)
-                                    @if ($terrain->id == request()->get('terrain_id'))
-                                        {{ $terrain->tarif }} DH/heure
-                                    @endif
-                                @endforeach
+                                @if($selectedTerrain)
+                                    <span id="tarif-base" data-tarif="{{ $selectedTerrain->tarif }}">
+                                        {{ $selectedTerrain->tarif }} DH/heure
+                                    </span>
+                                @else
+                                    @foreach ($terrains as $terrain)
+                                        @if ($terrain->id == request()->get('terrain_id'))
+                                            <span id="tarif-base" data-tarif="{{ $terrain->tarif }}">
+                                                {{ $terrain->tarif }} DH/heure
+                                            </span>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -440,6 +458,16 @@
     <!-- Ajouter cet élément caché pour stocker les données -->
     <div id="reservationsData" data-reservations="{{ json_encode($reservations) }}" style="display: none;"></div>
 
+    <!-- Ajouter les données du terrain -->
+    <div id="terrain-data" 
+        data-terrain="{{ $selectedTerrain ? json_encode([
+            'id' => $selectedTerrain->id,
+            'tarif' => $selectedTerrain->tarif,
+            'type' => $selectedTerrain->type
+        ]) : '{}' }}"
+        style="display: none;">
+    </div>
+
     <!-- Ajouter ceci juste avant la balise script -->
     <div id="debug-info" style="display: none;">
         Terrain ID from URL: {{ request()->get('terrain_id') }}
@@ -448,221 +476,113 @@
         <script
             src="https://www.paypal.com/sdk/js?client-id=AZJn5WHxQd6j5kzVqhx3exj_IqMg-g4B99i1wpRP9-CiIPv3YrSJIMIqmcjZdgvLrP8K2_uHRvWHNmea&currency=EUR">
         </script>
+        <div id="prix-terrain" data-prix="{{ $selectedTerrain ? $selectedTerrain->tarif : ($terrains->first()->tarif ?? 0) }}"></div>
         <script>
-            // PAYPAL 
-            document.getElementById('confirm-btn').addEventListener('click', function() {
-                // Affiche la div PayPal
-                document.getElementById('paypal-buttons-container').classList.remove('hidden');
-
-                // Empêche d'afficher les boutons plusieurs fois
-                if (!window.paypalRendered) {
-                    window.paypalRendered = true;
-
-                    paypal.Buttons({
-                        createOrder: function(data, actions) {
-                            // Montant du paiement
-                            return actions.order.create({
-                                purchase_units: [{
-                                    amount: {
-                                        value: '50.00' // 💰 À personnaliser selon la réservation
-                                    }
-                                }]
-                            });
-                        },
-                        onApprove: function(data, actions) {
-                            // Paiement réussi
-                            return actions.order.capture().then(function(details) {
-                                alert('Paiement réussi pour ' + details.payer.name.given_name);
-                                // Tu peux ici envoyer une requête AJAX pour enregistrer la réservation côté serveur
-                            });
-                        },
-                        onCancel: function(data) {
-                            alert('Paiement annulé');
-                        },
-                        onError: function(err) {
-                            console.error('Erreur PayPal:', err);
-                        }
-                    }).render('#paypal-buttons-container');
-                }
-            });
-
-            // Définition des tarifs par activité
-            const tarifs = {
-                'football': 400,
-                'padel': 250,
-                'tennis': 300,
-                'basketball': 250
-            };
-
-            // Fonction pour déterminer l'activité en fonction du type de terrain
-            function determinerActivite(terrainType) {
-                terrainType = terrainType.toLowerCase();
-                if (terrainType.includes('football')) return 'football';
-                if (terrainType.includes('padel')) return 'padel';
-                if (terrainType.includes('tennis')) return 'tennis';
-                if (terrainType.includes('basketball')) return 'basketball';
-                return 'football'; // Par défaut
-            }
-
-            // Fonction pour calculer le montant
-            function calculerMontant(heureDebut, heureFin, tarifHoraire) {
-                if (!heureDebut || !heureFin) return 0;
-                const debut = parseInt(heureDebut.split(':')[0]);
-                const fin = parseInt(heureFin.split(':')[0]);
-                const nombreHeures = fin - debut;
-                return nombreHeures * tarifHoraire;
-            }
-
             document.addEventListener('DOMContentLoaded', function() {
+                // Récupérer le prix du terrain
+                const prixTerrain = parseInt(document.getElementById('prix-terrain').dataset.prix);
+
+                // Récupérer les éléments du formulaire
+                const form = document.getElementById('reservationForm');
+                const dateInput = document.getElementById('date');
                 const heureDebut = document.getElementById('heure_debut');
                 const heureFin = document.getElementById('heure_fin');
-                const dateInput = document.getElementById('date');
+                const telephone = document.getElementById('telephone');
                 const terrainInput = document.getElementById('terrain');
-                const horaireSelection = document.getElementById('horaire-selection');
-                const disponibiliteMessage = document.getElementById('disponibilite_message');
-                const nomInput = document.getElementById('nom');
-                const telephoneInput = document.getElementById('telephone');
-                const dateSelection = document.getElementById('date-selection');
-                const telephoneSelection = document.getElementById('telephone-selection');
-                const nomSelection = document.getElementById('nom-complet-selection');
 
-                // Fonction pour mettre à jour les heures disponibles
-                function updateAvailableHours() {
-                    const date = dateInput.value;
-                    const terrainId = terrainInput.value;
+                // Récupérer les éléments d'affichage
+                const dateAffichee = document.getElementById('date-selection');
+                const horaireAffiche = document.getElementById('horaire-selection');
+                const telephoneAffiche = document.getElementById('telephone-selection');
+                const tarifAffiche = document.getElementById('tarif-selection');
+                const messageDisponibilite = document.getElementById('disponibilite_message');
 
-                    if (!date || !terrainId) return;
+                // Fonction pour calculer le montant total
+                function calculerMontant() {
+                    if (!heureDebut.value || !heureFin.value) return;
 
-                    fetch(`/check-availability?date=${date}&terrain_id=${terrainId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            heureDebut.innerHTML = '<option value="">Sélectionnez une heure de début</option>';
-
-                            for (let i = 9; i <= 22; i++) {
-                                const timeValue = `${String(i).padStart(2, '0')}:00:00`;
-                                const timeDisplay = `${String(i).padStart(2, '0')}:00`;
-                                const slot = data.availableSlots.find(s => s.time === timeDisplay);
-
-                                const option = new Option(timeDisplay, timeValue);
-                                if (slot && slot.reserved) {
-                                    option.disabled = true;
-                                    option.classList.add('bg-gray-200', 'text-gray-400');
-                                }
-                                heureDebut.add(option);
-                            }
-
-                            heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
-
-                            const hasReservedSlots = data.availableSlots.some(slot => slot.reserved);
-                            disponibiliteMessage.classList.toggle('hidden', !hasReservedSlots);
-                        })
-                        .catch(error => {
-                            console.error('Erreur lors de la vérification des disponibilités:', error);
-                        });
+                    // Convertir les heures en nombres
+                    const debut = parseInt(heureDebut.value);
+                    const fin = parseInt(heureFin.value);
+                    
+                    // Calculer le nombre d'heures
+                    const nombreHeures = fin - debut;
+                    
+                    // Calculer le montant total
+                    const montantTotal = nombreHeures * prixTerrain;
+                    
+                    // Mettre à jour les champs
+                    document.getElementById('montant').value = montantTotal;
+                    tarifAffiche.textContent = `${montantTotal} DH (${prixTerrain} DH/heure)`;
                 }
 
-                // Mettre à jour les heures de fin disponibles
-                heureDebut.addEventListener('change', function() {
-                    if (!this.value) {
-                        heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
-                        return;
-                    }
-
-                    const startHour = parseInt(this.value.split(':')[0]);
-                    const date = dateInput.value;
-                    const terrainId = terrainInput.value;
-
-                    fetch(`/check-availability?date=${date}&terrain_id=${terrainId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
-
-                            for (let i = startHour + 1; i <= 23; i++) {
-                                const timeValue = `${String(i).padStart(2, '0')}:00:00`;
-                                const timeDisplay = `${String(i).padStart(2, '0')}:00`;
-                                const slot = data.availableSlots.find(s => s.time === timeDisplay);
-
-                                const option = new Option(timeDisplay, timeValue);
-                                if (slot && slot.reserved) {
-                                    option.disabled = true;
-                                    option.classList.add('bg-gray-200', 'text-gray-400');
-                                }
-                                heureFin.add(option);
-                            }
-                        });
-
-                    updateSummary();
-                });
-
-                // Mise à jour du résumé
-                function updateSummary() {
-                    const startTime = heureDebut.value;
-                    const endTime = heureFin.value;
-
-                    if (startTime && endTime) {
-                        horaireSelection.textContent = `${startTime.substring(0, 5)} - ${endTime.substring(0, 5)}`;
-                        updateMontantEtActivite();
+                // Mettre à jour le résumé quand on change les heures
+                function mettreAJourResume() {
+                    if (heureDebut.value && heureFin.value) {
+                        const debut = heureDebut.value.substring(0, 5);
+                        const fin = heureFin.value.substring(0, 5);
+                        horaireAffiche.textContent = `${debut} - ${fin}`;
+                        calculerMontant();
                     } else {
-                        horaireSelection.textContent = '-';
-                    }
-                }
-
-                // Mise à jour du montant et de l'activité
-                function updateMontantEtActivite() {
-                    const terrainElement = document.getElementById('terrain-selection');
-                    const terrainType = terrainElement.textContent.split('-')[0].trim();
-                    const activite = determinerActivite(terrainType);
-                    const heureDebut = document.getElementById('heure_debut').value;
-                    const heureFin = document.getElementById('heure_fin').value;
-
-                    document.getElementById('activite').value = activite;
-                    const montant = calculerMontant(heureDebut, heureFin, tarifs[activite]);
-                    document.getElementById('montant').value = montant;
-
-                    const tarifElement = document.getElementById('tarif-selection');
-                    if (montant > 0) {
-                        tarifElement.textContent = `${montant} DH (${tarifs[activite]} DH/heure)`;
+                        horaireAffiche.textContent = '-';
                     }
                 }
 
                 // Event Listeners
+                heureDebut.addEventListener('change', function() {
+                    heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+                    
+                    if (this.value) {
+                        const heureDebutChoisie = parseInt(this.value);
+                        for (let heure = heureDebutChoisie + 1; heure <= 23; heure++) {
+                            const heureFormatee = heure.toString().padStart(2, '0');
+                            heureFin.add(new Option(heureFormatee + ':00', heureFormatee + ':00:00'));
+                        }
+                    }
+                    
+                    mettreAJourResume();
+                });
+
+                heureFin.addEventListener('change', mettreAJourResume);
+                
                 dateInput.addEventListener('change', function() {
-                    dateSelection.textContent = this.value;
-                    updateAvailableHours();
-                    updateSummary();
+                    dateAffichee.textContent = this.value;
+                    verifierDisponibilites();
                 });
 
-                heureFin.addEventListener('change', updateSummary);
-
-                nomInput.addEventListener('input', function() {
-                    nomSelection.textContent = this.value;
+                telephone.addEventListener('input', function() {
+                    telephoneAffiche.textContent = this.value || '-';
                 });
 
-                telephoneInput.addEventListener('input', function() {
-                    telephoneSelection.textContent = this.value;
-                });
+                // Fonction pour vérifier les disponibilités
+                function verifierDisponibilites() {
+                    if (!dateInput.value || !terrainInput.value) return;
 
-                // Définir la date minimale à aujourd'hui
-                const today = new Date();
-                dateInput.min = today.toISOString().split('T')[0];
+                    fetch(`/check-availability?date=${dateInput.value}&terrain_id=${terrainInput.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            heureDebut.innerHTML = '<option value="">Sélectionnez une heure de début</option>';
+                            heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
 
-                // Chargement initial
-                if (dateInput.value && terrainInput.value) {
-                    updateAvailableHours();
+                            data.creneaux.forEach(creneau => {
+                                const option = new Option(creneau.heure, creneau.heure);
+                                if (!creneau.disponible) {
+                                    option.disabled = true;
+                                    option.classList.add('bg-gray-200');
+                                }
+                                heureDebut.add(option);
+                            });
+
+                            messageDisponibilite.classList.toggle('hidden', 
+                                !data.creneaux.some(creneau => !creneau.disponible));
+                        })
+                        .catch(error => alert('Erreur lors de la vérification des disponibilités'));
                 }
 
-                // Validation du formulaire
-                document.getElementById('reservationForm').addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    if (!telephoneInput.value || !dateInput.value || !heureDebut.value || !heureFin.value || !
-                        terrainInput.value) {
-                        alert('Veuillez remplir tous les champs obligatoires');
-                        return;
-                    }
-
-                    this.submit();
-                });
+                // Initialisation
+                if (dateInput.value && terrainInput.value) {
+                    verifierDisponibilites();
+                }
             });
         </script>
     @endsection
