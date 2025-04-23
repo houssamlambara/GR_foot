@@ -126,17 +126,10 @@
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Terrain Sélectionné</p>
                             <p id="terrain-selection" class="text-lg font-bold text-gray-800">
-                                @if ($selectedTerrain)
-                                    {{ $selectedTerrain->type }} - {{ $selectedTerrain->localisation }}
+                                {{ $selectedTerrain->type ?? 'Non sélectionné' }} - 
+                                {{ $selectedTerrain->localisation ?? '' }}
+                                @if($selectedTerrain)
                                     ({{ $selectedTerrain->capacite }} joueurs)
-                                @else
-                                    @foreach ($terrains as $terrain)
-                                        @if ($terrain->id == request()->get('terrain_id'))
-                                            {{ $terrain->type }} - {{ $terrain->localisation }} ({{ $terrain->capacite }}
-                                            joueurs)
-                                            @break
-                                        @endif
-                                    @endforeach
                                 @endif
                             </p>
                         </div>
@@ -163,20 +156,9 @@
                         <div>
                             <p class="text-sm font-semibold text-gray-700">Tarif</p>
                             <p id="tarif-selection" class="text-lg font-bold text-green-600">
-                                @if($selectedTerrain)
-                                    <span id="tarif-base" data-tarif="{{ $selectedTerrain->tarif }}">
-                                        {{ $selectedTerrain->tarif }} DH/heure
-                                    </span>
-                                @else
-                                    @foreach ($terrains as $terrain)
-                                        @if ($terrain->id == request()->get('terrain_id'))
-                                            <span id="tarif-base" data-tarif="{{ $terrain->tarif }}">
-                                                {{ $terrain->tarif }} DH/heure
-                                            </span>
-                                            @break
-                                        @endif
-                                    @endforeach
-                                @endif
+                                <span id="tarif-base" data-tarif="{{ $selectedTerrain->tarif ?? 0 }}">
+                                    {{ $selectedTerrain->tarif ?? 0 }} DH/heure
+                                </span>
                             </p>
                         </div>
                     </div>
