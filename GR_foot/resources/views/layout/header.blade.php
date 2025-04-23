@@ -8,6 +8,7 @@
     <title>@yield('title', 'Réservation de Terrain de Football')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <style>
         /* Ajout d'un fond de page léger et d'animations */
         body {

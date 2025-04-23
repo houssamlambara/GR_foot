@@ -134,14 +134,16 @@
             <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-gray-100">
                 <h1 class="text-2xl font-semibold text-gray-800">Gestion des terrains</h1>
 
-                @if(session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                        role="alert">
                         <span class="block sm:inline">{{ session('success') }}</span>
                     </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+                        role="alert">
                         <strong class="font-bold">Erreur!</strong>
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -158,7 +160,8 @@
                             <h3 class="text-lg font-medium text-gray-900">Ajouter un nouveau terrain</h3>
                         </div>
                         <div class="p-4 sm:p-6">
-                            <form action="{{ route('terrains.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 sm:space-y-6">
+                            <form action="{{ route('terrains.store') }}" method="POST" enctype="multipart/form-data"
+                                class="space-y-4 sm:space-y-6">
                                 @csrf
                                 <div class="grid grid-cols-1 gap-y-4 sm:gap-y-6 gap-x-4 sm:grid-cols-6">
                                     <!-- Type de terrain -->
@@ -244,6 +247,7 @@
                     </div>
                 </div>
 
+
                 <!-- Section pour lister les terrains existants -->
                 <div class="mt-8 bg-white shadow rounded-lg overflow-hidden">
                     <div class="px-4 sm:px-6 py-5 border-b border-gray-200">
@@ -254,34 +258,34 @@
                     <div class="block sm:hidden">
                         <div class="divide-y divide-gray-200">
                             @forelse($terrains as $terrain)
-                            <!-- Carte pour chaque terrain (mobile) -->
-                            <div class="p-4">
-                                <div class="flex items-center mb-2">
-                                    <!-- Image à gauche -->
-                                    <div class="w-24 h-24 flex-shrink-0">
-                                        @if($terrain->image)
-                                            <img src="{{ asset('img/' . $terrain->image) }}" alt="Photo du terrain"
-                                                class="w-24 h-24 rounded object-cover">
-                                        @else
-                                            <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
-                                                class="w-24 h-24 rounded object-cover">
-                                        @endif
-                                    </div>
-                                    <!-- Texte à droite -->
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $terrain->type }}
+                                <!-- Carte pour chaque terrain (mobile) -->
+                                <div class="p-4">
+                                    <div class="flex items-center mb-2">
+                                        <!-- Image à gauche -->
+                                        <div class="w-24 h-24 flex-shrink-0">
+                                            @if ($terrain->image)
+                                                <img src="{{ asset('img/' . $terrain->image) }}"
+                                                    alt="Photo du terrain" class="w-24 h-24 rounded object-cover">
+                                            @else
+                                                <img src="{{ asset('img/default-terrain.png') }}"
+                                                    alt="Photo par défaut" class="w-24 h-24 rounded object-cover">
+                                            @endif
                                         </div>
-                                        <div class="text-sm text-gray-500">
-                                            {{ $terrain->localisation }}
+                                        <!-- Texte à droite -->
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{ $terrain->type }}
+                                            </div>
+                                            <div class="text-sm text-gray-500">
+                                                {{ $terrain->localisation }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             @empty
-                            <div class="p-4 text-center text-gray-500">
-                                Aucun terrain n'a été ajouté pour le moment.
-                            </div>
+                                <div class="p-4 text-center text-gray-500">
+                                    Aucun terrain n'a été ajouté pour le moment.
+                                </div>
                             @endforelse
                         </div>
                     </div>
@@ -313,43 +317,48 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse($terrains as $terrain)
-                                <tr>
-                                    <td class="py-2 px-4">
-                                        <div class="flex items-center">
-                                            <div class="w-28 h-28 flex-shrink-0">
-                                                @if($terrain->image)
-                                                    <img src="{{ asset('img/' . $terrain->image) }}" alt="Photo du terrain"
-                                                        class="w-28 h-28 rounded object-cover">
-                                                @else
-                                                    <img src="{{ asset('img/default-terrain.png') }}" alt="Photo par défaut"
-                                                        class="w-28 h-28 rounded object-cover">
-                                                @endif
+                                    <tr>
+                                        <td class="py-2 px-4">
+                                            <div class="flex items-center">
+                                                <div class="w-28 h-28 flex-shrink-0">
+                                                    @if ($terrain->image)
+                                                        <img src="{{ asset('img/' . $terrain->image) }}"
+                                                            alt="Photo du terrain"
+                                                            class="w-28 h-28 rounded object-cover">
+                                                    @else
+                                                        <img src="{{ asset('img/default-terrain.png') }}"
+                                                            alt="Photo par défaut"
+                                                            class="w-28 h-28 rounded object-cover">
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-2 px-4">{{ $terrain->type }}</td>
-                                    <td class="py-2 px-4">{{ $terrain->capacite }}</td>
-                                    <td class="py-2 px-4">{{ $terrain->tarif }} DH</td>
-                                    <td class="py-2 px-4">{{ $terrain->localisation }}</td>
-                                    <td class="py-2 px-4">
-                                        <div class="flex flex-col sm:flex-row gap-2 justify-start">
-                                            <button onclick="openEditModal({{ $terrain->id }}, '{{ $terrain->type }}', {{ $terrain->capacite }}, {{ $terrain->tarif }}, '{{ $terrain->localisation }}')"
-                                                class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
-                                            <form action="{{ route('terrains.destroy', $terrain->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce terrain ?')"
-                                                    class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="py-2 px-4">{{ $terrain->type }}</td>
+                                        <td class="py-2 px-4">{{ $terrain->capacite }}</td>
+                                        <td class="py-2 px-4">{{ $terrain->tarif }} DH</td>
+                                        <td class="py-2 px-4">{{ $terrain->localisation }}</td>
+                                        <td class="py-2 px-4">
+                                            <div class="flex flex-col sm:flex-row gap-2 justify-start">
+                                                <button
+                                                    onclick="openEditModal({{ $terrain->id }}, '{{ $terrain->type }}', {{ $terrain->capacite }}, {{ $terrain->tarif }}, '{{ $terrain->localisation }}')"
+                                                    class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
+                                                <form action="{{ route('terrains.destroy', $terrain->id) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce terrain ?')"
+                                                        class="bg-red-500 text-white px-3 py-1 rounded-md text-sm">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="6" class="py-4 text-center text-gray-500">
-                                        Aucun terrain n'a été ajouté pour le moment.
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="6" class="py-4 text-center text-gray-500">
+                                            Aucun terrain n'a été ajouté pour le moment.
+                                        </td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -373,6 +382,32 @@
         closeButton.addEventListener('click', () => {
             sidebar.classList.add('hidden');
         });
+
+        function openEditModal(id, type, capacite, tarif, localisation) {
+            // Récupérer le formulaire d'ajout
+            const form = document.querySelector('form');
+
+            // Modifier l'action du formulaire vers "update"
+            form.action = `/terrains/${id}`;
+
+            // Ajouter un input hidden pour le spoofing de méthode PUT
+            const methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'PUT';
+            form.appendChild(methodField);
+
+            // Préremplir les champs
+            document.getElementById('type').value = type;
+            document.getElementById('capacite').value = capacite;
+            document.getElementById('tarif').value = tarif;
+            document.getElementById('localisation').value = localisation;
+
+            // Optionnel : faire défiler jusqu’au formulaire
+            form.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     </script>
 </body>
 
