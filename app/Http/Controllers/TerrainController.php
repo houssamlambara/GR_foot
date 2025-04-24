@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Terrain;
 use App\Models\Region;
+use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,9 +15,10 @@ class TerrainController extends Controller
      */
     public function create()
     {
-        $terrains = Terrain::all();
-        $regions = Region::all();
-        return view('addterrain', compact('terrains', 'regions'));
+        $terrains = Terrain::with('region.ville')->get();
+        $regions = Region::with('ville')->get();
+        $villes = Ville::all();
+        return view('addterrain', compact('terrains', 'regions', 'villes'));
     }
 
     /**
@@ -29,15 +31,21 @@ class TerrainController extends Controller
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|numeric|min:0',
             'region' => 'required|string|max:255',
+            'ville' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
 
         $data = $request->all();
 
-        // Créer ou récupérer la région
-        $region = Region::firstOrCreate(['nom_ville' => $request->region]);
+        // Créer ou récupérer la ville et la région
+        $ville = Ville::firstOrCreate(['nom' => $request->ville]);
+        $region = Region::firstOrCreate(
+            ['nom' => $request->region],
+            ['ville_id' => $ville->id]
+        );
+        
         $data['region_id'] = $region->id;
-        unset($data['region']); // Retirer le champ region car nous utilisons region_id
+        unset($data['region'], $data['ville']);
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -61,9 +69,10 @@ class TerrainController extends Controller
      */
     public function index()
     {
-        $terrains = Terrain::with('region')->get();
-        $regions = Region::all();
-        return view('addterrain', compact('terrains', 'regions'));
+        $terrains = Terrain::with('region.ville')->get();
+        $regions = Region::with('ville')->get();
+        $villes = Ville::all();
+        return view('addterrain', compact('terrains', 'regions', 'villes'));
     }
 
     /**
@@ -72,7 +81,8 @@ class TerrainController extends Controller
     public function edit(Terrain $terrain)
     {
         $regions = Region::all();
-        return view('terrains.edit', compact('terrain', 'regions'));
+        $villes = Ville::all();
+        return view('terrains.edit', compact('terrain', 'regions', 'villes'));
     }
 
     /**
@@ -85,13 +95,19 @@ class TerrainController extends Controller
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|integer|min:0',
             'region' => 'required|string|max:255',
+            'ville' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
 
-        // Créer ou récupérer la région
-        $region = Region::firstOrCreate(['nom_ville' => $request->region]);
+        // Créer ou récupérer la ville et la région
+        $ville = Ville::firstOrCreate(['nom' => $request->ville]);
+        $region = Region::firstOrCreate(
+            ['nom' => $request->region],
+            ['ville_id' => $ville->id]
+        );
+        
         $validatedData['region_id'] = $region->id;
-        unset($validatedData['region']); // Retirer le champ region car nous utilisons region_id
+        unset($validatedData['region'], $validatedData['ville']);
 
         if ($request->hasFile('image')) {
             // Delete old image if it exists

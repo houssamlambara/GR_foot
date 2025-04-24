@@ -203,13 +203,25 @@
 
                                     <!-- Région -->
                                     <div class="col-span-1 sm:col-span-3">
-                                        <label for="region_id" class="block text-sm font-medium text-gray-700">
+                                        <label for="region" class="block text-sm font-medium text-gray-700">
                                             Région
                                         </label>
                                         <div class="mt-1">
                                             <input type="text" name="region" id="region"
                                                 class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
                                                 placeholder="Entrez la région" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ville -->
+                                    <div class="col-span-1 sm:col-span-3">
+                                        <label for="ville" class="block text-sm font-medium text-gray-700">
+                                            Ville
+                                        </label>
+                                        <div class="mt-1">
+                                            <input type="text" name="ville" id="ville"
+                                                class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full text-sm border-gray-300 rounded-md p-4"
+                                                placeholder="Entrez la ville" required>
                                         </div>
                                     </div>
 
@@ -278,7 +290,10 @@
                                             {{ $terrain->type }}
                                         </div>
                                         <div class="text-sm text-gray-500">
-                                            {{ $terrain->region ? $terrain->region->nom_ville : 'Non assigné' }}
+                                            Région: {{ $terrain->region ? $terrain->region->nom : 'Non assigné' }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            Ville: {{ $terrain->region && $terrain->region->ville ? $terrain->region->ville->nom : 'Non assigné' }}
                                         </div>
                                     </div>
                                 </div>
@@ -313,6 +328,9 @@
                                         Région</th>
                                     <th
                                         class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Ville</th>
+                                    <th
+                                        class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions</th>
                                 </tr>
                             </thead>
@@ -337,11 +355,12 @@
                                     <td class="py-2 px-4">{{ $terrain->type }}</td>
                                     <td class="py-2 px-4">{{ $terrain->capacite }}</td>
                                     <td class="py-2 px-4">{{ $terrain->tarif }} DH</td>
-                                    <td class="py-2 px-4">{{ $terrain->region ? $terrain->region->nom_ville : 'Non assigné' }}</td>
+                                    <td class="py-2 px-4">{{ $terrain->region ? $terrain->region->nom : 'Non assigné' }}</td>
+                                    <td class="py-2 px-4">{{ $terrain->region && $terrain->region->ville ? $terrain->region->ville->nom : 'Non assigné' }}</td>
                                     <td class="py-2 px-4">
                                         <div class="flex flex-col sm:flex-row gap-2 justify-start">
                                             <button
-                                                onclick="openEditModal({{ $terrain->id }}, '{{ $terrain->type }}', {{ $terrain->capacite }}, {{ $terrain->tarif }}, '{{ $terrain->region ? $terrain->region->nom_ville : '' }}')"
+                                                onclick="openEditModal('{{ $terrain->id }}', '{{ $terrain->type }}', '{{ $terrain->capacite }}', '{{ $terrain->tarif }}', '{{ $terrain->region ? $terrain->region->nom : '' }}', '{{ $terrain->region && $terrain->region->ville ? $terrain->region->ville->nom : '' }}')"
                                                 class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">Modifier</button>
                                             <form action="{{ route('terrains.destroy', $terrain->id) }}"
                                                 method="POST" class="inline">
@@ -384,7 +403,7 @@
             sidebar.classList.add('hidden');
         });
 
-        function openEditModal(id, type, capacite, tarif, region) {
+        function openEditModal(id, type, capacite, tarif, region, ville) {
             // Récupérer le formulaire d'ajout
             const form = document.getElementById('terrainForm');
 
@@ -399,6 +418,7 @@
             document.getElementById('capacite').value = capacite;
             document.getElementById('tarif').value = tarif;
             document.getElementById('region').value = region;
+            document.getElementById('ville').value = ville;
 
             // Optionnel : faire défiler jusqu'au formulaire
             form.scrollIntoView({

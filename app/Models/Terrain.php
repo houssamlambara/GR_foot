@@ -16,7 +16,6 @@ class Terrain extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
         'type',
         'capacite',
         'tarif',
@@ -37,7 +36,6 @@ class Terrain extends Model
      */
     public function disponibiliter(): bool
     {
-        // Implement your availability logic here
         return true;
     }
 
@@ -46,7 +44,6 @@ class Terrain extends Model
      */
     public function reserverTerrain(): bool
     {
-        // Implement your reservation logic here
         return true;
     }
 
@@ -60,7 +57,9 @@ class Terrain extends Model
             'type' => $this->type,
             'capacite' => $this->capacite,
             'tarif' => $this->tarif,
-            'region' => $this->region->nom_ville
+            'image' => $this->image,
+            'region' => $this->region ? $this->region->nom : null,
+            'ville' => $this->region && $this->region->ville ? $this->region->ville->nom : null
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\TournoiController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\VilleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,3 +91,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/dashboard/stats', [DashboardController::class, 'getRealtimeStats'])->name('dashboard.stats');
 
 Route::get('/dashboard-reservation', [DashboardController::class, 'dashboardReservation'])->name('dashboardReservation');
+
+Route::resource('villes', VilleController::class);
