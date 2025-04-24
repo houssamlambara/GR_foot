@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Models\Terrain;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,7 @@ class ReservationController extends Controller
         $terrainId = request('terrain_id');
         $selectedTerrain = null;
         $terrains = Terrain::all();
+        $regions = Region::all();
 
         if ($terrainId) {
             $selectedTerrain = Terrain::find($terrainId);
@@ -42,7 +44,7 @@ class ReservationController extends Controller
             })
             ->get(['terrain_id', 'date', 'heure_debut', 'heure_fin']);
 
-        return view('reservation', compact('terrains', 'selectedTerrain', 'date', 'reservations'));
+        return view('reservation', compact('terrains', 'selectedTerrain', 'date', 'reservations', 'regions'));
     }
 
     /**
@@ -151,7 +153,8 @@ class ReservationController extends Controller
             ->paginate(10);
 
         $terrains = Terrain::all();
-        return view('dashboardreservation', compact('reservations', 'terrains'));
+        $regions = Region::all();
+        return view('dashboardreservation', compact('reservations', 'terrains', 'regions'));
     }
 
     public function checkAvailability(Request $request)

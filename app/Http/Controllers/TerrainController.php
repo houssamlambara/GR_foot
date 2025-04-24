@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Terrain;
+use App\Models\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TerrainController extends Controller
 {
@@ -13,7 +15,8 @@ class TerrainController extends Controller
     public function create()
     {
         $terrains = Terrain::all();
-        return view('addterrain', compact('terrains'));
+        $regions = Region::all();
+        return view('addterrain', compact('terrains', 'regions'));
     }
 
     /**
@@ -25,16 +28,25 @@ class TerrainController extends Controller
             'type' => 'required|string|max:255',
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|numeric|min:0',
-            'localisation' => 'required|string|max:255',
+            'region' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
 
         $data = $request->all();
 
+        // Créer ou récupérer la région
+        $region = Region::firstOrCreate(['nom_ville' => $request->region]);
+        $data['region_id'] = $region->id;
+        unset($data['region']); // Retirer le champ region car nous utilisons region_id
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Store the image in the public disk
             $image->move(public_path('img'), $imageName);
+            
+            // Make sure the image path is relative to public directory
             $data['image'] = $imageName;
         }
 
@@ -49,8 +61,9 @@ class TerrainController extends Controller
      */
     public function index()
     {
-        $terrains = Terrain::all();
-        return view('addterrain', compact('terrains'));
+        $terrains = Terrain::with('region')->get();
+        $regions = Region::all();
+        return view('addterrain', compact('terrains', 'regions'));
     }
 
     /**
@@ -58,7 +71,8 @@ class TerrainController extends Controller
      */
     public function edit(Terrain $terrain)
     {
-        return view('terrains.edit', compact('terrain'));
+        $regions = Region::all();
+        return view('terrains.edit', compact('terrain', 'regions'));
     }
 
     /**
@@ -70,20 +84,28 @@ class TerrainController extends Controller
             'type' => 'required|string|max:50',
             'capacite' => 'required|integer|min:1',
             'tarif' => 'required|integer|min:0',
-            'localisation' => 'required|string|max:255',
+            'region' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240'
         ]);
 
+        // Créer ou récupérer la région
+        $region = Region::firstOrCreate(['nom_ville' => $request->region]);
+        $validatedData['region_id'] = $region->id;
+        unset($validatedData['region']); // Retirer le champ region car nous utilisons region_id
+
         if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image si elle existe
+            // Delete old image if it exists
             if ($terrain->image && file_exists(public_path('img/' . $terrain->image))) {
                 unlink(public_path('img/' . $terrain->image));
             }
 
-            // Sauvegarder la nouvelle image
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
+            
+            // Store the new image
             $image->move(public_path('img'), $imageName);
+            
+            // Update the image path
             $validatedData['image'] = $imageName;
         }
 
@@ -98,6 +120,11 @@ class TerrainController extends Controller
      */
     public function destroy(Terrain $terrain)
     {
+        // Supprimer l'image si elle existe
+        if ($terrain->image && file_exists(public_path('img/' . $terrain->image))) {
+            unlink(public_path('img/' . $terrain->image));
+        }
+
         $terrain->delete();
 
         return redirect()->route('terrains.index')

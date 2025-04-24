@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Terrain extends Model
 {
@@ -15,10 +16,51 @@ class Terrain extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'type',
         'capacite',
         'tarif',
-        'localisation',
+        'region_id',
         'image'
     ];
+
+    /**
+     * Get the region that owns the terrain
+     */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    /**
+     * Check if the terrain is available
+     */
+    public function disponibiliter(): bool
+    {
+        // Implement your availability logic here
+        return true;
+    }
+
+    /**
+     * Reserve the terrain
+     */
+    public function reserverTerrain(): bool
+    {
+        // Implement your reservation logic here
+        return true;
+    }
+
+    /**
+     * Display terrain information
+     */
+    public function afficher(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'capacite' => $this->capacite,
+            'tarif' => $this->tarif,
+            'region' => $this->region->nom_ville
+        ];
+    }
 }

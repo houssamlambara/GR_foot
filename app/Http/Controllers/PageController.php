@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Terrain;
+use App\Models\Region;
 
 class PageController extends Controller
 {
@@ -22,7 +23,8 @@ class PageController extends Controller
 
     public function addterrain() {
         $terrains = Terrain::all();
-        return view('addterrain', compact('terrains'));
+        $regions = Region::all();
+        return view('addterrain', compact('terrains', 'regions'));
     }
 
     public function addtournois() {
