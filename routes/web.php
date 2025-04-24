@@ -9,6 +9,7 @@ use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VilleController;
+use App\Http\Controllers\ActiviteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::get('/check-availability', [ReservationController::class, 'checkAvailabil
 
 // Routes principales
 Route::middleware(['auth'])->group(function () {
-    Route::get('/activiter', [PageController::class, 'activiter'])->name('activiter');
+    Route::get('/activiter', [ActiviteController::class, 'index'])->name('activiter');
     Route::get('/addtournois', [PageController::class, 'addtournois'])->name('addtournois');
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardReservation', [ReservationController::class, 'dashboard'])->name('dashboardReservation');

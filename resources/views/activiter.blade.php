@@ -27,18 +27,20 @@
                     <option value="basketball">Basketball</option>
                 </select>
 
-                <!-- Filtrage par Région -->
-                <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
-                    <option value="">Toutes les Régions</option>
-                    <option value="region1">Région 1</option>
-                    <option value="region2">Région 2</option>
-                </select>
-
                 <!-- Filtrage par Ville -->
                 <select id="cityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
                     <option value="">Toutes les Villes</option>
-                    <option value="ville1">Ville 1</option>
-                    <option value="ville2">Ville 2</option>
+                    @foreach($villes as $ville)
+                        <option value="{{ $ville->id }}">{{ $ville->nom }}</option>
+                    @endforeach
+                </select>
+
+                <!-- Filtrage par Région -->
+                <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                    <option value="">Toutes les Régions</option>
+                    @foreach($regions as $region)
+                        <option value="{{ $region->id }}" data-ville="{{ $region->ville_id }}">{{ $region->nom }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -47,7 +49,9 @@
                 @foreach ($terrains as $terrain)
                     <!-- Terrain Card -->
                     <div
-                        class="activity-card {{ strtolower($terrain->type) }} group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+                        class="activity-card {{ strtolower($terrain->type) }} group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300"
+                        data-ville="{{ $terrain->region->ville_id ?? '' }}"
+                        data-region="{{ $terrain->region_id ?? '' }}">
                         <div class="relative overflow-hidden">
                             @if ($terrain->image)
                                 <img src="{{ asset('img/' . $terrain->image) }}" alt="Terrain de {{ $terrain->type }}"
@@ -104,7 +108,11 @@
                                 <div class="text-xl font-bold text-gray-800">
                                     {{ $terrain->tarif }} DH
                                 </div>
-                                <a href="{{ route('reservation', ['terrain_id' => $terrain->id]) }}"
+                                <a href="{{ route('reservation', [
+                                    'terrain_id' => $terrain->id,
+                                    'ville_id' => $terrain->region->ville_id ?? '',
+                                    'region_id' => $terrain->region_id ?? ''
+                                ]) }}"
                                     class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition duration-300">
                                     Réserver
                                 </a>
@@ -120,30 +128,41 @@
     @include('layout.footer')
 
     <script>
-        // Filtrage des cartes d'activités
         document.addEventListener('DOMContentLoaded', function() {
             const sportFilter = document.getElementById('sportFilter');
             const regionFilter = document.getElementById('regionFilter');
             const cityFilter = document.getElementById('cityFilter');
-            const availabilityFilter = document.getElementById('availabilityFilter');
             const activityCards = document.querySelectorAll('.activity-card');
+
+            // Filtrer les régions en fonction de la ville sélectionnée
+            cityFilter.addEventListener('change', function() {
+                const selectedVilleId = this.value;
+                const regionOptions = regionFilter.querySelectorAll('option');
+
+                regionFilter.value = ''; // Réinitialiser la sélection de région
+
+                regionOptions.forEach(option => {
+                    if (!selectedVilleId || option.value === '' || option.dataset.ville === selectedVilleId) {
+                        option.style.display = '';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+
+                filterCards();
+            });
 
             function filterCards() {
                 const selectedSport = sportFilter.value.toLowerCase();
-                const selectedRegion = regionFilter.value.toLowerCase();
-                const selectedCity = cityFilter.value.toLowerCase();
-                const selectedAvailability = availabilityFilter.value.toLowerCase();
+                const selectedRegion = regionFilter.value;
+                const selectedVille = cityFilter.value;
 
                 activityCards.forEach(card => {
                     const sportType = card.classList.contains(selectedSport);
-                    const region = card.dataset.region === selectedRegion;
-                    const city = card.dataset.city === selectedCity;
-                    const availability = card.dataset.availability === selectedAvailability;
+                    const region = !selectedRegion || card.dataset.region === selectedRegion;
+                    const ville = !selectedVille || card.dataset.ville === selectedVille;
 
-                    if ((!selectedSport || sportType) &&
-                        (!selectedRegion || region) &&
-                        (!selectedCity || city) &&
-                        (!selectedAvailability || availability)) {
+                    if ((!selectedSport || sportType) && region && ville) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -154,7 +173,6 @@
             sportFilter.addEventListener('change', filterCards);
             regionFilter.addEventListener('change', filterCards);
             cityFilter.addEventListener('change', filterCards);
-            availabilityFilter.addEventListener('change', filterCards);
         });
     </script>
 @endsection

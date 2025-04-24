@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Terrain;
 use App\Models\Region;
+use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,11 +28,9 @@ class ReservationController extends Controller
         // Récupérer le terrain sélectionné s'il existe
         $terrainId = request('terrain_id');
         $selectedTerrain = null;
-        $terrains = Terrain::all();
-        $regions = Region::all();
 
         if ($terrainId) {
-            $selectedTerrain = Terrain::find($terrainId);
+            $selectedTerrain = Terrain::with(['region.ville'])->find($terrainId);
         }
 
         // Récupérer la date (aujourd'hui par défaut)
@@ -44,7 +43,7 @@ class ReservationController extends Controller
             })
             ->get(['terrain_id', 'date', 'heure_debut', 'heure_fin']);
 
-        return view('reservation', compact('terrains', 'selectedTerrain', 'date', 'reservations', 'regions'));
+        return view('reservation', compact('selectedTerrain', 'date', 'reservations'));
     }
 
     /**
