@@ -193,7 +193,7 @@
                 const message = document.createElement('div');
                 message.id = 'results-message';
                 message.className = 'text-center text-gray-600 mb-8';
-                message.textContent = `${visibleCount} terrain(s) trouvé(s)`;
+                message.textContent = `${visibleCount} terrain trouvé`;
                 
                 const filterSection = document.querySelector('.flex.flex-wrap.justify-center');
                 filterSection.parentNode.insertBefore(message, filterSection.nextSibling);
