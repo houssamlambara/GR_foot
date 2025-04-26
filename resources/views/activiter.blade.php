@@ -134,28 +134,35 @@
             const cityFilter = document.getElementById('cityFilter');
             const activityCards = document.querySelectorAll('.activity-card');
 
+            // Stocker les options de région originales
+            const originalRegionOptions = Array.from(regionFilter.options);
+
             // Filtrer les régions en fonction de la ville sélectionnée
             cityFilter.addEventListener('change', function() {
                 const selectedVilleId = this.value;
-                const regionOptions = regionFilter.querySelectorAll('option');
-
-                regionFilter.value = ''; // Réinitialiser la sélection de région
-
-                regionOptions.forEach(option => {
-                    if (!selectedVilleId || option.value === '' || option.dataset.ville === selectedVilleId) {
-                        option.style.display = '';
-                    } else {
-                        option.style.display = 'none';
+                
+                // Réinitialiser le select des régions
+                regionFilter.innerHTML = '<option value="">Toutes les Régions</option>';
+                
+                // Ajouter uniquement les régions correspondant à la ville sélectionnée
+                originalRegionOptions.forEach(option => {
+                    if (option.value === '' || !selectedVilleId || option.dataset.ville === selectedVilleId) {
+                        regionFilter.appendChild(option.cloneNode(true));
                     }
                 });
 
+                // Réinitialiser la sélection de région
+                regionFilter.value = '';
+                
                 filterCards();
+                updateResults();
             });
 
             function filterCards() {
                 const selectedSport = sportFilter.value.toLowerCase();
                 const selectedRegion = regionFilter.value;
                 const selectedVille = cityFilter.value;
+                let visibleCount = 0;
 
                 activityCards.forEach(card => {
                     const sportType = card.classList.contains(selectedSport);
@@ -164,15 +171,47 @@
 
                     if ((!selectedSport || sportType) && region && ville) {
                         card.style.display = 'block';
+                        visibleCount++;
                     } else {
                         card.style.display = 'none';
                     }
                 });
+
+                return visibleCount;
             }
 
-            sportFilter.addEventListener('change', filterCards);
-            regionFilter.addEventListener('change', filterCards);
-            cityFilter.addEventListener('change', filterCards);
+            function updateResults() {
+                const visibleCount = filterCards();
+                
+                // Supprimer l'ancien message s'il existe
+                const oldMessage = document.getElementById('results-message');
+                if (oldMessage) {
+                    oldMessage.remove();
+                }
+
+                // Créer et afficher le nouveau message
+                const message = document.createElement('div');
+                message.id = 'results-message';
+                message.className = 'text-center text-gray-600 mb-8';
+                message.textContent = `${visibleCount} terrain(s) trouvé(s)`;
+                
+                const filterSection = document.querySelector('.flex.flex-wrap.justify-center');
+                filterSection.parentNode.insertBefore(message, filterSection.nextSibling);
+            }
+
+            // Ajouter les écouteurs d'événements
+            sportFilter.addEventListener('change', () => {
+                filterCards();
+                updateResults();
+            });
+            
+            regionFilter.addEventListener('change', () => {
+                filterCards();
+                updateResults();
+            });
+
+            // Initialiser l'affichage des résultats
+            updateResults();
         });
     </script>
 @endsection

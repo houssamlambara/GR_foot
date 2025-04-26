@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
 // Routes d'authentification
 Route::get('/signin', [PageController::class, 'signin'])->name('signin');
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes pour la gestion des tournois

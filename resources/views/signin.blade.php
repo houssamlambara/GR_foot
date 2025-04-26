@@ -141,8 +141,22 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 @endif
 
                 <!-- Formulaire de Connexion -->
-                <form method="POST" id="signInForm" class="space-y-6" action="{{url('/login')}}">
+                <form method="POST" id="signInForm" class="space-y-6" action="{{ route('login') }}">
                     @csrf
+                    @if(session('status'))
+                        <div class="mb-4 font-medium text-sm text-green-600">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if($errors->any())
+                        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="relative">
                         <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Adresse email</label>
                         <input id="email" name="email" type="email" required
