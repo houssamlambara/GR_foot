@@ -27,6 +27,7 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
 Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
 Route::get('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check-availability');
@@ -49,7 +50,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes pour la gestion des tournois
 Route::middleware(['auth', 'Admin'])->group(function () {
-    Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
     Route::get('/tournois/create', [TournoiController::class, 'create'])->name('tournois.create');
     Route::post('/tournois', [TournoiController::class, 'store'])->name('tournois.store');
     Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');

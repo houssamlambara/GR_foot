@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -20,15 +22,27 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $validateData['name'],
                 'email' => $validateData['email'],
-                'password' => bcrypt($validateData['password']),
+                'password' => Hash::make($validateData['password']),
                 'role' => 'Utilisateur',
+                'is_banned' => false,
             ]);
 
-            Auth::login($user);
+            if (!$user) {
+                throw new \Exception('Échec de la création de l\'utilisateur');
+            }
 
-            return redirect()->route('index')->with('success', 'Inscription réussie ! Bienvenue.');
+            Auth::login($user);
+            
+            return redirect()->route('index')
+                ->with('success', 'Inscription réussie ! Bienvenue ' . $user->name);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()
+                ->withErrors($e->errors())
+                ->withInput();
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Une erreur est survenue lors de l\'inscription.'])->withInput();
+            Log::error('Erreur lors de l\'inscription : ' . $e->getMessage());
+            return back()->withInput();
         }
     }
 

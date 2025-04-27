@@ -193,37 +193,54 @@ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 <!-- Formulaire d'Inscription -->
                 <form method="POST" id="signUpForm" class="space-y-6 hidden" action="{{url('/register')}}">
                     @csrf
+                    
+                    @if(session('success'))
+                    <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <ul class="list-disc list-inside">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <div class="relative">
                         <label for="signup-name" class="block text-sm font-bold text-gray-700 mb-2">Nom
                             complet</label>
-                        <input id="signup-name" name="name" type="text" required
-                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
+                        <input id="signup-name" name="name" type="text" value="{{ old('name') }}" required
+                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 @error('name') border-red-500 @enderror"
                             placeholder="Nom complet">
+                        @error('name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="relative">
                         <label for="signup-email" class="block text-sm font-bold text-gray-700 mb-2">Adresse
                             email</label>
-                        <input id="signup-email" name="email" type="email" value="{{old('email')}}" required
-                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
+                        <input id="signup-email" name="email" type="email" value="{{ old('email') }}" required
+                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 @error('email') border-red-500 @enderror"
                             placeholder="Email">
-                            @error('email')<span>{{$message}}</span> @enderror
+                        @error('email')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <!-- <div class="relative">
-                            <label for="signup-phone" class="block text-sm font-bold text-gray-700 mb-2">Numéro de téléphone</label>
-                            <input id="signup-phone" name="phone" type="tel" required
-                                class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
-                                placeholder="Numéro de téléphone">
-                        </div>                         -->
 
                     <div class="relative">
                         <label for="signup-password" class="block text-sm font-bold text-gray-700 mb-2">Mot de
                             passe</label>
                         <input id="signup-password" name="password" type="password" required
-                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300"
+                            class="mt-1 w-full px-4 py-3 pl-10 border-2 border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 @error('password') border-red-500 @enderror"
                             placeholder="Mot de passe">
-                            @error('password') <span>{{ $message }}</span> @enderror
+                        @error('password')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <button type="submit"
