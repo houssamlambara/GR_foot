@@ -27,7 +27,6 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/index', [PageController::class, 'index']);
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois.index');
 Route::get('/reservation', [ReservationController::class, 'create'])->name('reservation')->middleware('auth');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store')->middleware('auth');
 Route::get('/check-availability', [ReservationController::class, 'checkAvailability'])->name('check-availability');
@@ -35,11 +34,12 @@ Route::get('/check-availability', [ReservationController::class, 'checkAvailabil
 // Routes principales
 Route::middleware(['auth'])->group(function () {
     Route::get('/activiter', [ActiviteController::class, 'index'])->name('activiter');
-    Route::get('/addtournois', [PageController::class, 'addtournois'])->name('addtournois');
+    Route::get('/addtournois', [TournoiController::class, 'admin'])->name('addtournois');
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboardReservation', [ReservationController::class, 'dashboard'])->name('dashboardReservation');
     Route::get('/addterrain', [PageController::class, 'addterrain'])->name('addterrain');
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateur');
+    Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois');
 });
 
 // Routes d'authentification
@@ -55,6 +55,7 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::get('/tournois/{tournoi}/edit', [TournoiController::class, 'edit'])->name('tournois.edit');
     Route::put('/tournois/{tournoi}', [TournoiController::class, 'update'])->name('tournois.update');
     Route::delete('/tournois/{tournoi}', [TournoiController::class, 'destroy'])->name('tournois.destroy');
+    Route::put('/tournois/{tournoi}/terminer', [TournoiController::class, 'terminer'])->name('tournois.terminer');
 });
 
 // Routes pour la gestion des terrains (protégées pour les administrateurs)

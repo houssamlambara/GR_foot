@@ -14,8 +14,29 @@ class Tournoi extends Model
         'date_debut',
         'date_fin',
         'nombre_equipes',
-        'prix_inscription',
-        'description',
         'image',
+        'statut'
     ];
+
+    protected $casts = [
+        'date_debut' => 'date',
+        'date_fin' => 'date',
+    ];
+
+    // Méthode pour marquer un tournoi comme terminé
+    public function terminer()
+    {
+        $this->update(['statut' => 'termine']);
+    }
+
+    // Méthode pour vérifier si un tournoi est terminé
+    public function estTermine()
+    {
+        return $this->statut === 'termine';
+    }
+
+    public function equipes()
+    {
+        return $this->belongsToMany(Equipe::class);
+    }
 }
