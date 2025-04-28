@@ -2,7 +2,8 @@
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 ## À propos
 
@@ -44,7 +45,7 @@ GR_foot est une plateforme de gestion et réservation de terrains de football. E
 
 ```bash
 # Cloner le projet
-git clone https://github.com/lambarahoussam/GR_foot.git
+git clone https://github.com/houssamlambara/GR_foot.git
 cd GR_foot
 
 # Installer les dépendances
@@ -68,7 +69,8 @@ npm run dev
 
 - Laravel 10
 - PHP 8.2
-- MySQL
+- PostgreSQL
+- JavaScript
 - Bootstrap
 
 ## Contact
