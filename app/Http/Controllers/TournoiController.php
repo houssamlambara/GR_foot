@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tournoi;
+use App\Models\Equipe;
 
 class TournoiController extends Controller
 {
@@ -102,18 +103,13 @@ class TournoiController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
             if ($tournoi->image && file_exists(public_path('img/' . $tournoi->image))) {
                 unlink(public_path('img/' . $tournoi->image));
             }
 
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            
-            // Store the new image
             $image->move(public_path('img'), $imageName);
-            
-            // Update the image path
             $data['image'] = $imageName;
         }
 
@@ -148,5 +144,44 @@ class TournoiController extends Controller
         
         return redirect()->route('addtournois')
             ->with('success', 'Le tournoi a été marqué comme terminé.');
+    }
+
+    public function inscription(Request $request, Tournoi $tournoi)
+    {
+        $request->validate([
+            'nom_equipe' => 'required|string|max:255',
+        ]);
+
+        // Vérifier si le tournoi est en cours
+        if ($tournoi->statut !== 'en_cours') {
+            return redirect()->back()->with('error', 'Les inscriptions sont fermées pour ce tournoi.');
+        }
+
+        // Vérifier si l'utilisateur est déjà inscrit
+        $userTeam = $tournoi->equipes()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($userTeam) {
+            return redirect()->back()
+                ->with('error', 'Vous êtes déjà inscrit à ce tournoi avec l\'équipe ' . $userTeam->nom);
+        }
+
+        try {
+            // Créer une nouvelle équipe
+            $equipe = Equipe::create([
+                'nom' => $request->nom_equipe,
+                'user_id' => auth()->id()
+            ]);
+
+            // Inscrire l'équipe au tournoi
+            $tournoi->equipes()->attach($equipe->id);
+
+            return redirect()->route('tournois.index')
+                ->with('success', 'Votre équipe a été inscrite au tournoi avec succès !');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.');
+        }
     }
 }

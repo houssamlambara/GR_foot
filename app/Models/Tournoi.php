@@ -37,6 +37,6 @@ class Tournoi extends Model
 
     public function equipes()
     {
-        return $this->belongsToMany(Equipe::class);
+        return $this->belongsToMany(Equipe::class, 'equipe_tournoi', 'tournoi_id', 'equipe_id');
     }
 }
