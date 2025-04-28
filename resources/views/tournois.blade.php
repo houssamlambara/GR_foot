@@ -71,14 +71,20 @@
 
                         @if($tournoi->statut === 'en_cours')
                             <button
+                                onclick="openInscriptionModal('{{ $tournoi->id }}', '{{ $tournoi->nom }}')"
                                 class="mt-4 w-full bg-gradient-to-r from-green-400 to-green-500 hover:bg-green-600 text-white py-3 rounded-xl transition duration-300 flex items-center justify-center font-medium">
                                 <i class="fas fa-sign-in-alt mr-2"></i>
                                 S'inscrire Maintenant
                             </button>
                         @else
-                            <button disabled class="mt-4 w-full bg-gray-400 text-white py-3 rounded-xl flex items-center justify-center font-medium cursor-not-allowed">
+                            <button disabled 
+                                class="mt-4 w-full bg-gray-400 text-white py-3 rounded-xl flex items-center justify-center font-medium cursor-not-allowed">
                                 <i class="fas fa-lock mr-2"></i>
-                                Inscriptions terminées
+                                @if($tournoi->statut === 'en_attente')
+                                    Inscriptions Indisponibles
+                                @else
+                                    Tournoi terminé
+                                @endif
                             </button>
                         @endif
                     </div>
@@ -139,6 +145,67 @@
             </section>
         </div>
     </div>
+
+    <!-- Modal d'inscription au tournoi -->
+    <div id="inscriptionModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 text-center mb-4">Inscription au tournoi</h3>
+                <p id="tournoiName" class="text-center text-gray-600 mb-4"></p>
+                
+                <form id="inscriptionForm" method="POST" class="mt-4">
+                    @csrf
+                    <div class="mt-2 px-7 py-3">
+                        <div class="mb-4">
+                            <label for="nom_equipe" class="block text-sm font-medium text-gray-700 mb-2">Nom de l'équipe</label>
+                            <input type="text" id="nom_equipe" name="nom_equipe" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                                placeholder="Entrez le nom de votre équipe">
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 flex justify-between gap-3">
+                        <button type="button" onclick="closeInscriptionModal()"
+                            class="w-1/2 px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Annuler
+                        </button>
+                        <button type="submit"
+                            class="w-1/2 px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                            S'inscrire
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openInscriptionModal(tournoiId, tournoiNom) {
+            const modal = document.getElementById('inscriptionModal');
+            const form = document.getElementById('inscriptionForm');
+            const tournoiNameElement = document.getElementById('tournoiName');
+            
+            // Mettre à jour le titre avec le nom du tournoi
+            tournoiNameElement.textContent = tournoiNom;
+            
+            // Mettre à jour l'action du formulaire
+            form.action = `/tournois/${tournoiId}/inscription`;
+            
+            // Afficher la modal
+            modal.classList.remove('hidden');
+        }
+
+        function closeInscriptionModal() {
+            const modal = document.getElementById('inscriptionModal');
+            modal.classList.add('hidden');
+        }
+
+        // Fermer la modal en cliquant en dehors
+        document.getElementById('inscriptionModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeInscriptionModal();
+            }
+        });
+    </script>
 
     <!-- Footer -->
     @include('layout.footer')

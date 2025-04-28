@@ -58,6 +58,11 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::put('/tournois/{tournoi}/terminer', [TournoiController::class, 'terminer'])->name('tournois.terminer');
 });
 
+// Routes pour l'inscription aux tournois (utilisateurs authentifiés)
+Route::middleware(['auth'])->group(function () {
+    Route::post('/tournois/{tournoi}/inscription', [TournoiController::class, 'inscription'])->name('tournois.inscription');
+});
+
 // Routes pour la gestion des terrains (protégées pour les administrateurs)
 Route::middleware(['auth', 'Admin'])->group(function () {
     Route::get('/terrains', [TerrainController::class, 'index'])->name('terrains.index');
