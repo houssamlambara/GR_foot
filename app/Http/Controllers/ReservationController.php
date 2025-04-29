@@ -137,13 +137,13 @@ class ReservationController extends Controller
     {
         // Vérifier que l'utilisateur est bien le propriétaire de la réservation
         if ($reservation->user_id !== Auth::id()) {
-            return redirect()->route('mes.reservations')
+            return redirect()->route('mesReservations')
                 ->with('error', 'Vous n\'êtes pas autorisé à supprimer cette réservation.');
         }
 
         $reservation->delete();
         return redirect()
-            ->route('mes.reservations')
+            ->route('mesReservations')
             ->with('success', 'Réservation annulée avec succès.');
     }
 

@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateur');
     Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois');
     Route::get('/mesReservations', [ReservationController::class, 'mesReservations'])->name('mesReservations');
-    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+    Route::delete('/mesReservations/{reservation}', [ReservationController::class, 'destroy'])->name('mesReservations.destroy');
 });
 
 // Routes d'authentification

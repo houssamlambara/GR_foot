@@ -59,10 +59,16 @@
                                 Horaire
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Localisation
+                                Région
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Ville
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Prix
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -71,9 +77,7 @@
                         <tr class="hover:bg-gray-50 transition-colors duration-150">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-8 w-8 bg-green-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-futbol text-green-500"></i>
-                                    </div>
+                                    
                                     <div class="ml-3">
                                         <div class="text-sm font-medium text-gray-900">{{ $reservation->terrain->nom }}</div>
                                         <div class="text-xs text-gray-500">{{ $reservation->terrain->type }}</div>
@@ -88,19 +92,32 @@
                                     {{ substr($reservation->heure_debut, 0, 5) }} - {{ substr($reservation->heure_fin, 0, 5) }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    {{ \Carbon\Carbon::parse($reservation->heure_debut)->diffInMinutes(\Carbon\Carbon::parse($reservation->heure_fin)) }} min
+                                    {{ \Carbon\Carbon::parse($reservation->heure_debut)->diffInMinutes(\Carbon\Carbon::parse($reservation->heure_fin)) }} minutes
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    {{ $reservation->terrain->region->nom }}
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">
                                     {{ $reservation->terrain->region->ville->nom }}
                                 </div>
-                                <div class="text-xs text-gray-500">
-                                    {{ $reservation->terrain->region->nom }}
-                                </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-green-600">{{ $reservation->montant }} €</div>
+                                <div class="text-sm font-medium text-green-600">{{ $reservation->montant }} DH</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <form action="{{ route('mesReservations.destroy', $reservation->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                        onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?')"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors duration-150">
+                                        <i class="fas fa-times mr-1"></i> Annuler
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
