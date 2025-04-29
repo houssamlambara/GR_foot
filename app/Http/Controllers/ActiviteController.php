@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Terrain;
 use App\Models\Region;
 use App\Models\Ville;
-use Illuminate\Http\Request;
 
 class ActiviteController extends Controller
 {
     public function index()
     {
-        $terrains = Terrain::with('region.ville')->get();
+        $terrains = Terrain::with('region.ville')->paginate(6);
         $regions = Region::with('ville')->get();
         $villes = Ville::all();
         
