@@ -17,31 +17,33 @@
     <main class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
         <div class="max-w-screen-xl mx-auto px-4">
             <!-- Section de Filtrage -->
-            <div class="flex flex-wrap justify-center space-x-4 mb-8">
-                <!-- Filtrage par Activité -->
-                <select id="sportFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
-                    <option value="">Toutes les Activités</option>
-                    <option value="football">Football</option>
-                    <option value="padel">Padel</option>
-                    <option value="tennis">Tennis</option>
-                    <option value="basketball">Basketball</option>
-                </select>
+            <div class="overflow-x-auto">
+                <div class="flex flex-wrap justify-center space-x-4 mb-8 min-w-max px-4">
+                    <!-- Filtrage par Activité -->
+                    <select id="sportFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                        <option value="">Toutes les Activités</option>
+                        <option value="football">Football</option>
+                        <option value="padel">Padel</option>
+                        <option value="tennis">Tennis</option>
+                        <option value="basketball">Basketball</option>
+                    </select>
 
-                <!-- Filtrage par Ville -->
-                <select id="cityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
-                    <option value="">Toutes les Villes</option>
-                    @foreach($villes as $ville)
-                        <option value="{{ $ville->id }}">{{ $ville->nom }}</option>
-                    @endforeach
-                </select>
+                    <!-- Filtrage par Ville -->
+                    <select id="cityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                        <option value="">Toutes les Villes</option>
+                        @foreach($villes as $ville)
+                            <option value="{{ $ville->id }}">{{ $ville->nom }}</option>
+                        @endforeach
+                    </select>
 
-                <!-- Filtrage par Région -->
-                <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
-                    <option value="">Toutes les Régions</option>
-                    @foreach($regions as $region)
-                        <option value="{{ $region->id }}" data-ville="{{ $region->ville_id }}">{{ $region->nom }}</option>
-                    @endforeach
-                </select>
+                    <!-- Filtrage par Région -->
+                    <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
+                        <option value="">Toutes les Régions</option>
+                        @foreach($regions as $region)
+                            <option value="{{ $region->id }}" data-ville="{{ $region->ville_id }}">{{ $region->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <!-- Cards Grid -->

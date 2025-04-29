@@ -33,14 +33,25 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
     </style>
+    
+    <!-- Script pour le menu mobile - déplacé dans le head -->
+    <script>
+        // Fonction pour gérer le menu mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById("mobile-menu");
+            if (mobileMenu) {
+                mobileMenu.classList.toggle("hidden");
+            }
+        }
+    </script>
 </head>
 
 <body>
     <!-- Navbar -->
-    <header class="bg-white shadow-md">
+    <header class="bg-white shadow-md relative">
         <nav class="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-4">
             <a href="#">
-                <img src="" alt="Logo" width="200" height="53.5">
+                <img src="/img/Logo.png" alt="Logo" width="90" height="20">
             </a>
 
             <!-- Menu de navigation -->
@@ -59,7 +70,7 @@
 
             <!-- Boutons Sign In et Sign Up -->
             @auth
-            <form action="{{ route('logout') }}" method="POST">
+            <form action="{{ route('logout') }}" method="POST" class="hidden md:block">
                 @csrf
                 <button type="submit"
                     class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">LogOut</a>
@@ -77,7 +88,7 @@
             @endauth
 
             <!-- Menu burger pour mobile -->
-            <button id="burger-btn"
+            <button onclick="toggleMobileMenu()"
                 class="md:hidden flex items-center justify-center p-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 aria-label="Menu">
                 <svg class="w-6 h-6 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -87,51 +98,43 @@
                 </svg>
             </button>
         </nav>
-    </header>
 
-    <!-- Mobile menu (hidden by default) -->
-    <div id="mobile-menu" class="md:hidden bg-white shadow-md hidden absolute z-50 top-16 left-0 right-0">
-        <div class="px-6 py-4 space-y-4">
-            <a href="/index" class="block text-gray-700 font-medium hover:text-green-400 transition">Accueil</a>
-            <a href="/activiter" class="block text-gray-700 font-medium hover:text-green-400 transition">Notre
-                Activités</a>
-            <a href="/reservation" class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
-            @auth
-            <a href="{{ route('mesReservations') }}" class="block text-gray-700 font-medium hover:text-green-400 transition">Mes Réservations</a>
-            @endauth
-            <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
-            <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
-            <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
+        <!-- Mobile menu (hidden by default) -->
+        <div id="mobile-menu" class="md:hidden hidden absolute z-50 w-full bg-white shadow-lg">
+            <div class="px-6 py-4 space-y-4">
+                <a href="/index" class="block text-gray-700 font-medium hover:text-green-400 transition">Accueil</a>
+                <a href="/activiter" class="block text-gray-700 font-medium hover:text-green-400 transition">Notre
+                    Activités</a>
+                <a href="/reservation" class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
+                @auth
+                <a href="{{ route('mesReservations') }}" class="block text-gray-700 font-medium hover:text-green-400 transition">Mes Réservations</a>
+                @endauth
+                <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
+                <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
+                <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
 
-            @auth
-            <a href="/signin"
-                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Log
-                Out</a>
-            @else
-            <a href="/signup"
-                class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
-                Up</a>
-            <a href="/signin"
-                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
-                In</a>
-
-            @endauth
-
+                @auth
+                <form action="{{ route('logout') }}" method="POST" class="mt-4">
+                    @csrf
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">LogOut</button>
+                </form>
+                @else
+                <a href="/signup"
+                    class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
+                    Up</a>
+                <a href="/signin"
+                    class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
+                    In</a>
+                @endauth
+            </div>
         </div>
-    </div>
+    </header>
 
     <!-- Contenu spécifique à la page -->
     <div class="container mx-auto">
         @yield('content')
     </div>
-
-    <!-- Script pour le menu mobile -->
-    <script>
-        document.getElementById("burger-btn").addEventListener("click", function() {
-            const mobileMenu = document.getElementById("mobile-menu");
-            mobileMenu.classList.toggle("hidden");
-        });
-    </script>
 </body>
 
 </html>

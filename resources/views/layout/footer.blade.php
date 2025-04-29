@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         <!-- Logo and Social Links -->
         <div class="flex items-center justify-center mb-6 md:mb-0"> <!-- Ajout de justify-center -->
-            <img src="" alt="GSP Logo" class="w-48 h-auto">
+            <img src="/img/Logo.png" alt="Logo" width="200" height="20">
         </div>
 
         <!-- Address Section -->
@@ -29,16 +29,16 @@
             <h3 class="text-xl font-semibold mb-3 text-white">Suivez-nous sur les Réseaux Sociaux</h3>
             <div class="grid grid-cols-4 gap-6 justify-center">
                 <!-- Ajout de justify-center pour centrer les icônes -->
-                <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                <a href="https://www.facebook.com" target="_blank" class="text-gray-300 hover:text-green-500">
                     <i class="fab fa-facebook-f text-2xl"></i>
                 </a>
-                <a href="https://www.twitter.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                <a href="https://www.twitter.com" target="_blank" class="text-gray-300 hover:text-green-500">
                     <i class="fab fa-twitter text-2xl"></i>
                 </a>
-                <a href="https://www.instagram.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                <a href="https://www.instagram.com" target="_blank" class="text-gray-300 hover:text-green-500">
                     <i class="fab fa-instagram text-2xl"></i>
                 </a>
-                <a href="https://www.linkedin.com" target="_blank" class="text-gray-300 hover:text-yellow-500">
+                <a href="https://www.linkedin.com" target="_blank" class="text-gray-300 hover:text-green-500">
                     <i class="fab fa-linkedin-in text-2xl"></i>
                 </a>
             </div>
@@ -46,9 +46,10 @@
     </div>
 
     <div class="mt-10 border-t border-gray-700 pt-6 text-sm text-center text-gray-400">
-        <p>© 2025. Créé avec passion par WebDev Agency. Tous droits réservés.
+        <p>© 2025. SportZone Créé avec passion. Tous droits réservés.
     </div>
 </footer>
+
 <script>
         // Mise à jour du résumé de réservation
         document.addEventListener('DOMContentLoaded', function() {
@@ -97,7 +98,7 @@
                         montant = 700;
                         break;
                     case '3': // Football 11 vs 11
-                        montant = 1200;
+                        montant = 1100;
                         break;
                     case '4': // Padel
                         montant = 250;
