@@ -50,7 +50,7 @@
                     Activités</a>
                 <a href="/reservation" class="font-medium text-gray-700 hover:text-green-400 transition">Réservation</a>
                 @auth
-                <a href="{{ route('mes.reservations') }}" class="font-medium text-gray-700 hover:text-green-400 transition">Mes Réservations</a>
+                <a href="{{ route('mesReservations') }}" class="font-medium text-gray-700 hover:text-green-400 transition">Mes Réservations</a>
                 @endauth
                 <a href="/tournois" class="font-medium text-gray-700 hover:text-green-400 transition">Tournois</a>
                 <a href="/about" class="font-medium text-gray-700 hover:text-green-400 transition">About</a>
@@ -97,7 +97,7 @@
                 Activités</a>
             <a href="/reservation" class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
             @auth
-            <a href="{{ route('mes.reservations') }}" class="block text-gray-700 font-medium hover:text-green-400 transition">Mes Réservations</a>
+            <a href="{{ route('mesReservations') }}" class="block text-gray-700 font-medium hover:text-green-400 transition">Mes Réservations</a>
             @endauth
             <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
             <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>

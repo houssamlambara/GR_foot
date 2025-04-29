@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addterrain', [PageController::class, 'addterrain'])->name('addterrain');
     Route::get('/utilisateur', [PageController::class, 'utilisateur'])->name('utilisateur');
     Route::get('/tournois', [TournoiController::class, 'index'])->name('tournois');
-    Route::get('/mes-reservations', [ReservationController::class, 'mesReservations'])->name('mes.reservations');
+    Route::get('/mesReservations', [ReservationController::class, 'mesReservations'])->name('mesReservations');
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
 });
 
