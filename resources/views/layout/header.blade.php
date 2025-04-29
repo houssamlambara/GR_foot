@@ -49,6 +49,9 @@
                 <a href="/activiter" class="font-medium text-gray-700 hover:text-green-400 transition">Notre
                     Activités</a>
                 <a href="/reservation" class="font-medium text-gray-700 hover:text-green-400 transition">Réservation</a>
+                @auth
+                <a href="{{ route('mes.reservations') }}" class="font-medium text-gray-700 hover:text-green-400 transition">Mes Réservations</a>
+                @endauth
                 <a href="/tournois" class="font-medium text-gray-700 hover:text-green-400 transition">Tournois</a>
                 <a href="/about" class="font-medium text-gray-700 hover:text-green-400 transition">About</a>
                 <a href="/contact" class="font-medium text-gray-700 hover:text-green-400 transition">Contact</a>
@@ -56,21 +59,21 @@
 
             <!-- Boutons Sign In et Sign Up -->
             @auth
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit"
-                        class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">LogOut</a>
-                    </button>
-                </form>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit"
+                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">LogOut</a>
+                </button>
+            </form>
             @else
-                <div class="hidden md:flex space-x-4">
-                    <a href="/signin"
-                        class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
-                        In</a>
-                    <a href="/signin"
-                        class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Sign
-                        Up</a>
-                </div>
+            <div class="hidden md:flex space-x-4">
+                <a href="/signin"
+                    class="bg-transparent text-gray-700 px-4 py-2 border border-gray-400 rounded-lg font-semibold hover:bg-gray-100 transition">Sign
+                    In</a>
+                <a href="/signin"
+                    class="bg-gradient-to-r from-green-400 via-green-600 to-green-800 text-white px-4 py-2 rounded-lg font-semibold transition">Sign
+                    Up</a>
+            </div>
             @endauth
 
             <!-- Menu burger pour mobile -->
@@ -92,23 +95,25 @@
             <a href="/index" class="block text-gray-700 font-medium hover:text-green-400 transition">Accueil</a>
             <a href="/activiter" class="block text-gray-700 font-medium hover:text-green-400 transition">Notre
                 Activités</a>
-            <a href="/reservation"
-                class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
+            <a href="/reservation" class="block text-gray-700 font-medium hover:text-green-400 transition">Réservation</a>
+            @auth
+            <a href="{{ route('mes.reservations') }}" class="block text-gray-700 font-medium hover:text-green-400 transition">Mes Réservations</a>
+            @endauth
             <a href="/tournois" class="block text-gray-700 font-medium hover:text-green-400 transition">Tournois</a>
             <a href="/about" class="block text-gray-700 font-medium hover:text-green-400 transition">About</a>
             <a href="/contact" class="block text-gray-700 font-medium hover:text-green-400 transition">Contact</a>
 
             @auth
-                <a href="/signin"
-                    class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Log
-                    Out</a>
+            <a href="/signin"
+                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Log
+                Out</a>
             @else
-                <a href="/signup"
-                    class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
-                    Up</a>
-                <a href="/signin"
-                    class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
-                    In</a>
+            <a href="/signup"
+                class="block text-white bg-gradient-to-r from-green-400 via-green-600 to-green-800 px-4 py-2 rounded-lg font-semibold text-center transition">Sign
+                Up</a>
+            <a href="/signin"
+                class="block text-gray-700 border border-gray-400 px-4 py-2 rounded-lg font-semibold text-center hover:bg-gray-100 transition">Sign
+                In</a>
 
             @endauth
 

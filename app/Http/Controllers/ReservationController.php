@@ -79,7 +79,7 @@ class ReservationController extends Controller
         Reservation::create($validated);
 
         return redirect()
-            ->route('reservation')
+            ->route('activiter')
             ->with('success', 'Votre réservation a été confirmée !');
     }
 
@@ -135,10 +135,30 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
+        // Vérifier que l'utilisateur est bien le propriétaire de la réservation
+        if ($reservation->user_id !== Auth::id()) {
+            return redirect()->route('mes.reservations')
+                ->with('error', 'Vous n\'êtes pas autorisé à supprimer cette réservation.');
+        }
+
         $reservation->delete();
         return redirect()
-            ->route('dashboardReservation')
-            ->with('success', 'Réservation supprimée avec succès.');
+            ->route('mes.reservations')
+            ->with('success', 'Réservation annulée avec succès.');
+    }
+
+    /**
+     * Affiche les réservations de l'utilisateur connecté
+     */
+    public function mesReservations()
+    {
+        $reservations = Reservation::with(['terrain.region.ville'])
+            ->where('user_id', Auth::id())
+            ->orderBy('date', 'desc')
+            ->orderBy('heure_debut', 'desc')
+            ->paginate(5);
+
+        return view('mes-reservations', compact('reservations'));
     }
 
     /**
