@@ -71,7 +71,7 @@ npm run dev
 - PHP 8.2
 - PostgreSQL
 - JavaScript
-- Bootstrap
+- Tailwind
 
 ## Contact
 
