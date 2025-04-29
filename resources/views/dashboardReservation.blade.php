@@ -200,7 +200,10 @@
                                             Terrain</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Localisation</th>
+                                            Ville</th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Région</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Date</th>
@@ -233,7 +236,13 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">
-                                                    {{ $reservation->terrain->localisation }}</div>
+                                                    {{ $reservation->terrain->region && $reservation->terrain->region->ville ? $reservation->terrain->region->ville->nom : 'Non assigné' }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $reservation->terrain->region ? $reservation->terrain->region->nom : 'Non assigné' }}
+                                                </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ \Carbon\Carbon::parse($reservation->date)->format('d M Y') }}</td>

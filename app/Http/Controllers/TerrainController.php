@@ -106,9 +106,12 @@ class TerrainController extends Controller
             ['ville_id' => $ville->id]
         );
         
-        $validatedData['region_id'] = $region->id;
-        unset($validatedData['region'], $validatedData['ville']);
-
+        // Mettre à jour les données du terrain
+        $terrain->type = $validatedData['type'];
+        $terrain->capacite = $validatedData['capacite'];
+        $terrain->tarif = $validatedData['tarif'];
+        $terrain->region_id = $region->id;
+        
         if ($request->hasFile('image')) {
             // Delete old image if it exists
             if ($terrain->image && file_exists(public_path('img/' . $terrain->image))) {
@@ -122,10 +125,10 @@ class TerrainController extends Controller
             $image->move(public_path('img'), $imageName);
             
             // Update the image path
-            $validatedData['image'] = $imageName;
+            $terrain->image = $imageName;
         }
 
-        $terrain->update($validatedData);
+        $terrain->save();
 
         return redirect()->route('terrains.index')
             ->with('success', 'Le terrain a été mis à jour avec succès.');

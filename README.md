@@ -33,7 +33,6 @@ GR_foot est une plateforme de gestion et réservation de terrains de football. E
 - Création et gestion de tournois
 - Inscription des équipes
 - Gestion des matchs et résultats
-- Classements et statistiques
 
 ### Administration
 - Dashboard administrateur
@@ -71,7 +70,7 @@ npm run dev
 - PHP 8.2
 - PostgreSQL
 - JavaScript
-- Bootstrap
+- Tailwind
 
 ## Contact
 
