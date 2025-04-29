@@ -190,7 +190,7 @@
                     <div class="p-6">
                         <h3 class="text-2xl font-bold text-center text-gray-800">Football 11 vs 11</h3>
                         <div class="mt-4 text-center">
-                            <span class="text-3xl font-bold text-green-600">1200 DH</span>
+                            <span class="text-3xl font-bold text-green-600">1100 DH</span>
                             <span class="text-gray-500">/heure</span>
                         </div>
                         <ul class="mt-6 space-y-3">
