@@ -4,7 +4,6 @@
 
 @section('content')
 
-    <!-- Hero Section -->
     <section class="relative h-[500px] bg-cover bg-center flex items-center justify-center text-white"
         style="background-image: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
         <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
@@ -19,7 +18,6 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Bloc Notre Histoire -->
                 <div class="text-center">
                     <h2 class="text-4xl font-bold text-green-800 mb-8">Notre Histoire</h2>
                     <div class="bg-gradient-to-r from-green-100 to-green-50 p-8 rounded-lg shadow-lg">
@@ -33,7 +31,6 @@
                     </div>
                 </div>
 
-                <!-- Bloc Notre Mission -->
                 <div class="text-center">
                     <h2 class="text-4xl font-bold text-green-800 mb-8">Notre Mission</h2>
                     <div class="bg-gradient-to-r from-green-50 to-white p-8 rounded-lg shadow-lg">
@@ -56,7 +53,7 @@
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold text-green-800 mb-8">Notre Passion</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Football -->
+
                 <div
                     class="bg-white p-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
                     <img class="w-full h-64 object-cover rounded-md mb-4" src="./img/11vs11.png" alt="Terrain de football">
@@ -67,7 +64,7 @@
                         connecter les communautés et inspirer la prochaine génération de joueurs.
                     </p>
                 </div>
-                <!-- Padel -->
+
                 <div
                     class="bg-white p-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
                     <img class="w-full h-64 object-cover rounded-md mb-4" src="./img/padel.png" alt="Terrain de padel">
@@ -92,7 +89,7 @@
                 et tous les budgets</p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tarif 1: Football 5 vs 5 -->
+
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-green-500">
                     <div class="p-6">
@@ -137,8 +134,6 @@
                         </ul>
                     </div>
                 </div>
-
-                <!-- Tarif 2: Football 7 vs 7 -->
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-green-600">
                     <div class="p-6">
@@ -184,7 +179,6 @@
                     </div>
                 </div>
 
-                <!-- Tarif 3: Football 11 vs 11 -->
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-green-500">
                     <div class="p-6">
@@ -231,9 +225,8 @@
                 </div>
             </div>
 
-            <!-- Deuxième ligne (3 éléments) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                <!-- Tarif 4: Padel -->
+
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-blue-500">
                     <div class="p-6">
@@ -271,7 +264,6 @@
                     </div>
                 </div>
 
-                <!-- Tarif 5: Tennis -->
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-blue-500">
                     <div class="p-6">
@@ -309,7 +301,6 @@
                     </div>
                 </div>
 
-                <!-- Tarif 6: Basketball -->
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border-t-4 border-orange-500">
                     <div class="p-6">
@@ -354,13 +345,12 @@
     @include('layout.footer')
 
     <script>
-        // Sélectionner le bouton burger et le menu mobile
         const burgerBtn = document.getElementById("burger-btn");
         const mobileMenu = document.getElementById("mobile-menu");
 
         // Ajouter un événement pour ouvrir/fermer le menu
         burgerBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden"); // Toggle la classe 'hidden' pour afficher/masquer le menu
+            mobileMenu.classList.toggle("hidden"); 
         });
 
         // Optionnel : ajouter un événement pour fermer le menu lorsqu'un lien est cliqué

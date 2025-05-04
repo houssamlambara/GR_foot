@@ -4,7 +4,6 @@
 
 @section('content')
 
-    <!-- Header -->
     <header class="bg-green-600 py-12">
         <div class="max-w-screen-xl mx-auto text-center">
             <h1 class="text-5xl text-white font-bold">Nos Activités Sportives</h1>
@@ -16,10 +15,11 @@
     <!-- Main Content -->
     <main class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
         <div class="max-w-screen-xl mx-auto px-4">
+
             <!-- Section de Filtrage -->
             <div class="overflow-x-auto">
                 <div class="flex flex-wrap justify-center space-x-4 mb-8 min-w-max px-4">
-                    <!-- Filtrage par Activité -->
+
                     <select id="sportFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
                         <option value="">Toutes les Activités</option>
                         <option value="football">Football</option>
@@ -28,19 +28,18 @@
                         <option value="basketball">Basketball</option>
                     </select>
 
-                    <!-- Filtrage par Ville -->
                     <select id="cityFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
                         <option value="">Toutes les Villes</option>
-                        @foreach($villes as $ville)
+                        @foreach ($villes as $ville)
                             <option value="{{ $ville->id }}">{{ $ville->nom }}</option>
                         @endforeach
                     </select>
 
-                    <!-- Filtrage par Région -->
                     <select id="regionFilter" class="bg-gray-300 text-gray-800 px-4 py-2 rounded cursor-pointer">
                         <option value="">Toutes les Régions</option>
-                        @foreach($regions as $region)
-                            <option value="{{ $region->id }}" data-ville="{{ $region->ville_id }}">{{ $region->nom }}</option>
+                        @foreach ($regions as $region)
+                            <option value="{{ $region->id }}" data-ville="{{ $region->ville_id }}">{{ $region->nom }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -49,11 +48,8 @@
             <!-- Cards Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
                 @foreach ($terrains as $terrain)
-                    <!-- Terrain Card -->
-                    <div
-                        class="activity-card {{ strtolower($terrain->type) }} group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300"
-                        data-ville="{{ $terrain->region->ville_id ?? '' }}"
-                        data-region="{{ $terrain->region_id ?? '' }}">
+                    <div class="activity-card {{ strtolower($terrain->type) }} group bg-white rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300"
+                        data-ville="{{ $terrain->region->ville_id ?? '' }}" data-region="{{ $terrain->region_id ?? '' }}">
                         <div class="relative overflow-hidden">
                             @if ($terrain->image)
                                 <img src="{{ asset('img/' . $terrain->image) }}" alt="Terrain de {{ $terrain->type }}"
@@ -102,7 +98,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                    @if($terrain->region && $terrain->region->ville)
+                                    @if ($terrain->region && $terrain->region->ville)
                                         {{ $terrain->region->ville->nom }} - {{ $terrain->region->nom }}
                                     @else
                                         Localisation non disponible
@@ -117,7 +113,7 @@
                                 <a href="{{ route('reservation', [
                                     'terrain_id' => $terrain->id,
                                     'ville_id' => $terrain->region->ville_id ?? '',
-                                    'region_id' => $terrain->region_id ?? ''
+                                    'region_id' => $terrain->region_id ?? '',
                                 ]) }}"
                                     class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition duration-300">
                                     Réserver
@@ -132,45 +128,63 @@
             <div class="mt-12 flex justify-center">
                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                     @if ($terrains->onFirstPage())
-                        <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 cursor-not-allowed">
+                        <span
+                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 cursor-not-allowed">
                             <span class="sr-only">Précédent</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </span>
                     @else
-                        <a href="{{ $terrains->previousPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <a href="{{ $terrains->previousPageUrl() }}"
+                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                             <span class="sr-only">Précédent</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </a>
                     @endif
 
                     @foreach ($terrains->getUrlRange(max($terrains->currentPage() - 2, 1), min($terrains->currentPage() + 2, $terrains->lastPage())) as $page => $url)
                         @if ($page == $terrains->currentPage())
-                            <span class="relative inline-flex items-center px-4 py-2 border border-green-500 bg-green-50 text-sm font-medium text-green-600">
+                            <span
+                                class="relative inline-flex items-center px-4 py-2 border border-green-500 bg-green-50 text-sm font-medium text-green-600">
                                 {{ $page }}
                             </span>
                         @else
-                            <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            <a href="{{ $url }}"
+                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                 {{ $page }}
                             </a>
                         @endif
                     @endforeach
 
                     @if ($terrains->hasMorePages())
-                        <a href="{{ $terrains->nextPageUrl() }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <a href="{{ $terrains->nextPageUrl() }}"
+                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                             <span class="sr-only">Suivant</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </a>
                     @else
-                        <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 cursor-not-allowed">
+                        <span
+                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 cursor-not-allowed">
                             <span class="sr-only">Suivant</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
                             </svg>
                         </span>
                     @endif
@@ -195,20 +209,21 @@
             // Filtrer les régions en fonction de la ville sélectionnée
             cityFilter.addEventListener('change', function() {
                 const selectedVilleId = this.value;
-                
+
                 // Réinitialiser le select des régions
                 regionFilter.innerHTML = '<option value="">Toutes les Régions</option>';
-                
+
                 // Ajouter uniquement les régions correspondant à la ville sélectionnée
                 originalRegionOptions.forEach(option => {
-                    if (option.value === '' || !selectedVilleId || option.dataset.ville === selectedVilleId) {
+                    if (option.value === '' || !selectedVilleId || option.dataset.ville ===
+                        selectedVilleId) {
                         regionFilter.appendChild(option.cloneNode(true));
                     }
                 });
 
                 // Réinitialiser la sélection de région
                 regionFilter.value = '';
-                
+
                 filterCards();
                 updateResults();
             });
@@ -237,7 +252,7 @@
 
             function updateResults() {
                 const visibleCount = filterCards();
-                
+
                 // Supprimer l'ancien message s'il existe
                 const oldMessage = document.getElementById('results-message');
                 if (oldMessage) {
@@ -249,7 +264,7 @@
                 message.id = 'results-message';
                 message.className = 'text-center text-gray-600 mb-8';
                 message.textContent = `${visibleCount} terrain trouvé`;
-                
+
                 const filterSection = document.querySelector('.flex.flex-wrap.justify-center');
                 filterSection.parentNode.insertBefore(message, filterSection.nextSibling);
             }
@@ -259,7 +274,7 @@
                 filterCards();
                 updateResults();
             });
-            
+
             regionFilter.addEventListener('change', () => {
                 filterCards();
                 updateResults();
