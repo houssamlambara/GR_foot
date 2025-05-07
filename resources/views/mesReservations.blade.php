@@ -126,6 +126,11 @@
             </div>
         </div>
 
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $reservations->links('pagination::tailwind') }}
+        </div>
+
         @endif
     </div>
 </div>
