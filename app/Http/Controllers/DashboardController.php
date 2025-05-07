@@ -17,11 +17,16 @@ class DashboardController extends Controller
         $stats = [
             'total_reservations' => Reservation::count(),
             'terrains_disponibles' => Terrain::count(),
-            'tournois_actifs' => Tournoi::whereDate('date_fin', '>=', now())->count(), // Tournois non terminés
+            'tournois_actifs' => Tournoi::where('statut', 'en_cours')->count(), // Tournois en cours
             'total_users' => User::count()
         ];
 
-        // // Récupérer les 5 dernières réservations avec les relations
+        // Récupérer les tournois en cours
+        $tournoisEnCours = Tournoi::where('statut', 'en_cours')
+            ->orderBy('date_debut', 'desc')
+            ->get();
+
+        // Récupérer les 5 dernières réservations avec les relations
         $recent_reservations = Reservation::with(['user', 'terrain'])
             ->orderBy('created_at', 'desc')
             ->paginate(5);
@@ -44,7 +49,7 @@ class DashboardController extends Controller
             $chart_data[(int)$month] = $total;
         }
 
-        return view('dashboard', compact('stats', 'recent_reservations', 'chart_data'));
+        return view('dashboard', compact('stats', 'recent_reservations', 'chart_data', 'tournoisEnCours'));
     }
 
     public function getRealtimeStats()

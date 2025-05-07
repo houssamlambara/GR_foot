@@ -41,7 +41,6 @@
                         @enderror
                     </div>
 
-                    <!-- Numéro de téléphone -->
                     <div>
                         <label for="telephone" class="block text-sm font-semibold text-gray-700">Numéro de
                             téléphone</label>
@@ -53,7 +52,6 @@
                         @enderror
                     </div>
 
-                    <!-- Sélection de la date -->
                     <div>
                         <label for="date" class="block text-sm font-semibold text-gray-700">Date de
                             réservation</label>
@@ -68,7 +66,6 @@
                         @enderror
                     </div>
 
-                    <!-- Sélection de l'heure de début -->
                     <div>
                         <label for="heure_debut" class="block text-sm font-semibold text-gray-700">Heure de
                             début</label>
@@ -86,7 +83,6 @@
                         @enderror
                     </div>
 
-                    <!-- Sélection de l'heure de fin -->
                     <div>
                         <label for="heure_fin" class="block text-sm font-semibold text-gray-700">Heure de fin</label>
                         <select name="heure_fin" id="heure_fin" required
@@ -123,13 +119,11 @@
                 <p class="text-gray-600 mb-8">Vérifiez les informations avant de confirmer votre réservation.</p>
 
                 <div class="space-y-6">
-                    <!-- Nom complet -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Nom Complet</p>
                         <p id="nom-complet-selection" class="text-lg font-bold text-gray-800">{{ Auth::user()->name }}</p>
                     </div>
 
-                    <!-- Ville -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Ville</p>
                         <p class="text-lg font-bold text-gray-800">
@@ -137,7 +131,6 @@
                         </p>
                     </div>
 
-                    <!-- Région -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Région</p>
                         <p class="text-lg font-bold text-gray-800">
@@ -145,7 +138,6 @@
                         </p>
                     </div>
 
-                    <!-- Terrain sélectionné -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Terrain Sélectionné</p>
                         <p id="terrain-selection" class="text-lg font-bold text-gray-800">
@@ -158,25 +150,21 @@
                         </p>
                     </div>
 
-                    <!-- Horaire sélectionné -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Horaire Sélectionné</p>
                         <p id="horaire-selection" class="text-lg font-bold text-gray-800">-</p>
                     </div>
 
-                    <!-- Date de réservation -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Date de Réservation</p>
                         <p id="date-selection" class="text-lg font-bold text-gray-800">-</p>
                     </div>
 
-                    <!-- Numéro de téléphone -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Numéro de téléphone</p>
                         <p id="telephone-selection" class="text-lg font-bold text-gray-800">-</p>
                     </div>
 
-                    <!-- Tarif -->
                     <div>
                         <p class="text-sm font-semibold text-gray-700">Tarif</p>
                         <p id="tarif-selection" class="text-lg font-bold text-green-600">
@@ -200,141 +188,109 @@
 <!-- Scripts -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const dateInput = document.getElementById('date');
-        const heureDebutSelect = document.getElementById('heure_debut');
-        const heureFinSelect = document.getElementById('heure_fin');
-        const telephoneInput = document.getElementById('telephone');
-        const disponibiliteMessage = document.getElementById('disponibilite_message');
-        const reservationsData = JSON.parse(document.getElementById('reservationsData').dataset.reservations);
-        const terrainId = document.querySelector('input[name="terrain_id"]').value;
-        const tarifBase = parseFloat(document.getElementById('tarif-base').dataset.tarif);
-        const montantInput = document.getElementById('montant');
-        const tarifElement = document.getElementById('tarif-selection');
+        // Éléments du DOM
+        const elements = {
+            date: document.getElementById('date'),
+            heureDebut: document.getElementById('heure_debut'),
+            heureFin: document.getElementById('heure_fin'),
+            telephone: document.getElementById('telephone'),
+            disponibilite: document.getElementById('disponibilite_message'),
+            terrainId: document.querySelector('input[name="terrain_id"]').value,
+            tarifBase: parseFloat(document.getElementById('tarif-base').dataset.tarif),
+            montant: document.getElementById('montant'),
+            tarif: document.getElementById('tarif-selection')
+        };
 
-        // Fonction pour vérifier si un créneau est réservé
-        function isTimeSlotReserved(date, startTime, endTime) {
-            const selectedDate = new Date(date);
-            const reservationsForDate = reservationsData.filter(reservation => {
-                const reservationDate = new Date(reservation.date);
-                return reservation.terrain_id == terrainId &&
-                    reservationDate.getFullYear() === selectedDate.getFullYear() &&
-                    reservationDate.getMonth() === selectedDate.getMonth() &&
-                    reservationDate.getDate() === selectedDate.getDate();
-            });
-
-            // Convertir les heures en minutes pour faciliter la comparaison
-            const start = parseInt(startTime.split(':')[0]) * 60;
-            const end = parseInt(endTime.split(':')[0]) * 60;
-
-            return reservationsForDate.some(reservation => {
-                const reservationStart = parseInt(reservation.heure_debut.split(':')[0]) * 60;
-                const reservationEnd = parseInt(reservation.heure_fin.split(':')[0]) * 60;
-                return (start < reservationEnd && end > reservationStart);
-            });
-        }
-
-        // Fonction pour calculer le montant total
-        function calculateMontant() {
-            const debut = heureDebutSelect.value;
-            const fin = heureFinSelect.value;
-
-            if (debut && fin) {
-                const startHour = parseInt(debut.split(':')[0]);
-                const endHour = parseInt(fin.split(':')[0]);
-                const duree = endHour - startHour;
-                const montantTotal = tarifBase * duree;
-
-                montantInput.value = montantTotal;
-                tarifElement.innerHTML = `${montantTotal} DH (${tarifBase} DH/heure)`;
-            } else {
-                montantInput.value = tarifBase;
-                tarifElement.innerHTML = `${tarifBase} DH/heure`;
+        async function getReservations(date) {
+            try {
+                const response = await fetch(`/check-availability?date=${date}&terrain_id=${elements.terrainId}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Erreur:', error);
+                return { creneaux: [] };
             }
         }
 
-        // Mise à jour des informations dans le résumé
-        dateInput.addEventListener('change', function() {
-            document.getElementById('date-selection').textContent = this.value;
-            updateAvailableHours();
-        });
+        async function updateHours() {
+            const date = elements.date.value;
+            elements.heureDebut.innerHTML = '<option value="">Sélectionnez une heure de début</option>';
 
-        heureDebutSelect.addEventListener('change', function() {
-            updateHoraire();
-            updateAvailableEndHours();
-            calculateMontant();
-        });
+            const { creneaux } = await getReservations(date);
 
-        heureFinSelect.addEventListener('change', function() {
-            updateHoraire();
-            calculateMontant();
-        });
-
-        telephoneInput.addEventListener('input', function() {
-            document.getElementById('telephone-selection').textContent = this.value;
-        });
-
-        function updateHoraire() {
-            const debut = heureDebutSelect.value;
-            const fin = heureFinSelect.value;
-            if (debut && fin) {
-                document.getElementById('horaire-selection').textContent = `${debut.slice(0, 5)} - ${fin.slice(0, 5)}`;
-            }
-        }
-
-        function updateAvailableHours() {
-            const selectedDate = dateInput.value;
-            heureDebutSelect.innerHTML = '<option value="">Sélectionnez une heure de début</option>';
-
+            // Générer les options d'heures
             for (let hour = 9; hour <= 22; hour++) {
-                const timeStr = `${hour.toString().padStart(2, '0')}:00:00`;
-                const nextHourStr = `${(hour + 1).toString().padStart(2, '0')}:00:00`;
-
+                const time = `${hour.toString().padStart(2, '0')}:00:00`;
                 const option = document.createElement('option');
-                option.value = timeStr;
-                option.textContent = timeStr.slice(0, 5);
+                option.value = time;
+                option.textContent = time.slice(0, 5);
 
-                if (isTimeSlotReserved(selectedDate, timeStr, nextHourStr)) {
+                // Vérifier si le créneau est réservé
+                if (creneaux.some(c => c.heure === time.slice(0, 5) && !c.disponible)) {
                     option.disabled = true;
-                    option.classList.add('bg-gray-200');
+                    option.classList.add('bg-gray-200', 'text-gray-400');
                 }
 
-                heureDebutSelect.appendChild(option);
+                elements.heureDebut.appendChild(option);
             }
 
             // Réinitialiser l'heure de fin
-            heureFinSelect.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+            elements.heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
 
             // Afficher/masquer le message de disponibilité
-            const hasReservedSlots = Array.from(heureDebutSelect.options).some(option => option.disabled);
-            disponibiliteMessage.style.display = hasReservedSlots ? 'block' : 'none';
+            elements.disponibilite.style.display = 
+                Array.from(elements.heureDebut.options).some(opt => opt.disabled) ? 'block' : 'none';
         }
 
-        function updateAvailableEndHours() {
-            const selectedDate = dateInput.value;
-            const startHour = parseInt(heureDebutSelect.value);
-
-            heureFinSelect.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
+        // Mettre à jour les heures de fin disponibles
+        function updateEndHours() {
+            const startHour = parseInt(elements.heureDebut.value);
+            elements.heureFin.innerHTML = '<option value="">Sélectionnez une heure de fin</option>';
 
             if (startHour) {
                 for (let hour = startHour + 1; hour <= 23; hour++) {
-                    const startTimeStr = `${startHour.toString().padStart(2, '0')}:00:00`;
-                    const endTimeStr = `${hour.toString().padStart(2, '0')}:00:00`;
-
+                    const time = `${hour.toString().padStart(2, '0')}:00:00`;
                     const option = document.createElement('option');
-                    option.value = endTimeStr;
-                    option.textContent = endTimeStr.slice(0, 5);
-
-                    if (isTimeSlotReserved(selectedDate, startTimeStr, endTimeStr)) {
-                        break; // On arrête d'ajouter des options dès qu'on trouve un créneau réservé
-                    }
-
-                    heureFinSelect.appendChild(option);
+                    option.value = time;
+                    option.textContent = time.slice(0, 5);
+                    elements.heureFin.appendChild(option);
                 }
             }
         }
 
-        // Initialiser les heures disponibles au chargement
-        updateAvailableHours();
+        // Mettre à jour le résumé
+        function updateSummary() {
+            const debut = elements.heureDebut.value;
+            const fin = elements.heureFin.value;
+
+            if (debut && fin) {
+                document.getElementById('horaire-selection').textContent = 
+                    `${debut.slice(0, 5)} - ${fin.slice(0, 5)}`;
+
+                // Calcul du montant
+                const duree = parseInt(fin) - parseInt(debut);
+                const montantTotal = elements.tarifBase * duree;
+                elements.montant.value = montantTotal;
+                elements.tarif.innerHTML = `${montantTotal} DH (${elements.tarifBase} DH/heure)`;
+            }
+        }
+
+        elements.date.addEventListener('change', function() {
+            document.getElementById('date-selection').textContent = this.value;
+            updateHours();
+        });
+
+        elements.heureDebut.addEventListener('change', function() {
+            updateSummary();
+            updateEndHours();
+        });
+
+        elements.heureFin.addEventListener('change', updateSummary);
+
+        elements.telephone.addEventListener('input', function() {
+            document.getElementById('telephone-selection').textContent = this.value;
+        });
+
+        updateHours();
     });
 </script>
 
